@@ -23,11 +23,11 @@ import pl.lodz.p.pathfinder.model.PointOfInterest;
  * Use the {@link PoiListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PoiListFragment extends Fragment
+public abstract class PoiListFragment extends Fragment
 {
 
     private List<PointOfInterest> myPlacesList;
-    String listenerType;
+//    String listenerType;
 
 
 
@@ -36,8 +36,8 @@ public class PoiListFragment extends Fragment
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "poiList";
-    private static final String ARG_PARAM2 = "listenerType";
+    static final String ARG_PARAM1 = "poiList";
+    static final String ARG_PARAM2 = "listenerType";
 
 
 //    private OnFragmentInteractionListener mListener;
@@ -63,15 +63,15 @@ public class PoiListFragment extends Fragment
      */
     // TODO: Rename and change types and number of parameters
 //    public static PoiListFragment newInstance(String param1, String param2)
-    public static PoiListFragment newInstance(List<PointOfInterest> poiList, String listenerType) //TODO? replace string with enum
-    {
-        PoiListFragment fragment = new PoiListFragment();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_PARAM1,new ArrayList<Parcelable>(poiList));
-        args.putString(ARG_PARAM2,listenerType);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static PoiListFragment newInstance(List<PointOfInterest> poiList) //TODO? replace string with enum
+//    {
+//        PoiListFragment fragment = new PoiListFragment();
+//        Bundle args = new Bundle();
+//        args.putParcelableArrayList(ARG_PARAM1,new ArrayList<Parcelable>(poiList));
+////        args.putString(ARG_PARAM2,listenerType);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -80,7 +80,7 @@ public class PoiListFragment extends Fragment
         if (getArguments() != null)
         {
             myPlacesList = getArguments().getParcelableArrayList(ARG_PARAM1);
-            listenerType = getArguments().getString(ARG_PARAM2);
+//            listenerType = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -97,7 +97,7 @@ public class PoiListFragment extends Fragment
 
         if(myPlacesList==null) myPlacesList = new ArrayList<>();
 
-        PoiCardRVAdapter adapter = new PoiCardRVAdapter(myPlacesList,this.createItemListener(listenerType));
+        PoiCardRVAdapter adapter = new PoiCardRVAdapter(myPlacesList,this.createItemListener());
         rv.setAdapter(adapter);
 
 
@@ -107,24 +107,23 @@ public class PoiListFragment extends Fragment
 
 
 
-    //      TODO? Change to actual factory method?(polymorphism and shit)
-    private RvItemClickListener<PointOfInterest> createItemListener(String type)
-    {
-        RvItemClickListener<PointOfInterest> result = null;
-        switch (type)
-        {
-            case "MOVE_MAP":
-                result = new PoiListOnClickUpdateMap();
-                break;
-            case "OPEN_EDIT":
-                result = new PoiListOnClickOpenEditMode();
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown argument" + type);
-        }
-
-        return result;
-    }
+    abstract RvItemClickListener<PointOfInterest> createItemListener();
+//    {
+//        RvItemClickListener<PointOfInterest> result = null;
+//        switch (type)
+//        {
+//            case "MOVE_MAP":
+//                result = new PoiListOnClickUpdateMap();
+//                break;
+//            case "OPEN_EDIT":
+//                result = new PoiListOnClickOpenEditMode();
+//                break;
+//            default:
+//                throw new IllegalArgumentException("Unknown argument" + type);
+//        }
+//
+//        return result;
+//    }
 
 
 

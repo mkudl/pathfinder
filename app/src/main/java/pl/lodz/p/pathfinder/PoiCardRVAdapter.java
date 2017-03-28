@@ -45,7 +45,7 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
         {
             int itemPosition = getLayoutPosition();
             Toast.makeText(v.getContext(),String.valueOf(itemPosition),Toast.LENGTH_SHORT).show();
-            itemClick.onItemClicked(poiList.get(itemPosition), v);
+            if(itemClick != null)    itemClick.onItemClicked(poiList.get(itemPosition), v);
         }
     }
 

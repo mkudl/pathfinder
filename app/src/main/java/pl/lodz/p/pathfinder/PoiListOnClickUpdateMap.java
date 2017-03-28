@@ -14,11 +14,16 @@ public class PoiListOnClickUpdateMap implements RvItemClickListener<PointOfInter
 
     GoogleMapsMovable map;
 
+    public PoiListOnClickUpdateMap(GoogleMapsMovable map)
+    {
+        this.map = map;
+    }
+
     //TODO
     @Override
     public void onItemClicked(PointOfInterest item, View view)
     {
-
+        map.moveMapFromPosition(item.getPosition());
     }
 
 
