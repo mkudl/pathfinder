@@ -97,13 +97,18 @@ public abstract class PoiListFragment extends Fragment
 
         if(myPlacesList==null) myPlacesList = new ArrayList<>();
 
-        PoiCardRVAdapter adapter = new PoiCardRVAdapter(myPlacesList,this.createItemListener());
+//        PoiCardRVAdapter adapter = new PoiCardRVAdapter(myPlacesList,this.createItemListener());
+        RecyclerView.Adapter adapter = createRVAdapter(myPlacesList);
         rv.setAdapter(adapter);
 
 
         return v;
     }
 
+    RecyclerView.Adapter createRVAdapter(List<PointOfInterest> dataset)
+    {
+        return new PoiCardRVAdapter(dataset,this.createItemListener());
+    }
 
 
 

@@ -63,8 +63,7 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     {
         View v = LayoutInflater.from(parent.getContext())
                  .inflate(R.layout.cardview_poi,parent,false);
-        ViewHolder  vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
 
     }
 

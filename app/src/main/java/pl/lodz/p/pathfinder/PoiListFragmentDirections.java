@@ -11,19 +11,16 @@ import java.util.List;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 
 /**
- * Created by QDL on 2017-03-28.
+ * Created by QDL on 2017-03-29.
  */
 
-public class PoiListFragmentUpdateMap extends PoiListFragment
+public class PoiListFragmentDirections extends PoiListFragment
 {
-
-
-
     private GoogleMapsMovable mapsMovable;
 
     public static PoiListFragment newInstance(List<PointOfInterest> poiList)
     {
-        PoiListFragmentUpdateMap fragment = new PoiListFragmentUpdateMap();
+        PoiListFragmentDirections fragment = new PoiListFragmentDirections();
         Bundle args = new Bundle();
         args.putParcelableArrayList(ARG_PARAM1,new ArrayList<Parcelable>(poiList));
 //        args.putString(ARG_PARAM2,listenerType);
@@ -31,12 +28,19 @@ public class PoiListFragmentUpdateMap extends PoiListFragment
         return fragment;
     }
 
+
+    //Creates the decorator to allow for the display of directions in addition to POIs
+    @Override
+    RecyclerView.Adapter createRVAdapter(List<PointOfInterest> dataset)
+    {
+        return new PoiCardRVAdapterDirectionDecorator(dataset,this.createItemListener());
+    }
+
     @Override
     RvItemClickListener<PointOfInterest> createItemListener()
     {
         return new PoiListOnClickUpdateMap(mapsMovable);
     }
-
 
 
     @Override
@@ -52,25 +56,5 @@ public class PoiListFragmentUpdateMap extends PoiListFragment
             throw new RuntimeException(context.toString()
                     + " must implement GoogleMapsMovable");
         }
-    }
-
-
-
-
-
-
-
-
-
-
-
-    public GoogleMapsMovable getMapsMovable()
-    {
-        return mapsMovable;
-    }
-
-    public void setMapsMovable(GoogleMapsMovable mapsMovable)
-    {
-        this.mapsMovable = mapsMovable;
     }
 }
