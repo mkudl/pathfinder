@@ -1,4 +1,4 @@
-package pl.lodz.p.pathfinder;
+package pl.lodz.p.pathfinder.view;
 
 import android.os.Parcelable;
 import android.view.View;
