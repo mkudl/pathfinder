@@ -18,6 +18,9 @@ public class SimpleDirections
     private String duration;
     private Integer duration_actual;
 
+    private DirectionType directionType;
+
+
 
 
 
@@ -60,6 +63,16 @@ public class SimpleDirections
     public void setDuration_actual(Integer duration_actual)
     {
         this.duration_actual = duration_actual;
+    }
+
+    public DirectionType getDirectionType()
+    {
+        return directionType;
+    }
+
+    public void setDirectionType(DirectionType directionType)
+    {
+        this.directionType = directionType;
     }
 
 
