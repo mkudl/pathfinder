@@ -30,7 +30,7 @@ public abstract class PoiListFragment extends Fragment
 //    String listenerType;
 
 
-
+//TODO truncate long poi descriptions
 
 
 

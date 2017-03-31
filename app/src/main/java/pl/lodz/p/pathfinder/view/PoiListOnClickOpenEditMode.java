@@ -18,10 +18,8 @@ public class PoiListOnClickOpenEditMode implements RvItemClickListener<PointOfIn
     @Override
     public void onItemClicked(PointOfInterest item, View view)
     {
-
-
         Intent intent = new Intent(view.getContext(), PoiDetailBaseActivity.class); //TODO change to implementation
-//        intent.putExtra("POI_PARAM",item);
+        intent.putExtra("POI_PARAM",item);
         view.getContext().startActivity(intent);
     }
 
