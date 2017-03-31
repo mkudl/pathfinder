@@ -58,13 +58,13 @@ public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
                 f =  PoiListFragmentOpenEdit.newInstance(testData());
             break;
             case 1:
-                f =  PoiMenuTabSharedFragment.newInstance("bvdxz","F");
+                f =  PoiMenuTabFavoritesFragment.newInstance("bvdxz","F");
             break;
             case 2:
-                f =  PoiMenuTabSharedFragment.newInstance("bvdxz","F");
+                f =  PoiMenuTabFavoritesFragment.newInstance("bvdxz","F");
                 break;
             case 3:
-                f =  PoiMenuTabSharedFragment.newInstance("bvdxz","F");
+                f =  PoiMenuTabFavoritesFragment.newInstance("bvdxz","F");
                 break;
 
         }

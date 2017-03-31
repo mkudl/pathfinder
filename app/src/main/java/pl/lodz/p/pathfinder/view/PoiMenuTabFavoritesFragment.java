@@ -13,12 +13,12 @@ import pl.lodz.p.pathfinder.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PoiMenuTabSharedFragment.OnFragmentInteractionListener} interface
+ * {@link PoiMenuTabFavoritesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PoiMenuTabSharedFragment#newInstance} factory method to
+ * Use the {@link PoiMenuTabFavoritesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PoiMenuTabSharedFragment extends Fragment
+public class PoiMenuTabFavoritesFragment extends Fragment
 {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +31,7 @@ public class PoiMenuTabSharedFragment extends Fragment
 
     private OnFragmentInteractionListener mListener;
 
-    public PoiMenuTabSharedFragment()
+    public PoiMenuTabFavoritesFragment()
     {
         // Required empty public constructor
     }
@@ -42,12 +42,12 @@ public class PoiMenuTabSharedFragment extends Fragment
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PoiMenuTabSharedFragment.
+     * @return A new instance of fragment PoiMenuTabFavoritesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PoiMenuTabSharedFragment newInstance(String param1, String param2)
+    public static PoiMenuTabFavoritesFragment newInstance(String param1, String param2)
     {
-        PoiMenuTabSharedFragment fragment = new PoiMenuTabSharedFragment();
+        PoiMenuTabFavoritesFragment fragment = new PoiMenuTabFavoritesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
