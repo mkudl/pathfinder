@@ -66,7 +66,7 @@ public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
                 f =  PoiMenuTabFavoritesFragment.newInstance("bvdxz","F");
                 break;
             case 3:
-                f =  PoiMenuTabFavoritesFragment.newInstance("bvdxz","F");
+                f =  PoiSearchFragment.newInstance("bvdxz","F");
                 break;
 
         }
