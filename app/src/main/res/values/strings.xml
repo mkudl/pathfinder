@@ -25,7 +25,6 @@
     <string name="poi_picker_button_select">Select</string>
 
 
-
     <string-array name="poi_menu_tabs">
         <item>Created</item>
         <item>Saved</item>
@@ -130,4 +129,5 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="title_activity_main6">Main6Activity</string>
 </resources>

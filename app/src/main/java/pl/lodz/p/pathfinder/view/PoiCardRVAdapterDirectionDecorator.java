@@ -1,6 +1,7 @@
 package pl.lodz.p.pathfinder.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,9 +56,9 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
     }
 
 
-    public PoiCardRVAdapterDirectionDecorator(List<PointOfInterest> dataset, RvItemClickListener<PointOfInterest> itemListener)
+    public PoiCardRVAdapterDirectionDecorator(List<PointOfInterest> dataset, RvItemClickListener<PointOfInterest> itemListener,List<Bitmap> poiPhotoList)
     {
-        poiAdapter = new PoiCardRVAdapter(dataset,itemListener);
+        poiAdapter = new PoiCardRVAdapter(dataset,itemListener,poiPhotoList);
 
         //FIXME?
         directionsOverviewList = new ArrayList<>();

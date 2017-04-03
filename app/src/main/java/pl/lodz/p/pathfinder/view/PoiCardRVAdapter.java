@@ -1,14 +1,19 @@
 package pl.lodz.p.pathfinder.view;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import pl.lodz.p.pathfinder.PoiUtils;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 
@@ -16,21 +21,25 @@ import pl.lodz.p.pathfinder.model.PointOfInterest;
  * Created by QDL on 2017-03-21.
  */
 
-public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.ViewHolder> implements RVAdapterRemovable
+public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.ViewHolder> implements RVAdapterRemovable, RVAdapterPhotoUpdateable
 {
 
 
 
     private List<PointOfInterest> poiList;
+    private List<Bitmap> poiPhotoList;
+
     private RvItemClickListener<PointOfInterest> itemClick;
 
     private String listenerType;
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder //implements View.OnClickListener
     {
         public TextView title;
         public TextView details;
+        public ImageView image;
 
         public View itemView;
 
@@ -39,6 +48,7 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.poicard_textview_title);
             details = (TextView) itemView.findViewById(R.id.poicard_textview_details);
+            image = (ImageView) itemView.findViewById(R.id.poicard_imageview);
             this.itemView = itemView;
 //            itemView.setOnClickListener(this);
         }
@@ -56,10 +66,14 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     }
 
 
-    public PoiCardRVAdapter(List<PointOfInterest> dataset, RvItemClickListener<PointOfInterest> itemListener)
+    public PoiCardRVAdapter(List<PointOfInterest> dataset, RvItemClickListener<PointOfInterest> itemListener, List<Bitmap> poiPhotoList)
     {
         this.poiList = dataset;
         this.itemClick = itemListener;
+
+        //FIXME?
+        this.poiPhotoList = poiPhotoList;
+
     }
 
 
@@ -77,6 +91,8 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     public void onBindViewHolder(ViewHolder holder, final int position)
     {
         holder.title.setText(poiList.get(position).getName());
+//        PoiUtils.loadPoiPhoto();
+        holder.image.setImageBitmap(poiPhotoList.get(position));
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
@@ -100,9 +116,16 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     public void removeAt(int position)
     {
         poiList.remove(position);
+        poiPhotoList.remove(position);
         notifyDataSetChanged();
     }
 
+    @Override
+    public void updatePhoto(Bitmap bitmap, int position)
+    {
+        poiPhotoList.set(position,bitmap);
+        notifyDataSetChanged();
+    }
 
 
     public List<PointOfInterest> getPoiList()

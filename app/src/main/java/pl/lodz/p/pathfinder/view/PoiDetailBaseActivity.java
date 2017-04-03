@@ -20,6 +20,7 @@ import com.google.android.gms.location.places.PlacePhotoMetadataResult;
 import com.google.android.gms.location.places.PlacePhotoResult;
 import com.google.android.gms.location.places.Places;
 
+import pl.lodz.p.pathfinder.PoiUtils;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 
@@ -77,25 +78,27 @@ public class PoiDetailBaseActivity extends AppCompatActivity implements GoogleAp
 //        Places.GeoDataApi.getPlaceById(googleApiClient,ID).setResultCallback(this);
 
         //TODO fix, possibly delegate
-        Places.GeoDataApi.getPlacePhotos(googleApiClient,displayedPoi.getGoogleID())
-                .setResultCallback(new ResultCallback<PlacePhotoMetadataResult>() {
-            @Override
-            public void onResult(@NonNull final PlacePhotoMetadataResult placePhotoMetadataResult)
-            {
-                PlacePhotoMetadata photo = placePhotoMetadataResult.getPhotoMetadata().get(1);
-//                Picasso.with(Main5Activity.this).load("http://i.imgur.com/DvpvklR.png").into(img);
-                photo.getPhoto(googleApiClient).setResultCallback(new ResultCallback<PlacePhotoResult>()
-                {
-                    @Override
-                    public void onResult(@NonNull PlacePhotoResult placePhotoResult)
-                    {
-                        Bitmap bmp = placePhotoResult.getBitmap();
-                        img.setImageBitmap(bmp);
-                    }
-                });
+//        Places.GeoDataApi.getPlacePhotos(googleApiClient,displayedPoi.getGoogleID())
+//                .setResultCallback(new ResultCallback<PlacePhotoMetadataResult>() {
+//            @Override
+//            public void onResult(@NonNull final PlacePhotoMetadataResult placePhotoMetadataResult)
+//            {
+//                PlacePhotoMetadata photo = placePhotoMetadataResult.getPhotoMetadata().get(1);
+////                Picasso.with(Main5Activity.this).load("http://i.imgur.com/DvpvklR.png").into(img);
+//                photo.getPhoto(googleApiClient).setResultCallback(new ResultCallback<PlacePhotoResult>()
+//                {
+//                    @Override
+//                    public void onResult(@NonNull PlacePhotoResult placePhotoResult)
+//                    {
+//                        Bitmap bmp = placePhotoResult.getBitmap();
+//                        img.setImageBitmap(bmp);
+//                    }
+//                });
+//
+//            }
+//        });
 
-            }
-        });
+        PoiUtils.loadPoiPhoto(googleApiClient,displayedPoi,img);
     }
 
     @Override

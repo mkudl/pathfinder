@@ -1,5 +1,7 @@
 package pl.lodz.p.pathfinder.view;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,22 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.lodz.p.pathfinder.PoiUtils;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 
-//FIXME fix javadoc
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PoiListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PoiListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public abstract class PoiListFragment extends Fragment
+public abstract class PoiListFragment extends Fragment implements PhotoDownloadCallback
+
 {
 
     private List<PointOfInterest> myPlacesList;
@@ -31,6 +29,7 @@ public abstract class PoiListFragment extends Fragment
 
 
     private RVAdapterRemovable adapter;
+    private RVAdapterPhotoUpdateable adapterPhotoUpdateable;
 
 
 //TODO truncate long poi descriptions
@@ -55,15 +54,6 @@ public abstract class PoiListFragment extends Fragment
         // Required empty public constructor
     }
 
-    //FIXME fix javadoc
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PoiListFragment.
-     */
     // TODO: Rename and change types and number of parameters
 //    public static PoiListFragment newInstance(String param1, String param2)
 //    public static PoiListFragment newInstance(List<PointOfInterest> poiList) //TODO? replace string with enum
@@ -103,15 +93,62 @@ public abstract class PoiListFragment extends Fragment
 
         RecyclerView.Adapter adapter = createRVAdapter(myPlacesList);
         this.adapter = (RVAdapterRemovable) adapter;
+        this.adapterPhotoUpdateable = (RVAdapterPhotoUpdateable) adapter;
         rv.setAdapter(adapter);
 
+
+        //FIXME
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(getContext())
+//                .enableAutoManage(this /* FragmentActivity */,
+//                        this /* OnConnectionFailedListener */)
+//                .addConnectionCallbacks(this)
+//                .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+//                .addApi(Places.PLACE_DETECTION_API)
+                .build();
+        googleApiClient.connect();
+
+        int i=0;
+        for(PointOfInterest p : myPlacesList)
+        {
+            PoiUtils.getPhotosForPoi(googleApiClient,p,i,this);
+            i++;
+        }
 
         return v;
     }
 
     RecyclerView.Adapter createRVAdapter(List<PointOfInterest> dataset)
     {
-        return new PoiCardRVAdapter(dataset,this.createItemListener());
+        return new PoiCardRVAdapter(dataset,this.createItemListener(), this.createPhotoList(dataset));
+    }
+
+    protected List<Bitmap> createPhotoList(List<PointOfInterest> dataset)
+    {
+        List<Bitmap> result = new ArrayList<>(dataset.size());
+
+        Bitmap placeholder = BitmapFactory.decodeResource(getActivity().getResources(),R.drawable.placeholder);
+        for (int i = 0; i < dataset.size(); i++)
+        {
+            result.add(placeholder);
+        }
+
+        return result;
+    }
+
+
+    @Override
+    public void photoDownloaded(Bitmap bitmap, int position)
+    {
+        updatePhoto(position,bitmap);
+    }
+
+
+    public void updatePhoto(int position, Bitmap bitmap)
+    {
+        if(adapterPhotoUpdateable != null){
+            adapterPhotoUpdateable.updatePhoto(bitmap,position);
+        }
     }
 
 
@@ -123,6 +160,8 @@ public abstract class PoiListFragment extends Fragment
             adapter.removeAt(position);
         }
     }
+
+
 
     abstract RvItemClickListener<PointOfInterest> createItemListener();
 //    {

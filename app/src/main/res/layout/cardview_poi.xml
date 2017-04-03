@@ -25,7 +25,7 @@
                 android:text="TextView"/>
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/poicard_imageview"
                 android:layout_width="400dp"
                 android:layout_height="120dp"
                 android:layout_alignParentStart="true"
@@ -36,7 +36,7 @@
                 android:id="@+id/poicard_textview_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView2"
+                android:layout_below="@+id/poicard_imageview"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
                 android:text="TextView"

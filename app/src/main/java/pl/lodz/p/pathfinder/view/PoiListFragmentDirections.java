@@ -52,7 +52,7 @@ public class PoiListFragmentDirections extends PoiListFragment
     @Override
     RecyclerView.Adapter createRVAdapter(List<PointOfInterest> dataset)
     {
-        RVAdapter = new PoiCardRVAdapterDirectionDecorator(dataset,this.createItemListener());
+        RVAdapter = new PoiCardRVAdapterDirectionDecorator(dataset,this.createItemListener(),createPhotoList(dataset));
         return RVAdapter;
     }
 
