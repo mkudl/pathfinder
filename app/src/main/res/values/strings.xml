@@ -15,6 +15,7 @@
 
     <string name="title_activity_poi_detail_base">PoiDetailBaseActivity</string>
 
+    <string name="direction_walk">Walk</string>
 
     <string name="poi_picker_selected_info">Currently selected</string>
     <string name="poi_picker_selected_none">None</string>
@@ -22,6 +23,8 @@
     <string name="poi_picker_button_repick">Search</string>
     <string name="poi_picker_button_view">Views</string>
     <string name="poi_picker_button_select">Select</string>
+
+
 
     <string-array name="poi_menu_tabs">
         <item>Created</item>

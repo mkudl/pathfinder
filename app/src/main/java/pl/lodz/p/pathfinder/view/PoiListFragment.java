@@ -30,6 +30,9 @@ public abstract class PoiListFragment extends Fragment
 //    String listenerType;
 
 
+    private RVAdapterRemovable adapter;
+
+
 //TODO truncate long poi descriptions
 
 
@@ -97,8 +100,9 @@ public abstract class PoiListFragment extends Fragment
 
         if(myPlacesList==null) myPlacesList = new ArrayList<>();
 
-//        PoiCardRVAdapter adapter = new PoiCardRVAdapter(myPlacesList,this.createItemListener());
+
         RecyclerView.Adapter adapter = createRVAdapter(myPlacesList);
+        this.adapter = (RVAdapterRemovable) adapter;
         rv.setAdapter(adapter);
 
 
@@ -111,6 +115,14 @@ public abstract class PoiListFragment extends Fragment
     }
 
 
+
+    public void removeAt(int position)
+    {
+//        myPlacesList.remove(position);    //the list object is passed down to the adapter, so the item only has to be deleted down there
+        if(adapter!= null){
+            adapter.removeAt(position);
+        }
+    }
 
     abstract RvItemClickListener<PointOfInterest> createItemListener();
 //    {

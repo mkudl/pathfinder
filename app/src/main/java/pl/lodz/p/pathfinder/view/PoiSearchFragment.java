@@ -77,7 +77,7 @@ public class PoiSearchFragment extends Fragment
      * @return A new instance of fragment PoiSearchFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PoiSearchFragment newInstance(String param1, String param2)
+    public static PoiSearchFragment newInstance(String param1, String param2) //FIXME remove parameters
     {
         PoiSearchFragment fragment = new PoiSearchFragment();
 //        Bundle args = new Bundle();

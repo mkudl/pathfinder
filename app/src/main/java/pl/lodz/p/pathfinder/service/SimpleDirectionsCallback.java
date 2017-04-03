@@ -8,12 +8,13 @@ import pl.lodz.p.pathfinder.model.SimpleDirections;
 
 public interface SimpleDirectionsCallback
 {
-    SimpleDirections successCallback(SimpleDirections directions);
+    //TODO? change method types to void
+    void successCallback(SimpleDirections directions, int itemPosition);
 
     //failure calling the api
-    SimpleDirections failCallback(Throwable t);
+    void failCallback(Throwable t);
     //returned http fail code
-    SimpleDirections httpCodeFailCallback( int code);
+    void httpCodeFailCallback( int code);
 
     /**
      * Top-level Status Codes
@@ -37,7 +38,7 @@ public interface SimpleDirectionsCallback
      *ZERO_RESULTS IS HANDLED INSIDE THE CLIENT
      */
     //api returned error status inside response (top-level)
-    SimpleDirections apiFailTopLevelCallback(String code);
+    void apiFailTopLevelCallback(String code);
     //api returned error status inside response (element-level)
-    SimpleDirections apiFailElementCallback(String code);
+    void apiFailElementCallback(String code);
 }

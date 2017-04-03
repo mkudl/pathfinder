@@ -16,7 +16,7 @@ import pl.lodz.p.pathfinder.model.PointOfInterest;
  * Created by QDL on 2017-03-21.
  */
 
-public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.ViewHolder>
+public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.ViewHolder> implements RVAdapterRemovable
 {
 
 
@@ -27,27 +27,32 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     private String listenerType;
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    public class ViewHolder extends RecyclerView.ViewHolder //implements View.OnClickListener
     {
         public TextView title;
         public TextView details;
+
+        public View itemView;
 
         public ViewHolder(View itemView)
         {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.poicard_textview_title);
             details = (TextView) itemView.findViewById(R.id.poicard_textview_details);
-            itemView.setOnClickListener(this);
+            this.itemView = itemView;
+//            itemView.setOnClickListener(this);
         }
 
 
-        @Override
-        public void onClick(View v)
-        {
-            int itemPosition = getLayoutPosition();
-            Toast.makeText(v.getContext(),String.valueOf(itemPosition),Toast.LENGTH_SHORT).show();
-            if(itemClick != null)    itemClick.onItemClicked(poiList.get(itemPosition), v);
-        }
+//        @Override
+//        public void onClick(View v)
+//        {
+//
+//            //FIXME different values for list of just poi and list of poi with directions
+//            int itemPosition = getLayoutPosition()/2;
+//            Toast.makeText(v.getContext(),String.valueOf(itemPosition),Toast.LENGTH_SHORT).show();
+//            if(itemClick != null)    itemClick.onItemClicked(poiList.get(itemPosition), v);
+//        }
     }
 
 
@@ -69,9 +74,18 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(ViewHolder holder, final int position)
     {
         holder.title.setText(poiList.get(position).getName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(itemClick != null)    itemClick.onItemClicked(poiList.get(position), v);
+            }
+        });
     }
 
     @Override
@@ -81,6 +95,13 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     }
 
 
+
+    @Override
+    public void removeAt(int position)
+    {
+        poiList.remove(position);
+        notifyDataSetChanged();
+    }
 
 
 

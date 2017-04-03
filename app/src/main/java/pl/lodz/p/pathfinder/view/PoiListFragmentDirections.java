@@ -8,7 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.lodz.p.pathfinder.model.DetailDirections;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
+import pl.lodz.p.pathfinder.model.SimpleDirections;
+import pl.lodz.p.pathfinder.service.directions.DetailedDirectionsCallback;
 
 /**
  * Created by QDL on 2017-03-29.
@@ -18,7 +21,9 @@ public class PoiListFragmentDirections extends PoiListFragment
 {
     private GoogleMapsMovable mapsMovable;
 
-    public static PoiListFragment newInstance(List<PointOfInterest> poiList)
+    private PoiCardRVAdapterDirectionDecorator RVAdapter;
+
+    public static PoiListFragmentDirections newInstance(List<PointOfInterest> poiList)
     {
         PoiListFragmentDirections fragment = new PoiListFragmentDirections();
         Bundle args = new Bundle();
@@ -29,11 +34,26 @@ public class PoiListFragmentDirections extends PoiListFragment
     }
 
 
+
+    //TODO? extract interface
+    void updateDirections(SimpleDirections dirs, int position)
+    {
+        RVAdapter.updateDirections(dirs,position);
+    }
+
+    void updateDetailedDirections(DetailDirections dirs, int position)
+    {
+        RVAdapter.updateDetailDirections(dirs,position);
+    }
+
+
+
     //Creates the decorator to allow for the display of directions in addition to POIs
     @Override
     RecyclerView.Adapter createRVAdapter(List<PointOfInterest> dataset)
     {
-        return new PoiCardRVAdapterDirectionDecorator(dataset,this.createItemListener());
+        RVAdapter = new PoiCardRVAdapterDirectionDecorator(dataset,this.createItemListener());
+        return RVAdapter;
     }
 
     @Override

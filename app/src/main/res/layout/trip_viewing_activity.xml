@@ -32,7 +32,7 @@
     <LinearLayout
         android:id="@+id/trip_viewing_content_bottom"
         android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_height="530dp"
         android:layout_below="@+id/map_frag"
         android:orientation="vertical"
         app:behavior_peekHeight="100dp"
@@ -64,5 +64,14 @@
             <!--android:textSize="16sp"/>-->
 
     <!--</android.support.v4.widget.NestedScrollView>-->
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/trip_navigate_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_directions_black_24dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
