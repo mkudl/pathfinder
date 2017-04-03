@@ -28,7 +28,7 @@
     <string-array name="poi_menu_tabs">
         <item>Created</item>
         <item>Saved</item>
-        <item>Nearby</item>
+        <!--<item>Nearby</item>-->
         <item>Search</item>
     </string-array>
 

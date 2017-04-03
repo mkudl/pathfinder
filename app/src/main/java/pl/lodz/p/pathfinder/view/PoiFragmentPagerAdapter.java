@@ -22,7 +22,7 @@ import pl.lodz.p.pathfinder.model.PointOfInterest;
 public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
 {
 
-    private final static int PAGE_COUNT = 4;
+    private final static int PAGE_COUNT = 3;
 //    private String[] tabTitles = {"my trips","Browse"}; //FIXME
     private String[] tabTitles;
     private Context context;
@@ -60,12 +60,12 @@ public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
             case 1:
                 f =  PoiListFragmentOpenEdit.newInstance(testData());
             break;
+//            case 2:
+//                //TODO if the api doesn't start working, delete this tab
+////                f =  PoiNearbyFragment.newInstance("bvdxz","F");
+//                f =  PoiMenuTabFavoritesFragment.newInstance("bvdxz","F");
+//                break;
             case 2:
-                //TODO if the api doesn't start working, delete this tab
-//                f =  PoiNearbyFragment.newInstance("bvdxz","F");
-                f =  PoiMenuTabFavoritesFragment.newInstance("bvdxz","F");
-                break;
-            case 3:
                 f =  PoiSearchFragment.newInstance("bvdxz","F");
                 break;
 
