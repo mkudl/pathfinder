@@ -27,7 +27,7 @@ import pl.lodz.p.pathfinder.model.SimpleDirections;
  * Created by QDL on 2017-03-26.
  */
 
-public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RVAdapterRemovable
+public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RVAdapterRemovable, RVAdapterPhotoUpdateable
 {
     /*
         View types:
@@ -73,6 +73,7 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
         }
 //        super(dataset);
     }
+
 
 
     class ViewHolderDirections extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -203,6 +204,17 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
         poiAdapter.removeAt(position);
         notifyDataSetChanged();
     }
+
+
+    @Override
+    public void updatePhoto(Bitmap bitmap, int position)
+    {
+        poiAdapter.updatePhoto(bitmap,position);
+        notifyDataSetChanged();
+    }
+
+
+
 
 
 
