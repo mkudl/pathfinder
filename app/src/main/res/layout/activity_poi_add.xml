@@ -67,21 +67,5 @@
         android:layout_height="50dp"
         android:layout_weight="0.48"/>
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.48"
-        android:text="Description"/>
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.48"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Description"/>
-
 
 </LinearLayout>

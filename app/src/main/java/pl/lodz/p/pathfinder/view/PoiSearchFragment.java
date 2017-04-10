@@ -153,7 +153,7 @@ public class PoiSearchFragment extends Fragment
                 Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_LONG).show();
 
                 placeName.setText(place.getName());
-                currentSelection = new PointOfInterest(place.getName().toString(),"placeholder" /*FIXME*/,place.getLatLng(),place.getId());
+                currentSelection = new PointOfInterest(place.getName().toString(),place.getLatLng(),place.getId());
 
                 showUI();
             }

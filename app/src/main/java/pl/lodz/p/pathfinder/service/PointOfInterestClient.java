@@ -95,7 +95,7 @@ public class PointOfInterestClient
         if (places.getStatus().isSuccess() && places.getCount() > 0)
         {
             Place place = places.get(0);
-            PointOfInterest poi = new PointOfInterest(place.getName().toString(), "placeholder"/*FIXME*/, place.getLatLng(), googleID);
+            PointOfInterest poi = new PointOfInterest(place.getName().toString(), place.getLatLng(), googleID);
             places.release();
             return poi; //TODO merge with ^
         }

@@ -11,7 +11,6 @@ import com.google.android.gms.maps.model.LatLng;
 public class PointOfInterest implements Parcelable
 {
     private String name;
-    private String description;
     private LatLng position;
     private String googleID;
 
@@ -23,7 +22,6 @@ public class PointOfInterest implements Parcelable
         {
             PointOfInterest poi = new PointOfInterest();
             poi.setName(source.readString());
-            poi.setDescription(source.readString());
             poi.setPosition( source.<LatLng>readParcelable(LatLng.class.getClassLoader()) );
             poi.setGoogleID(source.readString());
             return poi;
@@ -38,10 +36,9 @@ public class PointOfInterest implements Parcelable
 
 
 
-    public PointOfInterest(String name, String description, LatLng position, String googleID)
+    public PointOfInterest(String name, LatLng position, String googleID)
     {
         this.name = name;
-        this.description = description;
         this.position = position;
         this.googleID = googleID;
     }
@@ -58,15 +55,6 @@ public class PointOfInterest implements Parcelable
         this.name = name;
     }
 
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
 
     public LatLng getPosition()
     {
@@ -99,7 +87,6 @@ public class PointOfInterest implements Parcelable
     public void writeToParcel(Parcel dest, int flags)
     {
         dest.writeString(name);
-        dest.writeString(description);
         dest.writeParcelable(position,0);
         dest.writeString(googleID);
     }

@@ -59,7 +59,6 @@ public class PoiDetailBaseActivity extends AppCompatActivity implements GoogleAp
         header = (CollapsingToolbarLayout) findViewById(R.id.poi_detail_toolbar_layout);
 
         header.setTitle(displayedPoi.getName());
-        description.setText(displayedPoi.getDescription());
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

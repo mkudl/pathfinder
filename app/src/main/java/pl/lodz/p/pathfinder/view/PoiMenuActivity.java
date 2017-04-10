@@ -25,6 +25,7 @@ public class PoiMenuActivity extends AppCompatActivity
     private ProgressBar spinner;
     private TabLayout tabs;
     private ViewPager viewPager;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,43 +38,25 @@ public class PoiMenuActivity extends AppCompatActivity
         spinner = (ProgressBar) findViewById(R.id.poi_menu_spinner);
         tabs = (TabLayout) findViewById(R.id.sliding_tabs);
         viewPager = (ViewPager) findViewById(R.id.poi_viewpager);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
-
+        //hide ui
+        //doesn't need method; only place it'd be called from anyway
         tabs.setVisibility(View.GONE);
         viewPager.setVisibility(View.GONE);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(PoiMenuActivity.this, PoiAddActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-
-
-//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//        tabLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                tabLayout.setupWithViewPager(viewPager);
-//            }
-//        });
 
         PointOfInterestClient poiClient = new PointOfInterestClient(this);
 
         PoiMenuPresenter presenter = new PoiMenuPresenter(this,poiClient);
         presenter.startActivity();
-
     }
 
 
+    //methods called from presenter
+    //TODO? add interface
     public void showSpinner()
     {
         spinner.setVisibility(View.VISIBLE);
@@ -90,6 +73,9 @@ public class PoiMenuActivity extends AppCompatActivity
 
     public void onDataRetrieved(List<PointOfInterest> created, List<PointOfInterest> favorites)
     {
+        //don't let user add new pois until after data was retrieved
+        fab.setOnClickListener( view -> startActivity(new Intent(PoiMenuActivity.this, PoiAddActivity.class)) );
+
         //components responsible for the horizontally scrolling tab view
         viewPager.setAdapter(new PoiFragmentPagerAdapter(getSupportFragmentManager(),PoiMenuActivity.this,created, favorites));
         tabs.setupWithViewPager(viewPager);
