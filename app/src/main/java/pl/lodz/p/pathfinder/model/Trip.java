@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Trip implements Parcelable
 {
+    private int id;
     private String name;
     private String description;
     private List<PointOfInterest> pointOfInterestList;
@@ -27,6 +28,7 @@ public class Trip implements Parcelable
             returnTrip.setDescription(source.readString());
             source.readList(poi,PointOfInterest.class.getClassLoader());
             returnTrip.setPointOfInterestList(poi);
+            returnTrip.setId(source.readInt());
             return returnTrip;
         }
 
@@ -37,14 +39,25 @@ public class Trip implements Parcelable
         }
     };
 
+    public Trip(int id, String name, String description, List<PointOfInterest> pointOfInterestList)
+    {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.pointOfInterestList = pointOfInterestList;
+    }
 
-
+    //TODO? include id
+    @Deprecated
     public Trip(String name, String description, List<PointOfInterest> pointOfInterestList)
     {
         this.name = name;
         this.description = description;
         this.pointOfInterestList = pointOfInterestList;
     }
+
+
+
 
     private Trip(){}
 
@@ -78,6 +91,15 @@ public class Trip implements Parcelable
         this.description = description;
     }
 
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
     @Override
     public int describeContents()
@@ -91,5 +113,6 @@ public class Trip implements Parcelable
         dest.writeString(getName());
         dest.writeString(getDescription());
         dest.writeList(getPointOfInterestList());
+        dest.writeInt(id);
     }
 }

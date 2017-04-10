@@ -27,11 +27,16 @@ public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
     private String[] tabTitles;
     private Context context;
 
-    public PoiFragmentPagerAdapter(FragmentManager fm, Context context)
+    List<PointOfInterest> created;
+    List<PointOfInterest> favorites;
+
+    public PoiFragmentPagerAdapter(FragmentManager fm, Context context, List<PointOfInterest> created, List<PointOfInterest> favorites)
     {
         super(fm);
         this.context = context;
         this.tabTitles = context.getResources().getStringArray(R.array.poi_menu_tabs);
+        this.created = created;
+        this.favorites = favorites;
     }
 
 
@@ -53,12 +58,12 @@ public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
         Fragment f= null;
         switch (position){
             case 0:
-
-                //FIXME
-                f =  PoiListFragmentOpenEdit.newInstance(testData());
+                //pois created by user tab
+                f =  PoiListFragmentOpenEdit.newInstance(created);
             break;
             case 1:
-                f =  PoiListFragmentOpenEdit.newInstance(testData());
+                //pois favorited by user tab
+                f =  PoiListFragmentOpenEdit.newInstance(favorites);
             break;
 //            case 2:
 //                //TODO if the api doesn't start working, delete this tab
@@ -66,7 +71,8 @@ public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
 //                f =  PoiMenuTabFavoritesFragment.newInstance("bvdxz","F");
 //                break;
             case 2:
-                f =  PoiSearchFragment.newInstance("bvdxz","F");
+                //poi search tab
+                f =  PoiSearchFragment.newInstance("bvdxz","F");    //FIXME remove useless parameters from fragment
                 break;
 
         }
@@ -74,21 +80,21 @@ public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
     }
 
     //TODO delete this, get real data
-    List<PointOfInterest> testData()
-    {
-        PointOfInterest poi1 = new PointOfInterest("poi1","poi1",new LatLng(51.74869,19.45537), "ChIJt9trB0euEmsR8NbepO14j3M");
-        PointOfInterest poi2 = new PointOfInterest("poi2",context.getString(R.string.large_text),new LatLng(51.74893,19.45957), "ChIJt9trB0euEmsR8NbepO14j3M");
-        PointOfInterest poi3 = new PointOfInterest("poi3","poi3",new LatLng(51.74548,19.46182), "ChIJt9trB0euEmsR8NbepO14j3M");
-        PointOfInterest poi4 = new PointOfInterest("poi4","poi4",new LatLng(51.74086,19.46393), "ChIJt9trB0euEmsR8NbepO14j3M");
-        PointOfInterest poi5 = new PointOfInterest("poi4",context.getString(R.string.large_text),new LatLng(51.71092,19.48337), "ChIJt9trB0euEmsR8NbepO14j3M");
-
-        ArrayList<PointOfInterest> poiList = new ArrayList<>();
-        poiList.add(poi1);
-        poiList.add(poi2);
-        poiList.add(poi3);
-        poiList.add(poi4);
-        poiList.add(poi5);
-        return poiList;
-    }
+//    List<PointOfInterest> testData()
+//    {
+//        PointOfInterest poi1 = new PointOfInterest("poi1","poi1",new LatLng(51.74869,19.45537), "ChIJt9trB0euEmsR8NbepO14j3M");
+//        PointOfInterest poi2 = new PointOfInterest("poi2",context.getString(R.string.large_text),new LatLng(51.74893,19.45957), "ChIJt9trB0euEmsR8NbepO14j3M");
+//        PointOfInterest poi3 = new PointOfInterest("poi3","poi3",new LatLng(51.74548,19.46182), "ChIJt9trB0euEmsR8NbepO14j3M");
+//        PointOfInterest poi4 = new PointOfInterest("poi4","poi4",new LatLng(51.74086,19.46393), "ChIJt9trB0euEmsR8NbepO14j3M");
+//        PointOfInterest poi5 = new PointOfInterest("poi4",context.getString(R.string.large_text),new LatLng(51.71092,19.48337), "ChIJt9trB0euEmsR8NbepO14j3M");
+//
+//        ArrayList<PointOfInterest> poiList = new ArrayList<>();
+//        poiList.add(poi1);
+//        poiList.add(poi2);
+//        poiList.add(poi3);
+//        poiList.add(poi4);
+//        poiList.add(poi5);
+//        return poiList;
+//    }
 }
 

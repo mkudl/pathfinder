@@ -20,7 +20,7 @@ import pl.lodz.p.pathfinder.view.PhotoDownloadCallback;
  * Created by QDL on 2017-04-03.
  */
 
-public class PoiUtils
+public class PoiUtils       //TODO? get poi photo link instead, delegate loading to Picasso in view
 {
 
     public static void loadPoiPhoto(final GoogleApiClient googleApiClient, PointOfInterest displayedPoi, final ImageView display)
@@ -65,6 +65,7 @@ public class PoiUtils
                                 {
                                     Bitmap bmp = placePhotoResult.getBitmap();
                                     callback.photoDownloaded(bmp,position);
+                                    placePhotoMetadataResult.getPhotoMetadata().release();
                                 }
                             });
 

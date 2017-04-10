@@ -1,3 +1,6 @@
+plugins {
+    id "me.tatarka.retrolambda" version "3.6.0"
+}
 apply plugin: 'com.android.application'
 
 android {
@@ -10,12 +13,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {        //does not actually provide java 8 support, only here to suppress language level warnings for retrolambda
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 
@@ -28,6 +36,7 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
 
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0' //for the purpose of debugging retrofit calls, remove later
 
 
 
@@ -46,5 +55,14 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
+
+
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxjava-async-util:0.21.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+
+
     testCompile 'junit:junit:4.12'
 }
