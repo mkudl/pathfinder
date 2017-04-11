@@ -2,6 +2,7 @@ package pl.lodz.p.pathfinder;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -57,18 +58,23 @@ public class PoiUtils       //TODO? get poi photo link instead, delegate loading
                         @Override
                         public void onResult(@NonNull final PlacePhotoMetadataResult placePhotoMetadataResult)
                         {
-                            PlacePhotoMetadata photo = placePhotoMetadataResult.getPhotoMetadata().get(1);
-                            photo.getPhoto(googleApiClient).setResultCallback(new ResultCallback<PlacePhotoResult>()
+                            Log.d("PoiUtils", "placePhotoMetadataResult null " + (placePhotoMetadataResult == null));
+                            Log.d("PoiUtils", "PhotoMetadata null" + (placePhotoMetadataResult.getPhotoMetadata() == null));
+                            Log.d("PoiUtils", "success " + (placePhotoMetadataResult.getStatus().isSuccess()));
+                            if(placePhotoMetadataResult.getStatus().isSuccess())    //TODO? error handling (sometimes api fails for no reason)
                             {
-                                @Override
-                                public void onResult(@NonNull PlacePhotoResult placePhotoResult)
+                                PlacePhotoMetadata photo = placePhotoMetadataResult.getPhotoMetadata().get(1);
+                                photo.getPhoto(googleApiClient).setResultCallback(new ResultCallback<PlacePhotoResult>()
                                 {
-                                    Bitmap bmp = placePhotoResult.getBitmap();
-                                    callback.photoDownloaded(bmp,position);
-                                    placePhotoMetadataResult.getPhotoMetadata().release();
-                                }
-                            });
-
+                                    @Override
+                                    public void onResult(@NonNull PlacePhotoResult placePhotoResult)
+                                    {
+                                        Bitmap bmp = placePhotoResult.getBitmap();
+                                        callback.photoDownloaded(bmp, position);
+                                        placePhotoMetadataResult.getPhotoMetadata().release();
+                                    }
+                                });
+                            }
                         }
                     });
 

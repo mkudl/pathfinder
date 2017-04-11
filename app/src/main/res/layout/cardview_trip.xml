@@ -56,13 +56,13 @@
                 android:layout_centerHorizontal="true"/>
 
             <ImageView
+                android:id="@+id/tripcard_expandIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/arrow_down_float"
-                android:layout_alignTop="@+id/poicard_textview_title"
                 android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/poicard_textview_title"
                 android:layout_marginStart="47dp"
-                android:id="@+id/tripcard_expandIcon"/>
+                app:srcCompat="@drawable/ic_expand_more_black_24dp"/>
 
 
         </RelativeLayout>

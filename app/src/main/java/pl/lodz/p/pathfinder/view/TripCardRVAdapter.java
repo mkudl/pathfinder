@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.R;
@@ -22,6 +25,8 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
 {
 
     private List<Trip> dataset;
+    private List<Boolean> expandStateList;
+
     RecyclerView recyclerView;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -30,6 +35,8 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
         List<Trip> tripList;
         public TextView details;
         ImageView expandIcon;
+
+        boolean isExpanded;
 
         public ViewHolder(View v, List<Trip> tl){
             super(v);
@@ -40,29 +47,6 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
 
             v.setOnClickListener(this);
 
-            details.setVisibility(View.GONE);
-
-            expandIcon.setOnClickListener(new View.OnClickListener()
-            {
-                boolean isExpanded = false;
-                @Override
-                public void onClick(View view)
-                {
-
-                    Toast.makeText(view.getContext(),"details pressed",Toast.LENGTH_SHORT).show();
-
-                    if(isExpanded)
-                    {
-                        details.setVisibility(View.GONE);
-                        isExpanded = false;
-                    }
-                    else
-                    {
-                        details.setVisibility(View.VISIBLE);
-                        isExpanded = true;
-                    }
-                }
-            });
 
 //            tv.setOnClickListener(new View.OnClickListener()
 //            {
@@ -101,6 +85,8 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
     public TripCardRVAdapter(List<Trip> dataset)
     {
         this.dataset = dataset;
+        expandStateList = new ArrayList<Boolean>(Arrays.asList(new Boolean[dataset.size()]));
+        Collections.fill(expandStateList,false);
     }
 
     @Override
@@ -124,7 +110,27 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
 //        holder.tv.setOnClickListener(new MyOnClickListener());
         holder.tv.setText(dataset.get(position).getName());
 
+        holder.details.setVisibility( expandStateList.get(position) ? View.VISIBLE : View.GONE);
+
+        holder.expandIcon.setOnClickListener((View.OnClickListener) view ->
+        {
+            if(expandStateList.get(position))
+            {
+                holder.details.setVisibility(View.GONE);
+                expandStateList.set(position,false);
+                holder.expandIcon.setRotation(0);
+            }
+            else
+            {
+                holder.details.setVisibility(View.VISIBLE);
+                expandStateList.set(position,true);
+                holder.expandIcon.setRotation(180);
+            }
+        });
+
     }
+
+
 
     @Override
     public int getItemCount()
