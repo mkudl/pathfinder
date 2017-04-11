@@ -37,13 +37,13 @@ public class PoiSearchFragment extends Fragment
 
     Button againButton;
     Button actionButton;
-
     TextView placeName;
-
     LinearLayout infoLayout;
     LinearLayout actionLayout;
 
 
+
+    String listenerType;
 
     PointOfInterest currentSelection;
 
@@ -54,7 +54,7 @@ public class PoiSearchFragment extends Fragment
 
 //    // TODO: Rename parameter arguments, choose names that match
 //    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_LISTENER = "listenerType";
 //    private static final String ARG_PARAM2 = "param2";
 //
 //    // TODO: Rename and change types of parameters
@@ -68,22 +68,13 @@ public class PoiSearchFragment extends Fragment
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PoiSearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PoiSearchFragment newInstance(String param1, String param2) //FIXME remove parameters
+
+    public static PoiSearchFragment newInstance(String listenerType)
     {
         PoiSearchFragment fragment = new PoiSearchFragment();
-//        Bundle args = new Bundle();
-////        args.putString(ARG_PARAM1, param1);
-////        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putString(ARG_LISTENER, listenerType);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -91,11 +82,10 @@ public class PoiSearchFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null)
-//        {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
+        if (getArguments() != null)
+        {
+            this.listenerType = getArguments().getString(ARG_LISTENER);
+        }
     }
 
     @Override
@@ -112,17 +102,11 @@ public class PoiSearchFragment extends Fragment
 
         hideUI();
 
-        againButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                callPicker();
-            }
-        });
 
-        //TODO
-//        actionButton.setOnClickListener();
+        againButton.setOnClickListener(v1 -> callPicker());
+
+
+        actionButton.setOnClickListener(createActionListener(listenerType));//TODO
 
 //        callPicker();
         return v;
@@ -159,6 +143,57 @@ public class PoiSearchFragment extends Fragment
             }
         }
     }
+
+
+
+    @Override
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+
+//        if (context instanceof )
+//        {
+//            mapsMovable = () context;
+//        } else
+//        {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement ");
+//        }
+    }
+
+
+
+    /**
+     * Simple factory for the action button listener
+     * Not using anactual (polymorphic) factory method since there's only two types of listeners
+     * @param listenerType type of listener to be created {RETURN_CHOICE,DISPLAY_DETAILS}
+     * @return a listener for the action button
+     */
+    private View.OnClickListener createActionListener(String listenerType)
+    {
+        switch(listenerType)
+        {
+            case "RETURN_CHOICE":
+                    return v ->
+                    {
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("selectedPoi",currentSelection);
+                        getActivity().setResult(Activity.RESULT_OK,returnIntent);
+                        getActivity().finish();
+                    };
+//                break;
+            case "DISPLAY_DETAILS":
+            default:
+                return v ->
+                {
+                    Intent intent = new Intent(v.getContext(), PoiDetailBaseActivity.class);
+                    intent.putExtra("POI_PARAM",currentSelection);
+                    v.getContext().startActivity(intent);
+                };
+//                break;
+        }
+    }
+
 
 
     private void hideUI()

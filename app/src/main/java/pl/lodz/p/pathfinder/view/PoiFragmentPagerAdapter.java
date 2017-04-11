@@ -19,7 +19,7 @@ import pl.lodz.p.pathfinder.model.PointOfInterest;
  * Created by QDL on 2017-01-17.
  */
 
-public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
+public abstract class PoiFragmentPagerAdapter extends FragmentPagerAdapter
 {
 
     private final static int PAGE_COUNT = 3;
@@ -37,6 +37,7 @@ public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
         this.tabTitles = context.getResources().getStringArray(R.array.poi_menu_tabs);
         this.created = created;
         this.favorites = favorites;
+
     }
 
 
@@ -52,32 +53,29 @@ public class PoiFragmentPagerAdapter extends FragmentPagerAdapter
         return tabTitles[position];
     }
 
-    //FIXME
-    @Override
-    public Fragment getItem(int position) {
-        Fragment f= null;
-        switch (position){
-            case 0:
-                //pois created by user tab
-                f =  PoiListFragmentOpenEdit.newInstance(created);
-            break;
-            case 1:
-                //pois favorited by user tab
-                f =  PoiListFragmentOpenEdit.newInstance(favorites);
-            break;
-//            case 2:
-//                //TODO if the api doesn't start working, delete this tab
-////                f =  PoiNearbyFragment.newInstance("bvdxz","F");
-//                f =  PoiMenuTabFavoritesFragment.newInstance("bvdxz","F");
-//                break;
-            case 2:
-                //poi search tab
-                f =  PoiSearchFragment.newInstance("bvdxz","F");    //FIXME remove useless parameters from fragment
-                break;
 
-        }
-        return f;
-    }
+
+    @Override
+    public abstract Fragment getItem(int position);
+//    {
+//        Fragment f= null;
+//        switch (position){
+//            case 0:
+//                //pois created by user tab
+//                f =  PoiListFragmentOpenEdit.newInstance(created);
+//            break;
+//            case 1:
+//                //pois favorited by user tab
+//                f =  PoiListFragmentOpenEdit.newInstance(favorites);
+//            break;
+//            case 2:
+//                //poi search tab
+//                f =  PoiSearchFragment.newInstance("DISPLAY_DETAILS");
+//                break;
+//
+//        }
+//        return f;
+//    }
 
     //TODO delete this, get real data
 //    List<PointOfInterest> testData()

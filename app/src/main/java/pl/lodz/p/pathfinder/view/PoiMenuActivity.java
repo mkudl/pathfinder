@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class PoiMenuActivity extends AppCompatActivity
     private TabLayout tabs;
     private ViewPager viewPager;
     private FloatingActionButton fab;
+
+    private boolean isForResult = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,6 +55,16 @@ public class PoiMenuActivity extends AppCompatActivity
 
         PoiMenuPresenter presenter = new PoiMenuPresenter(this,poiClient);
         presenter.startActivity();
+
+
+
+
+
+        isForResult =  getCallingActivity() != null;
+
+        //TODO delete
+        Toast.makeText(this, getCallingActivity() == null ? "STANDALONE" : "FOR RESULT" , Toast.LENGTH_LONG).show();
+
     }
 
 
@@ -77,7 +90,11 @@ public class PoiMenuActivity extends AppCompatActivity
         fab.setOnClickListener( view -> startActivity(new Intent(PoiMenuActivity.this, PoiAddActivity.class)) );
 
         //components responsible for the horizontally scrolling tab view
-        viewPager.setAdapter(new PoiFragmentPagerAdapter(getSupportFragmentManager(),PoiMenuActivity.this,created, favorites));
+        PoiFragmentPagerAdapter pagerAdapter = isForResult ?
+                new PoiFragmentPagerAdapterResult(getSupportFragmentManager(),PoiMenuActivity.this,created, favorites) :
+                new PoiFragmentPagerAdapterDetails(getSupportFragmentManager(),PoiMenuActivity.this,created, favorites);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(4);
         tabs.setupWithViewPager(viewPager);
     }
 
