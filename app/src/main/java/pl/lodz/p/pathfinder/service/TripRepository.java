@@ -57,7 +57,7 @@ public class TripRepository
      * details of each POI
      * @return  List of pois created by the currently logged in user
      */
-    Observable<List<Trip>> loadUserCreated()
+    public Observable<List<Trip>> loadUserCreated()
     {
         String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
         return restClient.loadUserCreated(idToken)
@@ -66,7 +66,7 @@ public class TripRepository
                 .toList();
     }
 
-    Observable<List<Trip>> loadUserFavorites()
+    public Observable<List<Trip>> loadUserFavorites()
     {
         String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
         return restClient.loadUserFavorites(idToken)
@@ -75,7 +75,7 @@ public class TripRepository
                 .toList();
     }
 
-    Observable<List<Trip>> loadRecommended()
+    public Observable<List<Trip>> loadRecommended()
     {
         String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
         return restClient.loadRecommended(idToken)
@@ -87,23 +87,23 @@ public class TripRepository
 
 
 
-    Observable<ResponseBody> createTrip(Trip tripToCreate)
-    {
-        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-        return restClient.createTrip(TripConverter.convertToJsonWrapper(idToken,tripToCreate));
-    }
-
-    Observable<ResponseBody> updateTrip(Trip tripToUpdate)
-    {
-        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-        return restClient.updateTrip(TripConverter.convertToJsonWrapper(idToken,tripToUpdate));
-    }
-
-    Observable<ResponseBody> addToFavorites(Trip favoriteTrip)
-    {
-        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-        return restClient.addToFavorites(TripConverter.convertToJsonWrapper(idToken,favoriteTrip));
-    }
+//    public Observable<ResponseBody> createTrip(Trip tripToCreate)
+//    {
+//        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
+//        return restClient.createTrip(TripConverter.convertToJsonWrapper(idToken,tripToCreate));
+//    }
+//
+//    public Observable<ResponseBody> updateTrip(Trip tripToUpdate)
+//    {
+//        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
+//        return restClient.updateTrip(TripConverter.convertToJsonWrapper(idToken,tripToUpdate));
+//    }
+//
+//    public Observable<ResponseBody> addToFavorites(Trip favoriteTrip)
+//    {
+//        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
+//        return restClient.addToFavorites(TripConverter.convertToJsonWrapper(idToken,favoriteTrip));
+//    }
 
 
 

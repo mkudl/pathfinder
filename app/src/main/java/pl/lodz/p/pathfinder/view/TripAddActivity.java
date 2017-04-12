@@ -2,18 +2,27 @@ package pl.lodz.p.pathfinder.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.presenter.TripAddPresenter;
+import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
+import pl.lodz.p.pathfinder.service.TripUploadService;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TripAddActivity extends AppCompatActivity
 {
@@ -32,7 +41,16 @@ public class TripAddActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_add);
 
-        presenter = new TripAddPresenter(this);
+
+
+        Retrofit rxRetrofit = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(Configuration.SERVER_ADDRESS)
+                .build();
+        DatabaseTripRest restClient = rxRetrofit.create(DatabaseTripRest.class);
+        TripUploadService tup = new TripUploadService(restClient);
+        presenter = new TripAddPresenter(this,tup);
 
 
         addTripButton = (Button) findViewById(R.id.trip_add_button_poi_add);
@@ -45,6 +63,13 @@ public class TripAddActivity extends AppCompatActivity
             startActivityForResult(intent,CALL_POI_PICK_CODE);
 
         });
+
+        finishButton.setOnClickListener( v ->
+                presenter.saveTrip(
+                        ((EditText) findViewById(R.id.trip_add_name_content)).getText().toString(),
+                        ((EditText) findViewById(R.id.trip_add_desc_content)).getText().toString()
+                ));
+
     }
 
 
@@ -94,5 +119,26 @@ public class TripAddActivity extends AppCompatActivity
         ll.removeView(childToRemove);
         ll.invalidate();
     }
+
+
+    public void displayCreationSuccessMessage()
+    {
+        Toast.makeText(this,getResources().getString(R.string.trip_add_success_message), Toast.LENGTH_LONG)
+                .show();
+    }
+
+    public void displayCreationErrorMessage(Throwable t)
+    {
+        Snackbar.make( finishButton,
+                        getResources().getString(R.string.trip_add_error_message),
+                        Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    public void finishActivity()
+    {
+        finish();
+    }
+
 
 }
