@@ -31,8 +31,9 @@ public class TripRepository
                 .baseUrl(Configuration.SERVER_ADDRESS)
 //            .client(httpClient.build()) //for debugging
                 .build();
-
         restClient = rxRetrofit.create(DatabaseTripRest.class);
+
+        this.tripFactory = tripFactory;
     }
 
 

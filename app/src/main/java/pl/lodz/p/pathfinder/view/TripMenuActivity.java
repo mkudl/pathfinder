@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -16,17 +17,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.R;
+import pl.lodz.p.pathfinder.TripFactory;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.Trip;
-import pl.lodz.p.pathfinder.presenter.TripMenuPresenter;
+import pl.lodz.p.pathfinder.presenter.TripMenuPresenterFavorites;
+import pl.lodz.p.pathfinder.service.PointOfInterestClient;
+import pl.lodz.p.pathfinder.service.TripRepository;
 
 public class TripMenuActivity extends AppCompatActivity
 {
 
     RecyclerView recyclerView;
-    List<Trip> newDataSet = new ArrayList<Trip>();
+    private ProgressBar spinner;
 
-    TripMenuPresenter presenter;
+
+    List<Trip> newDataSet = new ArrayList<Trip>();
+    TripMenuPresenterFavorites presenter;
 
 
     //FIXME
@@ -87,20 +93,17 @@ public class TripMenuActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
+        fab.setOnClickListener(view ->
         {
-            @Override
-            public void onClick(View view)
-            {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                Intent intent = new Intent(TripMenuActivity.this, TripAddActivity.class);
+            Intent intent = new Intent(TripMenuActivity.this, TripAddActivity.class);
 
-                startActivity(intent);
-            }
+            startActivity(intent);
         });
 
+        spinner = (ProgressBar) findViewById(R.id.trip_menu_spinner) ;
 
 
         recyclerView = (RecyclerView) findViewById(R.id.main3recycler);
@@ -108,13 +111,33 @@ public class TripMenuActivity extends AppCompatActivity
         recyclerView.setLayoutManager(llm);
 
 
+        PointOfInterestClient poiClient = new PointOfInterestClient(this);
+        TripFactory tripFactory = new TripFactory(poiClient);
+        TripRepository tripRepository = new TripRepository(tripFactory);
 
-        presenter = new TripMenuPresenter();
+        presenter = new TripMenuPresenterFavorites(tripRepository,this);
+        presenter.startActivity();
 
-        createTrips();
-        //TODO presenter callback
+
+//        createTrips();
+    }
+
+
+    public void onDataRetrieved(List<Trip> trips)
+    {
+        newDataSet = trips;
         TripCardRVAdapter adapter = new TripCardRVAdapter(newDataSet);
         recyclerView.setAdapter(adapter);
+    }
+
+    public void showSpinner()
+    {
+        spinner.setVisibility(View.VISIBLE);
+    }
+
+    public void hideSpinner()
+    {
+        spinner.setVisibility(View.GONE);
     }
 
 
