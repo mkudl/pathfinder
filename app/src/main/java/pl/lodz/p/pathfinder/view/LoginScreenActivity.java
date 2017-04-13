@@ -1,4 +1,4 @@
-package pl.lodz.p.pathfinder;
+package pl.lodz.p.pathfinder.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
+
+import pl.lodz.p.pathfinder.AccountSingleton;
+import pl.lodz.p.pathfinder.Configuration;
+import pl.lodz.p.pathfinder.R;
 
 public class LoginScreenActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener//, View.OnClickListener
 {
@@ -91,6 +95,7 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
         {
             GoogleSignInAccount asd = result.getSignInAccount();
             AccountSingleton.INSTANCE.setAccount(asd);
+            //TODO launch main menu
         }
         else{   //display error message
             Snackbar.make( findViewById(R.id.login_content_layout),
