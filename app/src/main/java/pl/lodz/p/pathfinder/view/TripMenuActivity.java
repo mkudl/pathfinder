@@ -18,8 +18,11 @@ import java.util.List;
 import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.TripFactory;
+import pl.lodz.p.pathfinder.TripMenuType;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.Trip;
+import pl.lodz.p.pathfinder.presenter.TripMenuPresenter;
+import pl.lodz.p.pathfinder.presenter.TripMenuPresenterFactory;
 import pl.lodz.p.pathfinder.presenter.TripMenuPresenterFavorites;
 import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
 import pl.lodz.p.pathfinder.service.PointOfInterestClient;
@@ -36,7 +39,7 @@ public class TripMenuActivity extends AppCompatActivity
 
 
     List<Trip> newDataSet = new ArrayList<Trip>();
-    TripMenuPresenterFavorites presenter;
+    TripMenuPresenter presenter;
 
 
     //FIXME
@@ -128,7 +131,9 @@ public class TripMenuActivity extends AppCompatActivity
         TripFactory tripFactory = new TripFactory(poiClient);
         TripDownloadService tripDownloadService = new TripDownloadService(tripFactory, restClient);
 
-        presenter = new TripMenuPresenterFavorites(tripDownloadService,this);
+//        presenter = new TripMenuPresenterFavorites(tripDownloadService,this);
+        TripMenuType type = (TripMenuType) getIntent().getSerializableExtra("TRIPMENU_TYPE");
+        presenter = TripMenuPresenterFactory.createPresenter(type,tripDownloadService,this);
         presenter.startActivity();
 
 
