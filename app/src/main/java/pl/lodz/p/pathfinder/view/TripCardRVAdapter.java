@@ -1,11 +1,14 @@
 package pl.lodz.p.pathfinder.view;
 
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.R;
+import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.Trip;
 
 /**
@@ -35,7 +39,7 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
         public TextView description;
         public ImageView photo;
         List<Trip> tripList;
-        public TextView details;
+        public LinearLayout details;
         ImageView expandIcon;
 
         boolean isExpanded;
@@ -46,8 +50,10 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
             description = (TextView)v.findViewById(R.id.poicard_textview_details);
             photo = (ImageView) v.findViewById(R.id.poicard_imageview);
             tripList = tl;
-            details = (TextView) v.findViewById(R.id.textView3);
+            details = (LinearLayout) v.findViewById(R.id.tripcard_details);
             expandIcon = (ImageView) v.findViewById(R.id.tripcard_expandIcon);
+
+
 
             v.setOnClickListener(this);
 
@@ -127,6 +133,17 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
             }
             else
             {
+                holder.details.removeAllViews();
+                for(PointOfInterest poi : dataset.get(position).getPointOfInterestList())
+                {
+                    TextView poiTextView = new TextView(holder.details.getContext());
+                    poiTextView.setText(poi.getName());
+                    poiTextView.setLayoutParams(new LinearLayoutCompat.LayoutParams(
+                            LinearLayoutCompat.LayoutParams.MATCH_PARENT,
+                            LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+                    poiTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+                    holder.details.addView(poiTextView);
+                }
                 holder.details.setVisibility(View.VISIBLE);
                 expandStateList.set(position,true);
                 holder.expandIcon.setRotation(180);
