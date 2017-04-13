@@ -27,7 +27,7 @@ public class PoiMenuPresenter
     //TODO weakreference
     private PoiMenuActivity view;
     private PointOfInterestClient poiClient;
-//    private TripRepository tripRepository;
+//    private TripDownloadService tripRepository;
     private Retrofit rxRetrofit;
 
     private List<PointOfInterest> created;

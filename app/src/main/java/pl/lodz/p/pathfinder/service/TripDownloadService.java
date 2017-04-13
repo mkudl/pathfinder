@@ -14,25 +14,17 @@ import rx.Observable;
 
 
 //TODO? change name (service might be more appropriate)
-public class TripRepository
+public class TripDownloadService
 {
 
-    private Retrofit rxRetrofit;
     private DatabaseTripRest restClient;
 
     private TripFactory tripFactory;
 
 
-    public TripRepository(TripFactory tripFactory)
+    public TripDownloadService(TripFactory tripFactory, DatabaseTripRest databaseTripRest)
     {
-        this.rxRetrofit = new Retrofit.Builder()
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(Configuration.SERVER_ADDRESS)
-//            .client(httpClient.build()) //for debugging
-                .build();
-        restClient = rxRetrofit.create(DatabaseTripRest.class);
-
+        this.restClient = databaseTripRest;
         this.tripFactory = tripFactory;
     }
 
@@ -43,27 +35,27 @@ public class TripRepository
      * details of each POI
      * @return  List of pois created by the currently logged in user
      */
-    public Observable<List<Trip>> loadUserCreated()
+    public Observable<List<Trip>> loadUserCreated(String idToken)
     {
-        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
+//        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
         return restClient.loadUserCreated(idToken)
                 .flatMap( Observable::from)
                 .map( tj -> tripFactory.convertToModel(tj) )
                 .toList();
     }
 
-    public Observable<List<Trip>> loadUserFavorites()
+    public Observable<List<Trip>> loadUserFavorites(String idToken)
     {
-        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
+//        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
         return restClient.loadUserFavorites(idToken)
                 .flatMap( Observable::from)
                 .map( tj -> tripFactory.convertToModel(tj) )
                 .toList();
     }
 
-    public Observable<List<Trip>> loadRecommended()
+    public Observable<List<Trip>> loadRecommended(String idToken)
     {
-        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
+//        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
         return restClient.loadRecommended(idToken)
                 .flatMap( Observable::from)
                 .map( tj -> tripFactory.convertToModel(tj) )

@@ -3,7 +3,6 @@ package pl.lodz.p.pathfinder.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +15,18 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.TripFactory;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.presenter.TripMenuPresenterFavorites;
+import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
 import pl.lodz.p.pathfinder.service.PointOfInterestClient;
-import pl.lodz.p.pathfinder.service.TripRepository;
+import pl.lodz.p.pathfinder.service.TripDownloadService;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TripMenuActivity extends AppCompatActivity
 {
@@ -111,11 +115,20 @@ public class TripMenuActivity extends AppCompatActivity
         recyclerView.setLayoutManager(llm);
 
 
+
+
+        Retrofit rxRetrofit = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(Configuration.SERVER_ADDRESS)
+//            .client(httpClient.build()) //for debugging
+                .build();
+        DatabaseTripRest restClient = rxRetrofit.create(DatabaseTripRest.class);
         PointOfInterestClient poiClient = new PointOfInterestClient(this);
         TripFactory tripFactory = new TripFactory(poiClient);
-        TripRepository tripRepository = new TripRepository(tripFactory);
+        TripDownloadService tripDownloadService = new TripDownloadService(tripFactory, restClient);
 
-        presenter = new TripMenuPresenterFavorites(tripRepository,this);
+        presenter = new TripMenuPresenterFavorites(tripDownloadService,this);
         presenter.startActivity();
 
 
