@@ -1,8 +1,7 @@
 package pl.lodz.p.pathfinder.service;
 
 import okhttp3.ResponseBody;
-import pl.lodz.p.pathfinder.AccountSingleton;
-import pl.lodz.p.pathfinder.TripConverter;
+import pl.lodz.p.pathfinder.TripJsonWrapperFactory;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
 import rx.Observable;
@@ -27,19 +26,19 @@ public class TripUploadService
     public Observable<ResponseBody> createTrip(String idToken, Trip tripToCreate)
     {
 //        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-        return restClient.createTrip(TripConverter.convertToJsonWrapper(idToken,tripToCreate));
+        return restClient.createTrip(TripJsonWrapperFactory.convertToJsonWrapper(idToken,tripToCreate));
     }
 
     public Observable<ResponseBody> updateTrip(String idToken, Trip tripToUpdate)
     {
 //        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-        return restClient.updateTrip(TripConverter.convertToJsonWrapper(idToken,tripToUpdate));
+        return restClient.updateTrip(TripJsonWrapperFactory.convertToJsonWrapper(idToken,tripToUpdate));
     }
 
     public Observable<ResponseBody> addToFavorites(String idToken, Trip favoriteTrip)
     {
 //        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-        return restClient.addToFavorites(TripConverter.convertToJsonWrapper(idToken,favoriteTrip));
+        return restClient.addToFavorites(TripJsonWrapperFactory.convertToJsonWrapper(idToken,favoriteTrip));
     }
 
 }

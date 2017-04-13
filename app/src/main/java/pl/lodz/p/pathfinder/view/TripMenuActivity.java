@@ -18,14 +18,16 @@ import java.util.List;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.Trip;
+import pl.lodz.p.pathfinder.presenter.TripMenuPresenter;
 
 public class TripMenuActivity extends AppCompatActivity
 {
 
     RecyclerView recyclerView;
-
-
     List<Trip> newDataSet = new ArrayList<Trip>();
+
+    TripMenuPresenter presenter;
+
 
     //FIXME
     private void createTrips()
@@ -100,12 +102,17 @@ public class TripMenuActivity extends AppCompatActivity
         });
 
 
-        createTrips();
 
         recyclerView = (RecyclerView) findViewById(R.id.main3recycler);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
 
+
+
+        presenter = new TripMenuPresenter();
+
+        createTrips();
+        //TODO presenter callback
         TripCardRVAdapter adapter = new TripCardRVAdapter(newDataSet);
         recyclerView.setAdapter(adapter);
     }

@@ -1,26 +1,18 @@
 package pl.lodz.p.pathfinder.presenter;
 
-import android.app.Activity;
-import android.app.Application;
 import android.util.Log;
-import android.view.View;
 
 import java.util.List;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
 import pl.lodz.p.pathfinder.Configuration;
-import pl.lodz.p.pathfinder.TripConverter;
-import pl.lodz.p.pathfinder.json.server.TripJson;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
-import pl.lodz.p.pathfinder.rest.RestInterface;
 import pl.lodz.p.pathfinder.service.PoiRepository;
 import pl.lodz.p.pathfinder.service.PointOfInterestClient;
-import pl.lodz.p.pathfinder.service.TripRepository;
 import pl.lodz.p.pathfinder.view.PoiMenuActivity;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

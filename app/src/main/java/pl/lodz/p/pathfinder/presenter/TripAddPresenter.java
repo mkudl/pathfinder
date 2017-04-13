@@ -1,7 +1,5 @@
 package pl.lodz.p.pathfinder.presenter;
 
-import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
@@ -9,18 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
-import pl.lodz.p.pathfinder.Configuration;
-import pl.lodz.p.pathfinder.TripConverter;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.Trip;
-import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
-import pl.lodz.p.pathfinder.service.PointOfInterestClient;
-import pl.lodz.p.pathfinder.service.TripRepository;
 import pl.lodz.p.pathfinder.service.TripUploadService;
 import pl.lodz.p.pathfinder.view.TripAddActivity;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
