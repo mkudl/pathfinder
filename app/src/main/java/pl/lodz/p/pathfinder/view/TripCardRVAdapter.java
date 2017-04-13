@@ -31,7 +31,9 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        public TextView tv;
+        public TextView name;
+        public TextView description;
+        public ImageView photo;
         List<Trip> tripList;
         public TextView details;
         ImageView expandIcon;
@@ -40,7 +42,9 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
 
         public ViewHolder(View v, List<Trip> tl){
             super(v);
-            tv = (TextView)v.findViewById(R.id.poicard_textview_details);
+            name = (TextView) v.findViewById(R.id.poicard_textview_title);
+            description = (TextView)v.findViewById(R.id.poicard_textview_details);
+            photo = (ImageView) v.findViewById(R.id.poicard_imageview);
             tripList = tl;
             details = (TextView) v.findViewById(R.id.textView3);
             expandIcon = (ImageView) v.findViewById(R.id.tripcard_expandIcon);
@@ -108,7 +112,8 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
     public void onBindViewHolder(TripCardRVAdapter.ViewHolder holder, int position)
     {
 //        holder.tv.setOnClickListener(new MyOnClickListener());
-        holder.tv.setText(dataset.get(position).getName());
+        holder.name.setText(dataset.get(position).getName());
+        holder.description.setText(dataset.get(position).getDescription());
 
         holder.details.setVisibility( expandStateList.get(position) ? View.VISIBLE : View.GONE);
 
