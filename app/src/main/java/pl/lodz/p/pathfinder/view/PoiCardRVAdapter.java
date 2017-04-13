@@ -38,7 +38,6 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder //implements View.OnClickListener
     {
         public TextView title;
-        public TextView details;
         public ImageView image;
 
         public View itemView;
@@ -47,7 +46,6 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
         {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.poicard_textview_title);
-            details = (TextView) itemView.findViewById(R.id.poicard_textview_details);
             image = (ImageView) itemView.findViewById(R.id.poicard_imageview);
             this.itemView = itemView;
 //            itemView.setOnClickListener(this);
