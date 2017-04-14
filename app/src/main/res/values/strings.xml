@@ -33,11 +33,14 @@
     <string name="trip_add_success_message">Trip created successfully</string>
 
 
-
-
-
-
     <!--UI elements-->
+
+    <string name="main_menu_label_pois">Manage attractions</string>
+    <string name="main_menu_label_trip_created">Your trips</string>
+    <string name="main_menu_label_trip_favorites">Saved trips</string>
+    <string name="main_menu_label_trip_recommended">Recommended trips</string>
+    <string name="main_menu_message_welcome">Welcome, %1$s</string>
+
 
     <string name="direction_walk">Walk</string>
 
@@ -54,8 +57,6 @@
         <!--<item>Nearby</item>-->
         <item>Search</item>
     </string-array>
-
-
 
 
     <string name="ipsum">Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit amet magna. Vestibulum dapibus, mauris nec malesuada fames ac turpis velit, rhoncus eu, luctus et interdum adipiscing wisi. Aliquam erat ac ipsum. Integer aliquam purus. Quisque lorem tortor fringilla sed, vestibulum id, eleifend justo vel bibendum sapien massa ac turpis faucibus orci luctus non, consectetuer lobortis quis, varius in, purus. Integer ultrices posuere cubilia Curae, Nulla ipsum dolor lacus, suscipit adipiscing. Cum sociis natoque penatibus et ultrices volutpat. Nullam wisi ultricies a, gravida vitae, dapibus risus ante sodales lectus blandit eu, tempor diam pede cursus vitae, ultricies eu, faucibus quis, porttitor eros cursus lectus, pellentesque eget, bibendum a, gravida ullamcorper quam. Nullam viverra consectetuer. Quisque cursus et, porttitor risus. Aliquam sem. In hendrerit nulla quam nunc, accumsan congue. Lorem ipsum primis in nibh vel risus. Sed vel lectus. Ut sagittis, ipsum dolor quam.</string>
@@ -151,6 +152,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
 
     <!--&lt;!&ndash; Strings related to Settings &ndash;&gt;-->
 
@@ -159,7 +161,7 @@
 
     <!--<string name="pref_title_social_recommendations">Enable social recommendations</string>-->
     <!--<string name="pref_description_social_recommendations">Recommendations for people to contact-->
-        <!--based on your message history-->
+    <!--based on your message history-->
     <!--</string>-->
 
     <!--<string name="pref_title_display_name">Display name</string>-->
@@ -167,14 +169,14 @@
 
     <!--<string name="pref_title_add_friends_to_messages">Add friends to messages</string>-->
     <!--<string-array name="pref_example_list_titles">-->
-        <!--<item>Always</item>-->
-        <!--<item>When possible</item>-->
-        <!--<item>Never</item>-->
+    <!--<item>Always</item>-->
+    <!--<item>When possible</item>-->
+    <!--<item>Never</item>-->
     <!--</string-array>-->
     <!--<string-array name="pref_example_list_values">-->
-        <!--<item>1</item>-->
-        <!--<item>0</item>-->
-        <!--<item>-1</item>-->
+    <!--<item>1</item>-->
+    <!--<item>0</item>-->
+    <!--<item>-1</item>-->
     <!--</string-array>-->
 
     <!--&lt;!&ndash; Example settings for Data & Sync &ndash;&gt;-->
@@ -182,32 +184,32 @@
 
     <!--<string name="pref_title_sync_frequency">Sync frequency</string>-->
     <!--<string-array name="pref_sync_frequency_titles">-->
-        <!--<item>15 minutes</item>-->
-        <!--<item>30 minutes</item>-->
-        <!--<item>1 hour</item>-->
-        <!--<item>3 hours</item>-->
-        <!--<item>6 hours</item>-->
-        <!--<item>Never</item>-->
+    <!--<item>15 minutes</item>-->
+    <!--<item>30 minutes</item>-->
+    <!--<item>1 hour</item>-->
+    <!--<item>3 hours</item>-->
+    <!--<item>6 hours</item>-->
+    <!--<item>Never</item>-->
     <!--</string-array>-->
     <!--<string-array name="pref_sync_frequency_values">-->
-        <!--<item>15</item>-->
-        <!--<item>30</item>-->
-        <!--<item>60</item>-->
-        <!--<item>180</item>-->
-        <!--<item>360</item>-->
-        <!--<item>-1</item>-->
+    <!--<item>15</item>-->
+    <!--<item>30</item>-->
+    <!--<item>60</item>-->
+    <!--<item>180</item>-->
+    <!--<item>360</item>-->
+    <!--<item>-1</item>-->
     <!--</string-array>-->
 
     <!--<string-array name="list_preference_entries">-->
-        <!--<item>Entry 1</item>-->
-        <!--<item>Entry 2</item>-->
-        <!--<item>Entry 3</item>-->
+    <!--<item>Entry 1</item>-->
+    <!--<item>Entry 2</item>-->
+    <!--<item>Entry 3</item>-->
     <!--</string-array>-->
 
     <!--<string-array name="list_preference_entry_values">-->
-        <!--<item>1</item>-->
-        <!--<item>2</item>-->
-        <!--<item>3</item>-->
+    <!--<item>1</item>-->
+    <!--<item>2</item>-->
+    <!--<item>3</item>-->
     <!--</string-array>-->
 
     <!--<string-array name="multi_select_list_preference_default_value"/>-->

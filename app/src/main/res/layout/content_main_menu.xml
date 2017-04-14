@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="pl.lodz.p.pathfinder.view.MainMenuActivity"
+    android:orientation="vertical"
+    tools:showIn="@layout/app_bar_main_menu">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/main_menu_welcome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_menu_message_welcome"
+                    android:textSize="36sp"/>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"/>
+
+                <Button
+                    android:id="@+id/main_menu_button_created"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_menu_label_trip_created"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <Button
+                    android:id="@+id/main_menu_button_favorites"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_menu_label_trip_favorites"
+
+                    android:layout_marginTop="10dp"
+                    />
+
+                <Button
+                    android:id="@+id/main_menu_button_recommended"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_menu_label_trip_recommended"
+
+                    android:layout_marginTop="10dp"
+                    />
+
+                <Button
+                    android:id="@+id/main_menu_button_poi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_menu_label_pois"
+                    android:layout_marginTop="10dp"
+                    />
+
+        </LinearLayout>
+
+
+</ScrollView>
