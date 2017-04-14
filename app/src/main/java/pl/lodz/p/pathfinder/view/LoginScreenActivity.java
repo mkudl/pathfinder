@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import pl.lodz.p.pathfinder.AccountSingleton;
 import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.R;
+import pl.lodz.p.pathfinder.TripMenuType;
 
 public class LoginScreenActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener//, View.OnClickListener
 {
@@ -35,8 +36,13 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+
+
+
+        if (AccountSingleton.INSTANCE.getAccount() != null)
+        {
+            launchMainMenu();
+        }
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -48,10 +54,6 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
-//        ImageView background = (ImageView) findViewById(R.id.login_bg);
-//        Picasso.with(this).load(R.drawable.splash).into(background);
-
 
         findViewById(R.id.sign_in_button).setOnClickListener(v ->
                 startActivityForResult(Auth.GoogleSignInApi.getSignInIntent(googleApiClient), RC_SIGN_IN) );
@@ -96,6 +98,8 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
             GoogleSignInAccount asd = result.getSignInAccount();
             AccountSingleton.INSTANCE.setAccount(asd);
             //TODO launch main menu
+
+            launchMainMenu();
         }
         else{   //display error message
             Snackbar.make( findViewById(R.id.login_content_layout),
@@ -103,6 +107,14 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
                     Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
+    }
+
+
+    private void launchMainMenu()
+    {
+        Intent intent = new Intent(this, MainMenuActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

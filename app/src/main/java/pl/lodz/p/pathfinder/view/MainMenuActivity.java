@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
+import pl.lodz.p.pathfinder.MainActivity;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.TripMenuType;
 
@@ -76,6 +77,7 @@ public class MainMenuActivity extends AppCompatActivity
 
         poiButton.setOnClickListener( v ->  startActivity(new Intent(this, PoiMenuActivity.class)));
 
+        ((Button) findViewById(R.id.button_dev)).setOnClickListener( v -> startActivity(new Intent(this, MainActivity.class))); //FIXME delete upon project completion!!!!!!
 
         View header = navigationView.getHeaderView(0);
 
@@ -139,11 +141,16 @@ public class MainMenuActivity extends AppCompatActivity
     {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        
 
-        if (id == R.id.menu_logout)
+        if (id == R.id.menu_logout) //log user out, kick them out to login screen
         {
-            // TODO
-        } else if (id == R.id.menu_info)
+            AccountSingleton.INSTANCE.setAccount(null);
+            Intent intent = new Intent(this, LoginScreenActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else if (id == R.id.menu_info)
         {
             //TODO
         }
