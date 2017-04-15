@@ -1,9 +1,12 @@
 package pl.lodz.p.pathfinder.view;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,9 +19,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
 import pl.lodz.p.pathfinder.MainActivity;
+import pl.lodz.p.pathfinder.MapsActivity;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.TripMenuType;
 
@@ -94,6 +99,14 @@ public class MainMenuActivity extends AppCompatActivity
             navHeaderName.setText(AccountSingleton.INSTANCE.getAccount().getDisplayName());
             navHeaderEmail.setText( AccountSingleton.INSTANCE.getAccount().getEmail());
         } else Log.wtf("MAIN_MENU", "User accessed main menu without logging in");  //should never happen
+
+
+
+        if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                && (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED))
+        {
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+        }
 
     }
 
