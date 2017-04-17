@@ -118,6 +118,14 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
         return v;
     }
 
+    @Override
+    public void onDestroyView()
+    {
+        adapter = null;
+        adapterPhotoUpdateable = null;
+        super.onDestroyView();
+    }
+
     RecyclerView.Adapter createRVAdapter(List<PointOfInterest> dataset)
     {
         return new PoiCardRVAdapter(dataset,this.createItemListener(), this.createPhotoList(dataset));

@@ -81,6 +81,7 @@ public class PoiMenuPresenter
             view.hideSpinner();
             view.showUI();
             Log.d("PoiMenuPresenter","Finished getting data");
+            view = null;
         }
     }
 
