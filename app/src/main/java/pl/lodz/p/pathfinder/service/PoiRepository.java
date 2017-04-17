@@ -16,18 +16,18 @@ import rx.Observable;
 public class PoiRepository
 {
 
-    private Retrofit rxRetrofit;
+//    private Retrofit rxRetrofit;
     private DatabasePoiRest restClient;
     private PointOfInterestClient poiClient;
 
 
-    public PoiRepository(Retrofit rxRetrofit, PointOfInterestClient poiClient)
+    public PoiRepository(DatabasePoiRest restClient, PointOfInterestClient poiClient)
     {
-        this.rxRetrofit = rxRetrofit;
-//        this.restClient = restClient;
+//        this.rxRetrofit = rxRetrofit;
+////        this.restClient = restClient;
         this.poiClient = poiClient;
 
-        this.restClient = rxRetrofit.create(DatabasePoiRest.class);
+        this.restClient = restClient;
     }
 
     public Observable<List<PointOfInterest>> loadUserCreatedPois(String idToken)
@@ -49,6 +49,11 @@ public class PoiRepository
     public Observable<ResponseBody> addPoiToFavorites(String idToken, String poiGoogleId)
     {
         return restClient.addPoiToFavorites(idToken,poiGoogleId);
+    }
+
+    public Observable<ResponseBody> addPoiToCreated(String idToken, String poiGoogleId)
+    {
+        return restClient.addCreatedPoi(idToken,poiGoogleId);
     }
 
 

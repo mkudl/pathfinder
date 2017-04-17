@@ -7,6 +7,7 @@ import java.util.List;
 import pl.lodz.p.pathfinder.AccountSingleton;
 import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
+import pl.lodz.p.pathfinder.rest.DatabasePoiRest;
 import pl.lodz.p.pathfinder.service.PoiRepository;
 import pl.lodz.p.pathfinder.service.PointOfInterestClient;
 import pl.lodz.p.pathfinder.view.PoiMenuActivity;
@@ -55,7 +56,7 @@ public class PoiMenuPresenter
         //get data
 
         String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-        PoiRepository poiRepository = new PoiRepository(rxRetrofit,poiClient);
+        PoiRepository poiRepository = new PoiRepository(rxRetrofit.create(DatabasePoiRest.class),poiClient);
 
 
         //TODO error handling

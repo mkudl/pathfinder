@@ -165,7 +165,7 @@ public class PoiSearchFragment extends Fragment
 
     /**
      * Simple factory for the action button listener
-     * Not using anactual (polymorphic) factory method since there's only two types of listeners
+     * Not using an actual (polymorphic) factory method since there's only two types of listeners
      * @param listenerType type of listener to be created {RETURN_CHOICE,DISPLAY_DETAILS}
      * @return a listener for the action button
      */

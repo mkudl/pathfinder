@@ -33,6 +33,8 @@
     <string name="trip_add_error_message">An error occurred while creating your trip. Try again later</string>
     <string name="trip_add_success_message">Trip created successfully</string>
 
+    <string name="poi_add_error_message">An error occurred while creating your attraction. Try again later</string>
+    <string name="poi_add_success_message">Attraction created successfully</string>
 
     <!--UI elements-->
 
