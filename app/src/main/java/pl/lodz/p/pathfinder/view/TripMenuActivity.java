@@ -36,6 +36,7 @@ public class TripMenuActivity extends AppCompatActivity
 
     RecyclerView recyclerView;
     private ProgressBar spinner;
+    private FloatingActionButton fab;
 
 
     List<Trip> newDataSet = new ArrayList<Trip>();
@@ -99,16 +100,7 @@ public class TripMenuActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(view ->
-        {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
-            Intent intent = new Intent(TripMenuActivity.this, TripAddActivity.class);
-
-            startActivity(intent);
-        });
+         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         spinner = (ProgressBar) findViewById(R.id.trip_menu_spinner) ;
 
@@ -146,6 +138,14 @@ public class TripMenuActivity extends AppCompatActivity
         newDataSet = trips;
         TripCardRVAdapter adapter = new TripCardRVAdapter(newDataSet);
         recyclerView.setAdapter(adapter);
+
+        //only set listener after data successfully retrieved
+        //user shouldn't try to add anything if there is no connection anyway
+        fab.setOnClickListener(view ->
+        {
+            Intent intent = new Intent(TripMenuActivity.this, TripAddActivity.class);
+            startActivity(intent);
+        });
     }
 
     public void showSpinner()
