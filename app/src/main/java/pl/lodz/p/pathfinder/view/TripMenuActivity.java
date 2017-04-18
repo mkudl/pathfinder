@@ -3,6 +3,7 @@ package pl.lodz.p.pathfinder.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -146,6 +147,14 @@ public class TripMenuActivity extends AppCompatActivity
             Intent intent = new Intent(TripMenuActivity.this, TripAddActivity.class);
             startActivity(intent);
         });
+    }
+
+    public void displayCreationErrorMessage(Throwable t)
+    {
+        Snackbar.make( spinner,
+                getResources().getString(R.string.error_connection_generic),
+                Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 
     public void showSpinner()

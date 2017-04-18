@@ -2,6 +2,8 @@ package pl.lodz.p.pathfinder.presenter;
 
 import android.util.Log;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
@@ -43,6 +45,18 @@ public abstract class TripMenuPresenter
         view.hideSpinner();
         Log.d("TripMenuPresenter","Finished getting data");
     }
+
+    protected void onConnectionFailure(Throwable t)
+    {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        Log.d("TripMenuPresenter", sw.toString());
+
+        view.displayCreationErrorMessage(t);
+        view.hideSpinner();
+    }
+
 
     public List<Trip> getTripList()
     {

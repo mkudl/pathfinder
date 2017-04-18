@@ -2,6 +2,8 @@ package pl.lodz.p.pathfinder.presenter;
 
 import android.util.Log;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
@@ -64,12 +66,12 @@ public class PoiMenuPresenter
         poiRepository.loadUserCreatedPois(idToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( x -> setFavorites(x), t -> t.printStackTrace(), () -> returnData());
+                .subscribe( x -> setFavorites(x), t -> onConnectionFailure(t), () -> returnData());
 
         poiRepository.loadUserFavoritePois(idToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( x -> setCreated(x), t -> t.printStackTrace(), () -> returnData());
+                .subscribe( x -> setCreated(x), t -> onConnectionFailure(t), () -> returnData());
 
     }
 
@@ -86,6 +88,17 @@ public class PoiMenuPresenter
     }
 
 
+    protected void onConnectionFailure(Throwable t)
+    {
+        //TODO? some sort of util class?
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        Log.d("PoiMenuPresenter", sw.toString());
+
+        view.displayCreationErrorMessage(t);
+        view.hideSpinner();
+    }
 
     public void setCreated(List<PointOfInterest> created)
     {

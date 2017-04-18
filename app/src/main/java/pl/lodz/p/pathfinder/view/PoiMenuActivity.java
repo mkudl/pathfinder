@@ -63,7 +63,7 @@ public class PoiMenuActivity extends AppCompatActivity
         isForResult =  getCallingActivity() != null;
 
         //TODO delete
-        Toast.makeText(this, getCallingActivity() == null ? "STANDALONE" : "FOR RESULT" , Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, getCallingActivity() == null ? "STANDALONE" : "FOR RESULT" , Toast.LENGTH_LONG).show();
 
     }
 
@@ -99,5 +99,12 @@ public class PoiMenuActivity extends AppCompatActivity
     }
 
 
+    public void displayCreationErrorMessage(Throwable t)
+    {
+        Snackbar.make( fab,
+                getResources().getString(R.string.error_connection_generic),
+                Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
 
 }

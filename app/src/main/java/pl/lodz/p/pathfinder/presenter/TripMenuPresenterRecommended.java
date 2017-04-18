@@ -23,6 +23,6 @@ public class TripMenuPresenterRecommended extends TripMenuPresenter
         tripDownloadService.loadRecommended(idToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( x -> setTripList(x), t -> t.printStackTrace(), () -> returnData());
+                .subscribe( x -> setTripList(x), t -> onConnectionFailure(t), () -> returnData());
     }
 }

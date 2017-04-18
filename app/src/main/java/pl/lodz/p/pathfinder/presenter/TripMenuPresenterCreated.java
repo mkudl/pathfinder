@@ -23,6 +23,6 @@ public class TripMenuPresenterCreated extends TripMenuPresenter
         tripDownloadService.loadUserCreated(idToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( x -> setTripList(x), t -> t.printStackTrace(), () -> returnData());
+                .subscribe( x -> setTripList(x), t -> onConnectionFailure(t), () -> returnData());
     }
 }
