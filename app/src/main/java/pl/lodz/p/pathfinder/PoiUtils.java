@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.PlacePhotoMetadata;
+import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
 import com.google.android.gms.location.places.PlacePhotoMetadataResult;
 import com.google.android.gms.location.places.PlacePhotoResult;
 import com.google.android.gms.location.places.Places;
@@ -63,7 +64,8 @@ public class PoiUtils       //TODO? get poi photo link instead, delegate loading
                             Log.d("PoiUtils", "success " + (placePhotoMetadataResult.getStatus().isSuccess()));
                             if(placePhotoMetadataResult.getStatus().isSuccess())    //TODO? error handling (sometimes api fails for no reason)
                             {
-                                PlacePhotoMetadata photo = placePhotoMetadataResult.getPhotoMetadata().get(1);
+                                PlacePhotoMetadataBuffer buffer = placePhotoMetadataResult.getPhotoMetadata();
+                                PlacePhotoMetadata photo = buffer.get(1);
                                 photo.getPhoto(googleApiClient).setResultCallback(new ResultCallback<PlacePhotoResult>()
                                 {
                                     @Override
@@ -71,9 +73,10 @@ public class PoiUtils       //TODO? get poi photo link instead, delegate loading
                                     {
                                         Bitmap bmp = placePhotoResult.getBitmap();
                                         callback.photoDownloaded(bmp, position);
-                                        placePhotoMetadataResult.getPhotoMetadata().release();
+//                                        placePhotoMetadataResult.getPhotoMetadata().release();
                                     }
                                 });
+                                buffer.release();
                             }
                         }
                     });
