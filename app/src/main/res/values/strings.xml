@@ -29,7 +29,11 @@
     <string name="error_network_no_connection">Error: no network connection. Check your settings and try again.</string>
 
     <string name="error_login_failed">Error: login unsuccessful</string>
+
     <string name="error_connection_generic">An error occurred while retrieving your data. Try again later</string>
+    <string name="error_database_download_generic">An error occurred while retrieving your data. Try again later</string>
+    <string name="error_database_upload_generic">An error occurred while downloading your data. Try again later</string>
+
 
 
     <string name="trip_add_error_message">An error occurred while creating your trip. Try again later</string>

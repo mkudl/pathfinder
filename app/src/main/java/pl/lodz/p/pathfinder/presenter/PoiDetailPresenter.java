@@ -1,11 +1,9 @@
 package pl.lodz.p.pathfinder.presenter;
 
-import okhttp3.ResponseBody;
 import pl.lodz.p.pathfinder.AccountSingleton;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.service.PoiRepository;
 import pl.lodz.p.pathfinder.view.PoiDetailBaseActivity;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -17,11 +15,11 @@ public class PoiDetailPresenter
 {
 
     private boolean isFavorite = false;
-    PointOfInterest displayedPoi;
-
+    private PointOfInterest displayedPoi;
 
     PoiDetailBaseActivity view;
-    PoiRepository poiRepository;
+    private PoiRepository poiRepository;
+
 
     public PoiDetailPresenter(PointOfInterest displayedPoi, PoiDetailBaseActivity view, PoiRepository poiRepository)
     {
@@ -34,28 +32,15 @@ public class PoiDetailPresenter
     public void init()
     {
         view.showButton();
-
-        //TODO call API to check if it is user favorite
         String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
         poiRepository.checkFavorite(idToken,displayedPoi.getGoogleID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( x -> setFavorite(x.get("isFavorite")), t -> t.printStackTrace(), () -> updateButtonListener(isFavorite));
-        view.setButtonListenerFavorite();
+                .subscribe( x -> setFavorite(x.get("isFavorite")),
+                            t -> {t.printStackTrace();
+                                view.showDBDownloadErrorMessage();},
+                            () -> updateButtonListener(isFavorite));
     }
-
-    public void buttonClicked()
-    {
-//        isFavorite = !isFavorite;
-        //flip the state first, then update according to the new state
-        setFavorite(!isFavorite);
-        updateButtonListener(isFavorite);
-        updateServer(isFavorite)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( x -> showSuccessMessageFavorite(isFavorite) , t -> t.printStackTrace(), () -> updateButtonListener(isFavorite));
-    }
-
 
     private void updateButtonListener(boolean favorite)
     {
@@ -67,26 +52,47 @@ public class PoiDetailPresenter
         }
     }
 
-    private Observable<ResponseBody> updateServer(boolean favorite)
+
+
+    public void buttonClicked()
     {
+        //flip the state first, then update according to the new state
+        setFavorite(!isFavorite);
         String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-        if(favorite) {
-             return poiRepository.addPoiToFavorites(idToken,displayedPoi.getGoogleID());
+        if(isFavorite)
+        {
+            favorite(idToken);
         }
-        else {
-            return poiRepository.removePoiFromFavorites(idToken,displayedPoi.getGoogleID());
+        else
+        {
+            unfavorite(idToken);
         }
     }
 
-    private void showSuccessMessageFavorite(boolean favorite)
+    private void favorite(String idToken)
     {
-        if(favorite) {
-            view.showMessageFavorited();
-        }
-        else {
-            view.showMessageUnfavorited();
-        }
+        poiRepository.addPoiToFavorites(idToken,displayedPoi.getGoogleID())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( x -> view.showMessageFavorited(),
+                            t -> {t.printStackTrace();
+                                  view.showDBUploadErrorMessage();},
+                            () -> view.setButtonListenerUnfavorite());
     }
+
+    private void unfavorite(String idToken)
+    {
+        poiRepository.removePoiFromFavorites(idToken,displayedPoi.getGoogleID())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( x -> view.showMessageUnfavorited(),
+                            t -> {t.printStackTrace();
+                                  view.showDBUploadErrorMessage();},
+                            () -> view.setButtonListenerFavorite());
+    }
+
+
+
 
 
 
