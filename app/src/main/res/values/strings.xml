@@ -49,6 +49,10 @@
 
     <string name="direction_walk">Walk</string>
 
+
+    <string name="poi_favorite_added">Added to favorites</string>
+    <string name="poi_favorite_removed">Removed from favorites</string>
+
     <string name="poi_picker_selected_info">Currently selected</string>
     <string name="poi_picker_selected_none">None</string>
 

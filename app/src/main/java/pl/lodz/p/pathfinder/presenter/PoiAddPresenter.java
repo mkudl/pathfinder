@@ -61,19 +61,30 @@ public class PoiAddPresenter
         AddPlaceRequest request = new AddPlaceRequest(name,selectedCoordinates,selectedAddress,
                 Collections.<Integer>singletonList(Place.TYPE_PARK),"phone number");
 
-        Places.GeoDataApi.addPlace(googleApiClient,request)
-                .setResultCallback(places -> poiRepository.addPoiToCreated(idToken,places.get(0).getId())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe( x ->
-                                {
-                                    view.displayCreationSuccessMessage();}
-                                , t -> {
-                                    t.printStackTrace();
-                                    view.displayCreationErrorMessage(t);
-                                }
-                                , () -> view.finishActivity()));
+//        Places.GeoDataApi.addPlace(googleApiClient,request)
+//                .setResultCallback(places -> poiRepository.addPoiToCreated(idToken,places.get(0).getId())
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe( x ->
+//                                {
+//                                    view.displayCreationSuccessMessage();}
+//                                , t -> {
+//                                    t.printStackTrace();
+//                                    view.displayCreationErrorMessage(t);
+//                                }
+//                                , () -> view.finishActivity()));
 
+        poiRepository.addPoiToCreated(idToken,"ChIJWXvZPtw0GkcR5fe1V3RNltQ")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( x ->
+                        {
+                            view.displayCreationSuccessMessage();}
+                        , t -> {
+                            t.printStackTrace();
+                            view.displayCreationErrorMessage(t);
+                        }
+                        , () -> view.finishActivity());
 
 
 

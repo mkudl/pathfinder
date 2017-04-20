@@ -1,6 +1,7 @@
 package pl.lodz.p.pathfinder.service;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import pl.lodz.p.pathfinder.json.server.PointOfInterestJson;
@@ -51,10 +52,20 @@ public class PoiRepository
         return restClient.addPoiToFavorites(idToken,poiGoogleId);
     }
 
+    public Observable<ResponseBody> removePoiFromFavorites(String idToken, String poiGoogleId)
+    {
+        return restClient.removePoiFromFavorites(idToken,poiGoogleId);
+    }
+
+
     public Observable<ResponseBody> addPoiToCreated(String idToken, String poiGoogleId)
     {
         return restClient.addCreatedPoi(idToken,poiGoogleId);
     }
 
+    public Observable<Map<String,Boolean>> checkFavorite(String idToken, String poiGoogleId)
+    {
+        return  restClient.checkFavorite(idToken,poiGoogleId);
+    }
 
 }

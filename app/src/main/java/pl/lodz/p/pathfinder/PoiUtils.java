@@ -65,7 +65,7 @@ public class PoiUtils       //TODO? get poi photo link instead, delegate loading
                             if(placePhotoMetadataResult.getStatus().isSuccess())    //TODO? error handling (sometimes api fails for no reason)
                             {
                                 PlacePhotoMetadataBuffer buffer = placePhotoMetadataResult.getPhotoMetadata();
-                                PlacePhotoMetadata photo = buffer.get(1);
+                                PlacePhotoMetadata photo = buffer.get(0);
                                 photo.getPhoto(googleApiClient).setResultCallback(new ResultCallback<PlacePhotoResult>()
                                 {
                                     @Override
