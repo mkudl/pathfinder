@@ -1,6 +1,9 @@
 package pl.lodz.p.pathfinder.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -30,6 +33,7 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
 
     private List<Trip> dataset;
     private List<Boolean> expandStateList;
+    private List<Bitmap> photoBitmaps;
 
     RecyclerView recyclerView;
 
@@ -92,11 +96,13 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
         }
     }
 
-    public TripCardRVAdapter(List<Trip> dataset)
+    public TripCardRVAdapter(List<Trip> dataset, Context context)
     {
         this.dataset = dataset;
         expandStateList = new ArrayList<Boolean>(Arrays.asList(new Boolean[dataset.size()]));
         Collections.fill(expandStateList,false);
+        Bitmap placeholder = BitmapFactory.decodeResource(context.getResources(),R.drawable.placeholder);
+        this.photoBitmaps = Collections.nCopies(dataset.size(),placeholder);
     }
 
     @Override
@@ -114,16 +120,18 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
         return vh;
     }
 
+
+    //FIXME everything in here
     @Override
     public void onBindViewHolder(TripCardRVAdapter.ViewHolder holder, int position)
     {
 //        holder.tv.setOnClickListener(new MyOnClickListener());
         holder.name.setText(dataset.get(position).getName());
         holder.description.setText(dataset.get(position).getDescription());
-
+        holder.photo.setImageBitmap(photoBitmaps.get(position));
         holder.details.setVisibility( expandStateList.get(position) ? View.VISIBLE : View.GONE);
 
-        holder.expandIcon.setOnClickListener((View.OnClickListener) view ->
+        holder.expandIcon.setOnClickListener( view ->
         {
             if(expandStateList.get(position))
             {
@@ -167,6 +175,15 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
         super.onAttachedToRecyclerView(recyclerView);
         this.recyclerView = recyclerView;
     }
+
+
+    //TODO use some kind of interface for this
+    public void updatePhotos(List<Bitmap> photos)
+    {
+        this.photoBitmaps = photos;
+        notifyDataSetChanged();
+    }
+
 
 //    @Override
 //    public void onClick(final View view)

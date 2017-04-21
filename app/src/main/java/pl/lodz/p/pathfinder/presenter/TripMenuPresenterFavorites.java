@@ -1,11 +1,7 @@
 package pl.lodz.p.pathfinder.presenter;
 
-import android.util.Log;
-
-import java.util.List;
-
-import pl.lodz.p.pathfinder.AccountSingleton;
-import pl.lodz.p.pathfinder.model.Trip;
+import pl.lodz.p.pathfinder.RepresentativePoiStrategy;
+import pl.lodz.p.pathfinder.service.PoiPhotoClient;
 import pl.lodz.p.pathfinder.service.TripDownloadService;
 import pl.lodz.p.pathfinder.view.TripMenuActivity;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,9 +15,9 @@ public class TripMenuPresenterFavorites extends TripMenuPresenter
 {
 
 
-    public TripMenuPresenterFavorites(TripDownloadService tripDownloadService, TripMenuActivity view)
+    public TripMenuPresenterFavorites(TripDownloadService tripDownloadService, TripMenuActivity view, PoiPhotoClient poiPhotoClient, RepresentativePoiStrategy poiStrategy)
     {
-        super(tripDownloadService, view);
+        super(tripDownloadService, view, poiPhotoClient ,poiStrategy );
     }
 
     @Override

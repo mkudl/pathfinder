@@ -1,7 +1,9 @@
 package pl.lodz.p.pathfinder.view;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +13,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.lodz.p.pathfinder.ChooseFirstPoiStrategy;
 import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.R;
+import pl.lodz.p.pathfinder.RepresentativePoiStrategy;
 import pl.lodz.p.pathfinder.TripFactory;
 import pl.lodz.p.pathfinder.TripMenuType;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
@@ -26,22 +33,24 @@ import pl.lodz.p.pathfinder.presenter.TripMenuPresenter;
 import pl.lodz.p.pathfinder.presenter.TripMenuPresenterFactory;
 import pl.lodz.p.pathfinder.presenter.TripMenuPresenterFavorites;
 import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
+import pl.lodz.p.pathfinder.service.PoiPhotoClient;
 import pl.lodz.p.pathfinder.service.PointOfInterestClient;
 import pl.lodz.p.pathfinder.service.TripDownloadService;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TripMenuActivity extends AppCompatActivity
+public class TripMenuActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener
 {
 
     RecyclerView recyclerView;
     private ProgressBar spinner;
     private FloatingActionButton fab;
 
-
     List<Trip> newDataSet = new ArrayList<Trip>();
     TripMenuPresenter presenter;
+
+    TripCardRVAdapter adapter;
 
 
     //FIXME
@@ -102,17 +111,13 @@ public class TripMenuActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
          fab = (FloatingActionButton) findViewById(R.id.fab);
-
         spinner = (ProgressBar) findViewById(R.id.trip_menu_spinner) ;
-
-
         recyclerView = (RecyclerView) findViewById(R.id.main3recycler);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
 
 
-
-
+        //creating presenter dependencies
         Retrofit rxRetrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -123,21 +128,25 @@ public class TripMenuActivity extends AppCompatActivity
         PointOfInterestClient poiClient = new PointOfInterestClient(this);
         TripFactory tripFactory = new TripFactory(poiClient);
         TripDownloadService tripDownloadService = new TripDownloadService(tripFactory, restClient);
-
-//        presenter = new TripMenuPresenterFavorites(tripDownloadService,this);
+        RepresentativePoiStrategy poiStrategy = new ChooseFirstPoiStrategy();
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addApi(Places.GEO_DATA_API)
+                .build();
+        googleApiClient.connect();
+        PoiPhotoClient poiPhotoClient = new PoiPhotoClient(googleApiClient);
         TripMenuType type = (TripMenuType) getIntent().getSerializableExtra("TRIPMENU_TYPE");
-        presenter = TripMenuPresenterFactory.createPresenter(type,tripDownloadService,this);
+        presenter = TripMenuPresenterFactory.createPresenter(type,tripDownloadService,this,poiPhotoClient,poiStrategy);
+
         presenter.startActivity();
-
-
-//        createTrips();
     }
 
 
     public void onDataRetrieved(List<Trip> trips)
     {
         newDataSet = trips;
-        TripCardRVAdapter adapter = new TripCardRVAdapter(newDataSet);
+        adapter = new TripCardRVAdapter(newDataSet,this);
         recyclerView.setAdapter(adapter);
 
         //only set listener after data successfully retrieved
@@ -167,7 +176,18 @@ public class TripMenuActivity extends AppCompatActivity
         spinner.setVisibility(View.GONE);
     }
 
+    public void updatePhotos(List<Bitmap> photos)
+    {
+        adapter.updatePhotos(photos);
+    }
 
 
 
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult)
+    {
+
+    }
 }

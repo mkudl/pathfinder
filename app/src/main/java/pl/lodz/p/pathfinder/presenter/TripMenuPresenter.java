@@ -1,5 +1,6 @@
 package pl.lodz.p.pathfinder.presenter;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.io.PrintWriter;
@@ -7,9 +8,13 @@ import java.io.StringWriter;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
+import pl.lodz.p.pathfinder.ChooseFirstPoiStrategy;
+import pl.lodz.p.pathfinder.RepresentativePoiStrategy;
 import pl.lodz.p.pathfinder.model.Trip;
+import pl.lodz.p.pathfinder.service.PoiPhotoClient;
 import pl.lodz.p.pathfinder.service.TripDownloadService;
 import pl.lodz.p.pathfinder.view.TripMenuActivity;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -20,13 +25,21 @@ import rx.schedulers.Schedulers;
 public abstract class TripMenuPresenter
 {
     protected TripDownloadService tripDownloadService;
+    PoiPhotoClient poiPhotoClient;
+    RepresentativePoiStrategy poiStrategy;
+
     protected TripMenuActivity view;
     private List<Trip> tripList;
+    private List<Bitmap> photos;
 
-    TripMenuPresenter(TripDownloadService tripDownloadService, TripMenuActivity view)
+
+
+    TripMenuPresenter(TripDownloadService tripDownloadService, TripMenuActivity view, PoiPhotoClient poiPhotoClient, RepresentativePoiStrategy poiStrategy)
     {
         this.tripDownloadService = tripDownloadService;
         this.view = view;
+        this.poiPhotoClient = poiPhotoClient;
+        this.poiStrategy = poiStrategy;
     }
 
     public void startActivity()
@@ -44,7 +57,35 @@ public abstract class TripMenuPresenter
         view.onDataRetrieved(getTripList());
         view.hideSpinner();
         Log.d("TripMenuPresenter","Finished getting data");
+        downloadPhotos();
     }
+
+    //TODO possible SRP violation
+    private void downloadPhotos()
+    {
+        //TODO move to constructor
+//        RepresentativePoiStrategy poiStrategy = new ChooseFirstPoiStrategy();
+
+        //for every trip chooses the poi that best represents it (according to strategy)
+        //then retrieves its photo and stores it in a list
+        Observable.just(getTripList())
+                .flatMap(Observable::from)
+                .map( t -> poiStrategy.pickRepresentativePoi(t).getGoogleID())
+                .map( s -> poiPhotoClient.getPhoto(s))
+                .toList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( (List<Bitmap> x) -> setPhotos(x),
+                        Throwable::printStackTrace,
+                        () -> updatePhotos());
+    }
+
+    private void updatePhotos()
+    {
+        view.updatePhotos(photos);
+    }
+
+
 
     protected void onConnectionFailure(Throwable t)
     {
@@ -66,5 +107,10 @@ public abstract class TripMenuPresenter
     public void setTripList(List<Trip> tripList)
     {
         this.tripList = tripList;
+    }
+
+    private void setPhotos(List<Bitmap> photos)
+    {
+        this.photos = photos;
     }
 }

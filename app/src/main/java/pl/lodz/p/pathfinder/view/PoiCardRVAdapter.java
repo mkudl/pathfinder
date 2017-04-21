@@ -118,6 +118,7 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
         notifyDataSetChanged();
     }
 
+    //TODO adopt approach from TipCardRVAdapter
     @Override
     public void updatePhoto(Bitmap bitmap, int position)
     {

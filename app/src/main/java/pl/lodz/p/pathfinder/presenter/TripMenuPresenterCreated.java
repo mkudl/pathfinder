@@ -1,5 +1,7 @@
 package pl.lodz.p.pathfinder.presenter;
 
+import pl.lodz.p.pathfinder.RepresentativePoiStrategy;
+import pl.lodz.p.pathfinder.service.PoiPhotoClient;
 import pl.lodz.p.pathfinder.service.TripDownloadService;
 import pl.lodz.p.pathfinder.view.TripMenuActivity;
 import rx.android.schedulers.AndroidSchedulers;
@@ -12,9 +14,9 @@ import rx.schedulers.Schedulers;
 public class TripMenuPresenterCreated extends TripMenuPresenter
 {
 
-    public TripMenuPresenterCreated(TripDownloadService tripDownloadService, TripMenuActivity view)
+    public TripMenuPresenterCreated(TripDownloadService tripDownloadService, TripMenuActivity view, PoiPhotoClient poiPhotoClient, RepresentativePoiStrategy poiStrategy)
     {
-        super(tripDownloadService, view);
+        super(tripDownloadService, view, poiPhotoClient ,poiStrategy );
     }
 
     @Override
