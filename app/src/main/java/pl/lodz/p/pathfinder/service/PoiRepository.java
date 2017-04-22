@@ -14,6 +14,7 @@ import rx.Observable;
  * Created by QDL on 2017-04-10.
  */
 
+//TODO? split into different classes like Trip access
 public class PoiRepository
 {
 
@@ -63,6 +64,7 @@ public class PoiRepository
         return restClient.addCreatedPoi(idToken,poiGoogleId);
     }
 
+    //todo? return Observable<Boolean> from this
     public Observable<Map<String,Boolean>> checkFavorite(String idToken, String poiGoogleId)
     {
         return  restClient.checkFavorite(idToken,poiGoogleId);

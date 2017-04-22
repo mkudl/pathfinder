@@ -6,14 +6,21 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
+import pl.lodz.p.pathfinder.AccountSingleton;
 import pl.lodz.p.pathfinder.model.DetailDirections;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.SimpleDirections;
+import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.service.DistanceMatrixApiClient;
 import pl.lodz.p.pathfinder.service.SimpleDirectionsCallback;
+import pl.lodz.p.pathfinder.service.TripDownloadService;
+import pl.lodz.p.pathfinder.service.TripFavoriteChecker;
+import pl.lodz.p.pathfinder.service.TripUploadService;
 import pl.lodz.p.pathfinder.service.directions.DetailedDirectionsCallback;
 import pl.lodz.p.pathfinder.service.directions.DirectionsApiClient;
 import pl.lodz.p.pathfinder.view.TripViewingActivity;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by QDL on 2017-04-02.
@@ -24,15 +31,28 @@ public class TripViewingPresenter implements SimpleDirectionsCallback, DetailedD
     //TODO change to interfaces, decouple etc.
 
     private TripViewingActivity view;
+    private Trip displayedTrip;
+    private boolean isFavorite = false;
+
 
     private DistanceMatrixApiClient simpleDirectionsApi; //TODO see if this can be turned into a local variable
 
+    private TripFavoriteChecker tripFavoriteChecker;
+    private TripUploadService tripUploadService;
 
-    public TripViewingPresenter(TripViewingActivity view)
+
+    public TripViewingPresenter(TripViewingActivity view, Trip displayedTrip, /*DistanceMatrixApiClient simpleDirectionsApi,*/ TripFavoriteChecker tripFavoriteChecker, TripUploadService tripUploadService)
     {
         this.view = view;
+        this.displayedTrip = displayedTrip;
+
+//        this.simpleDirectionsApi = simpleDirectionsApi;
         simpleDirectionsApi = new DistanceMatrixApiClient(this);
+
+        this.tripFavoriteChecker = tripFavoriteChecker;
+        this.tripUploadService = tripUploadService;
     }
+
 
 
     public void getSimpleDirections(List<PointOfInterest> pois)
@@ -41,9 +61,7 @@ public class TripViewingPresenter implements SimpleDirectionsCallback, DetailedD
         for(int i=0; i<=pois.size()-2 ;i++)
         {
             simpleDirectionsApi.sendRequest(pois.get(i).getPosition(),pois.get(i+1).getPosition(), i);
-
         }
-
     }
 
 
@@ -51,13 +69,10 @@ public class TripViewingPresenter implements SimpleDirectionsCallback, DetailedD
     {
         DirectionsApiClient detailDirectionsApi = new DirectionsApiClient(this);
 
-
         for(int i=0; i<=pois.size()-2 ;i++)
         {
             detailDirectionsApi.sendRequest(pois.get(i).getPosition(),pois.get(i+1).getPosition(),i);
-
         }
-
         view.clearDrawings();
     }
 
@@ -72,28 +87,81 @@ public class TripViewingPresenter implements SimpleDirectionsCallback, DetailedD
             {
                 view.drawDirections(directions);
             }
-
             @Override
             public void apiFailCallback(String statusCode)
             {
                 view.handleDirectionsFail();
             }
-
             @Override
             public void failCallback(Throwable t)
             {
                 view.handleDirectionsFail();
             }
         });
-
         directionsApi.sendRequest(currentLocation,poi.getPosition(),0);
+    }
 
+    public void initFavorite()
+    {
+
+        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
+        tripFavoriteChecker.checkFavorite(idToken,displayedTrip)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( x -> setFavorite(x),
+                        t -> {t.printStackTrace();
+                            view.showDBDownloadErrorMessage();},
+                        () -> updateButtonListener(isFavorite));
+    }
+
+    private void updateButtonListener(boolean favorite)
+    {
+        if(favorite) {
+            view.setButtonListenerUnfavorite();
+        }
+        else {
+            view.setButtonListenerFavorite();
+        }
+        view.showFavoriteButtion();
     }
 
 
+    public void buttonClicked()
+    {
+        //flip the state first, then update according to the new state
+        setFavorite(!isFavorite);
+        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
+        if(isFavorite)
+        {
+            favorite(idToken);
+        }
+        else
+        {
+            unfavorite(idToken);
+        }
+    }
 
+    private void favorite(String idToken)
+    {
+        tripUploadService.addToFavorites(idToken,displayedTrip)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( x -> view.showMessageFavorited(),
+                        t -> {t.printStackTrace();
+                            view.showDBUploadErrorMessage();},
+                        () -> view.setButtonListenerUnfavorite());
+    }
 
-
+    private void unfavorite(String idToken)
+    {
+        tripUploadService.removeFromFavorites(idToken,displayedTrip)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( x -> view.showMessageUnfavorited(),
+                        t -> {t.printStackTrace();
+                            view.showDBUploadErrorMessage();},
+                        () -> view.setButtonListenerFavorite());
+    }
 
 
     //Distance Matrix API client callback
@@ -110,7 +178,11 @@ public class TripViewingPresenter implements SimpleDirectionsCallback, DetailedD
     {
         view.startNavigation(directions,itemPosition);
         view.drawDirections(directions);
+        view.hideNavButton();
     }
+
+
+
 
 
 
@@ -143,5 +215,12 @@ public class TripViewingPresenter implements SimpleDirectionsCallback, DetailedD
     public void apiFailElementCallback(String code)
     {
         view.handleDirectionsFail();
+    }
+
+
+
+    public void setFavorite(boolean favorite)
+    {
+        isFavorite = favorite;
     }
 }

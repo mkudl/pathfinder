@@ -39,8 +39,8 @@ public class MainMenuActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener()
+//        FloatingActionButton fabDirections = (FloatingActionButton) findViewById(R.id.fabDirections);
+//        fabDirections.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
 //            public void onClick(View view)

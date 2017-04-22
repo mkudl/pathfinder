@@ -65,13 +65,32 @@
 
     <!--</android.support.v4.widget.NestedScrollView>-->
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/trip_favorite_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_favorite_border_black_24dp"
+        />
+
+
+    <View
+        android:id="@+id/dummy"
+        android:layout_width="1dp"
+        android:layout_height="16dp"
+        app:layout_anchor="@id/trip_favorite_fab"
+        app:layout_anchorGravity="top|right|end" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/trip_navigate_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="end|top"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_directions_black_24dp"/>
+        app:layout_anchor="@id/dummy"
+        app:layout_anchorGravity="top|right|end"
+        app:srcCompat="@drawable/ic_directions_black_24dp"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

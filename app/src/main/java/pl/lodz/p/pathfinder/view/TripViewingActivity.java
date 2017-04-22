@@ -9,7 +9,6 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
@@ -32,16 +30,22 @@ import java.util.ArrayList;
 import java.util.List;
 //import java.util.stream.Collectors;
 
+import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.PolylineUtils;
 import pl.lodz.p.pathfinder.R;
-import pl.lodz.p.pathfinder.json.directions.Step;
 import pl.lodz.p.pathfinder.model.DetailDirections;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.SimpleDirections;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.presenter.TripViewingPresenter;
+import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
+import pl.lodz.p.pathfinder.service.TripFavoriteChecker;
+import pl.lodz.p.pathfinder.service.TripUploadService;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-
+//FIXME EVERYTHING
 //TODO #IMPORTANT ask for permissions at main menu, if  check fails here back out of the activity
 public class TripViewingActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMapsMovable
 {
@@ -56,13 +60,14 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
     private PoiListFragmentDirections poiListFragment;
     private List<DetailDirections> detailDirections;
 
-    FloatingActionButton fab;
+    FloatingActionButton fabDirections;
     private boolean navigationStarted;
+    FloatingActionButton fabFavorite;
 
     private TripViewingPresenter presenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)  //TODO extract methods
     {
         super.onCreate(savedInstanceState);
 
@@ -77,8 +82,22 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
         //retrieve data
         trip = getIntent().getParcelableExtra("TRIP_PARAM");
 
-        presenter = new TripViewingPresenter(this);
+
+        fabFavorite = (FloatingActionButton) findViewById(R.id.trip_favorite_fab);
+        fabFavorite.setVisibility(View.INVISIBLE);
+
+        Retrofit rxRetrofit = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(Configuration.SERVER_ADDRESS)
+//                .client(httpClient.build()) //for debugging
+                .build();
+        TripFavoriteChecker tripFavoriteChecker = new TripFavoriteChecker(rxRetrofit.create(DatabaseTripRest.class));
+        TripUploadService tripUploadService = new TripUploadService(rxRetrofit.create(DatabaseTripRest.class));
+
+        presenter = new TripViewingPresenter(this,trip,tripFavoriteChecker,tripUploadService);
         presenter.getSimpleDirections(trip.getPointOfInterestList());
+        presenter.initFavorite();
 
         //initialize the detailed directions list
         detailDirections = new ArrayList<>();
@@ -89,9 +108,10 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
         detailDirections.add(null);
 
 
+
         //set up the navigation button
-        fab = (FloatingActionButton) findViewById(R.id.trip_navigate_fab);
-        fab.setOnClickListener(new View.OnClickListener()
+        fabDirections = (FloatingActionButton) findViewById(R.id.trip_navigate_fab);
+        fabDirections.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -327,13 +347,57 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
         //TODO
     }
 
+    public void showMessageFavorited()
+    {
+        Toast.makeText(this, getString(R.string.poi_favorite_added), Toast.LENGTH_SHORT).show();
+    }
 
-    //detailed directions callback, hide the button
-    //TODO possibly split the two
+    public void showMessageUnfavorited()
+    {
+        Toast.makeText(this, getString(R.string.poi_favorite_removed), Toast.LENGTH_SHORT).show();
+    }
+
+    public void showDBDownloadErrorMessage()
+    {
+        Snackbar.make(fabDirections, getString(R.string.error_database_download_generic), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    public void showDBUploadErrorMessage()
+    {
+        Snackbar.make(fabDirections, getString(R.string.error_database_upload_generic), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+
+    public void setButtonListenerFavorite()
+    {
+        fabFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+        fabFavorite.setOnClickListener(view ->
+        {
+            presenter.buttonClicked();
+        });
+    }
+
+    /**
+     * Called when the poi is user's favorite, and the action to be set is to unfavorite the poi
+     */
+    public void setButtonListenerUnfavorite()
+    {
+        fabFavorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+        fabFavorite.setOnClickListener(view ->
+        {
+            presenter.buttonClicked();
+        });
+    }
+
+
+
+
     public void startNavigation(DetailDirections dirs, int position)
     {
         navigationStarted = true;
-        fab.setVisibility(View.INVISIBLE);
+        fabDirections.setVisibility(View.GONE);
 
         //TODO? possibly move the location retrieval to presenter
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
@@ -364,20 +428,26 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
         detailDirections.set(position,dirs);
     }
 
-    private void hideNavButton()
+    public void hideNavButton()
     {
-        //TODO move here
+//        fabDirections.setVisibility(View.INVISIBLE);
+        fabDirections.setVisibility(View.GONE);
     }
 
-
+    public void showFavoriteButtion()
+    {
+        fabFavorite.setVisibility(View.VISIBLE);
+    }
 
 
     public void clearDrawings()
     {
-        for (Polyline p : polylinesDrawn)
-        {
-            p.remove();
-        }
+        polylinesDrawn.forEach(Polyline::remove);
+
+//        for (Polyline p : polylinesDrawn)
+//        {
+//            p.remove();
+//        }
     }
 
 

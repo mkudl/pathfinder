@@ -1,6 +1,7 @@
 package pl.lodz.p.pathfinder.rest;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import pl.lodz.p.pathfinder.TokenJson;
@@ -9,6 +10,7 @@ import pl.lodz.p.pathfinder.json.server.TripJsonWrapper;
 import pl.lodz.p.pathfinder.model.Trip;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -62,4 +64,9 @@ public interface DatabaseTripRest
     @PUT("trip/addFavorite")
     Observable<ResponseBody> addToFavorites(@Body TripJsonWrapper tripRequest);
 
+    @DELETE("trip/removeFavorite")
+    Observable<ResponseBody> removeFromFavorites(@Query("idToken") String idToken, @Query("tripID") int tripId);
+
+    @GET("trip/checkFavorite")
+    Observable<Map<String,Boolean>> checkFavorite(@Query("idToken") String idToken, @Query("tripID") int tripId);
 }
