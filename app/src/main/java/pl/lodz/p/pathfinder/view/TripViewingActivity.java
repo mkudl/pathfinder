@@ -264,8 +264,9 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
 
         //FIXME
         LatLngBounds.Builder asd = new LatLngBounds.Builder();
-        asd.include(positionList.get(positionList.size() - 1));
-        asd.include(positionList.get(0));
+//        asd.include(positionList.get(positionList.size() - 1));
+//        asd.include(positionList.get(0));
+        positionList.forEach(asd::include);
 
         int width = getResources().getDisplayMetrics().widthPixels;
         int height = getResources().getDisplayMetrics().heightPixels;
