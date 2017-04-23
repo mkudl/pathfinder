@@ -38,7 +38,7 @@ public class TripUploadService
     public Observable<ResponseBody> addToFavorites(String idToken, Trip favoriteTrip)
     {
 //        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-        return restClient.addToFavorites(TripJsonWrapperFactory.convertToJsonWrapper(idToken,favoriteTrip));
+        return restClient.addToFavorites(idToken,favoriteTrip.getId());
     }
 
     public Observable<ResponseBody> removeFromFavorites(String idToken, Trip favoriteTrip)

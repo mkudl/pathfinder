@@ -62,7 +62,7 @@ public interface DatabaseTripRest
     Observable<ResponseBody> updateTrip(@Body TripJsonWrapper tripRequest);
 
     @PUT("trip/addFavorite")
-    Observable<ResponseBody> addToFavorites(@Body TripJsonWrapper tripRequest);
+    Observable<ResponseBody> addToFavorites(@Query("idToken") String idToken, @Query("tripID") int tripId);
 
     @DELETE("trip/removeFavorite")
     Observable<ResponseBody> removeFromFavorites(@Query("idToken") String idToken, @Query("tripID") int tripId);
