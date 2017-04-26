@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,17 +46,21 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
         public LinearLayout details;
         ImageView expandIcon;
 
+        TextView popupMenuButton;
+
         boolean isExpanded;
 
         public ViewHolder(View v, List<Trip> tl){
             super(v);
-            name = (TextView) v.findViewById(R.id.poicard_textview_title);
-            description = (TextView)v.findViewById(R.id.poicard_textview_details);
-            photo = (ImageView) v.findViewById(R.id.poicard_imageview);
+            name = (TextView) v.findViewById(R.id.tripcard_textview_title);
+            description = (TextView)v.findViewById(R.id.tripcard_textview_details);
+            photo = (ImageView) v.findViewById(R.id.tripcard_imageview);
             tripList = tl;
             details = (LinearLayout) v.findViewById(R.id.tripcard_details);
             expandIcon = (ImageView) v.findViewById(R.id.tripcard_expandIcon);
 
+            //not actually a button, but it's more convenient like this
+            popupMenuButton = (TextView) v.findViewById(R.id.tripcard_menu_actions);
 
 
             v.setOnClickListener(this);
@@ -96,13 +100,13 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
         }
     }
 
-    public TripCardRVAdapter(List<Trip> dataset, Context context)
+    public TripCardRVAdapter(List<Trip> dataset)
     {
         this.dataset = dataset;
         expandStateList = new ArrayList<Boolean>(Arrays.asList(new Boolean[dataset.size()]));
         Collections.fill(expandStateList,false);
-        Bitmap placeholder = BitmapFactory.decodeResource(context.getResources(),R.drawable.placeholder);
-        this.photoBitmaps = Collections.nCopies(dataset.size(),placeholder);
+        this.photoBitmaps = Collections.nCopies(dataset.size(),null );
+
     }
 
     @Override
@@ -128,7 +132,9 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
 //        holder.tv.setOnClickListener(new MyOnClickListener());
         holder.name.setText(dataset.get(position).getName());
         holder.description.setText(dataset.get(position).getDescription());
-        holder.photo.setImageBitmap(photoBitmaps.get(position));
+        if(photoBitmaps.get(position) != null){
+            holder.photo.setImageBitmap(photoBitmaps.get(position));
+        }
         holder.details.setVisibility( expandStateList.get(position) ? View.VISIBLE : View.GONE);
 
         holder.expandIcon.setOnClickListener( view ->
@@ -158,6 +164,13 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
             }
         });
 
+        holder.popupMenuButton.setVisibility(View.GONE);
+        setupPopupMenu(holder.popupMenuButton,dataset.get(position));
+    }
+
+    protected void setupPopupMenu(TextView popupMenuButton, Trip trip)
+    {
+        //Intentionally left blank (most use cases don't need this menu)
     }
 
 

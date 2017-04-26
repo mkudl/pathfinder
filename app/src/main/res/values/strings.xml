@@ -9,7 +9,6 @@
     <!--TODO rename-->
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_main3">Main3Activity</string>
     <string name="title_activity_trip_menu">TripMenu</string>
     <string name="title_activity_poi_menu">PoiMenu</string>
@@ -24,7 +23,12 @@
     <string name="title_activity_login_screen">LoginScreenActivity</string>
 
 
+    <string name="action_settings">Settings</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+
     <!--Error messages-->
+    <string name="error_generic">An error occurred</string>
 
     <string name="error_network_no_connection">Error: no network connection. Check your settings and try again.</string>
 
@@ -35,9 +39,10 @@
     <string name="error_database_upload_generic">An error occurred while downloading your data. Try again later</string>
 
 
-
     <string name="trip_add_error_message">An error occurred while creating your trip. Try again later</string>
     <string name="trip_add_success_message">Trip created successfully</string>
+    <string name="trip_edit_error_message">An error occurred while updating your trip. Try again later</string>
+    <string name="trip_edit_success_message">Trip updated successfully</string>
 
     <string name="poi_add_error_message">An error occurred while creating your attraction. Try again later</string>
     <string name="poi_add_success_message">Attraction created successfully</string>
@@ -166,6 +171,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="title_activity_trip_edit">TripEditActivity</string>
 
     <!--&lt;!&ndash; Strings related to Settings &ndash;&gt;-->
 

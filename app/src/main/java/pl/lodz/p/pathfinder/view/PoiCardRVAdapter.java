@@ -1,19 +1,15 @@
 package pl.lodz.p.pathfinder.view;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import pl.lodz.p.pathfinder.PoiUtils;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 
@@ -45,8 +41,8 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
         public ViewHolder(View itemView)
         {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.poicard_textview_title);
-            image = (ImageView) itemView.findViewById(R.id.poicard_imageview);
+            title = (TextView) itemView.findViewById(R.id.tripcard_textview_title);
+            image = (ImageView) itemView.findViewById(R.id.tripcard_imageview);
             this.itemView = itemView;
 //            itemView.setOnClickListener(this);
         }

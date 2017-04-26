@@ -20,16 +20,27 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/poicard_textview_details"
+                android:id="@+id/tripcard_menu_actions"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="&#8942;"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textSize="30sp"
+                android:layout_below="@+id/tripcard_textview_details"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:id="@+id/tripcard_textview_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/poicard_textview_title"
+                android:layout_below="@+id/tripcard_textview_title"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
                 android:text="TextView"/>
 
             <ImageView
-                android:id="@+id/poicard_imageview"
+                android:id="@+id/tripcard_imageview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -38,10 +49,10 @@
                 app:srcCompat="@drawable/placeholder"/>
 
             <TextView
-                android:id="@+id/poicard_textview_title"
+                android:id="@+id/tripcard_textview_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/poicard_imageview"
+                android:layout_below="@+id/tripcard_imageview"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
                 android:text="TextView"
@@ -59,9 +70,9 @@
 
             <ImageView
                 android:id="@+id/tripcard_expandIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/poicard_textview_details"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@+id/tripcard_textview_details"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="27dp"
                 app:srcCompat="@drawable/ic_expand_more_black_24dp"/>

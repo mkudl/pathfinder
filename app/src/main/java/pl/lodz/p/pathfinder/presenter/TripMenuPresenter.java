@@ -13,6 +13,7 @@ import pl.lodz.p.pathfinder.RepresentativePoiStrategy;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.service.PoiPhotoClient;
 import pl.lodz.p.pathfinder.service.TripDownloadService;
+import pl.lodz.p.pathfinder.view.TripCardRVAdapter;
 import pl.lodz.p.pathfinder.view.TripMenuActivity;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -44,20 +45,23 @@ public abstract class TripMenuPresenter
 
     public void startActivity()
     {
-
         String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
         downloadTrips(idToken);
-
     }
 
     abstract void downloadTrips(String idToken);
 
     synchronized void returnData()
     {
-        view.onDataRetrieved(getTripList());
+        view.onDataRetrieved(createRVAdapter(getTripList()));
         view.hideSpinner();
         Log.d("TripMenuPresenter","Finished getting data");
         downloadPhotos();
+    }
+
+    TripCardRVAdapter createRVAdapter(List<Trip> trips)
+    {
+        return new TripCardRVAdapter(trips);
     }
 
     //TODO possible SRP violation

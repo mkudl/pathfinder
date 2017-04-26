@@ -39,14 +39,6 @@ dependencies {
     //for the purpose of debugging retrofit calls, remove later
 
 
-
-
-
-
-
-
-
-
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:cardview-v7:25.1.0'
