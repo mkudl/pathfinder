@@ -1,6 +1,5 @@
 package pl.lodz.p.pathfinder.presenter;
 
-import pl.lodz.p.pathfinder.RepresentativePoiStrategy;
 import pl.lodz.p.pathfinder.TripMenuType;
 import pl.lodz.p.pathfinder.service.PoiPhotoClient;
 import pl.lodz.p.pathfinder.service.TripDownloadService;

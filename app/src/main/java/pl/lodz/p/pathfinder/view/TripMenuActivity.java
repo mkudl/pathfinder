@@ -16,22 +16,19 @@ import android.widget.ProgressBar;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.lodz.p.pathfinder.ChooseFirstPoiStrategy;
+import pl.lodz.p.pathfinder.presenter.ChooseFirstPoiStrategy;
 import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.R;
-import pl.lodz.p.pathfinder.RepresentativePoiStrategy;
+import pl.lodz.p.pathfinder.presenter.RepresentativePoiStrategy;
 import pl.lodz.p.pathfinder.TripFactory;
 import pl.lodz.p.pathfinder.TripMenuType;
-import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.presenter.TripMenuPresenter;
 import pl.lodz.p.pathfinder.presenter.TripMenuPresenterFactory;
-import pl.lodz.p.pathfinder.presenter.TripMenuPresenterFavorites;
 import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
 import pl.lodz.p.pathfinder.service.PoiPhotoClient;
 import pl.lodz.p.pathfinder.service.PointOfInterestClient;

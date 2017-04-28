@@ -1,4 +1,4 @@
-package pl.lodz.p.pathfinder;
+package pl.lodz.p.pathfinder.presenter;
 
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.Trip;

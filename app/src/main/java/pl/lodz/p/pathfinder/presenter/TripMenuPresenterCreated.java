@@ -2,7 +2,6 @@ package pl.lodz.p.pathfinder.presenter;
 
 import java.util.List;
 
-import pl.lodz.p.pathfinder.RepresentativePoiStrategy;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.service.PoiPhotoClient;
 import pl.lodz.p.pathfinder.service.TripDownloadService;
