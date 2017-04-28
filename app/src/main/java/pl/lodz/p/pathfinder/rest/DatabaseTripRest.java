@@ -69,4 +69,7 @@ public interface DatabaseTripRest
 
     @GET("trip/checkFavorite")
     Observable<Map<String,Boolean>> checkFavorite(@Query("idToken") String idToken, @Query("tripID") int tripId);
+
+    @DELETE("trip/deleteTrip")
+    Observable<ResponseBody> deleteTrip(@Query("idToken") String idToken, @Query("tripID") int tripId);
 }

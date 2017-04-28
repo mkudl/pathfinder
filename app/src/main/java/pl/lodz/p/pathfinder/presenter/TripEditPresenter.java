@@ -74,4 +74,21 @@ public class TripEditPresenter
                         , () -> view.finishActivity());
     }
 
+    public void deleteTrip()
+    {
+        String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
+        tripUploadService.deleteTrip(idToken,tripToUpdate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( x ->
+                        {
+                            view.displayDeleteSuccessMessage();}
+                        , t -> {
+                            t.printStackTrace();
+                            view.displayDeleteErrorMessage(t);
+                        }
+                        , () -> view.finishActivity());
+    }
+
+
 }

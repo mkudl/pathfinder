@@ -43,6 +43,8 @@
     <string name="trip_add_success_message">Trip created successfully</string>
     <string name="trip_edit_error_message">An error occurred while updating your trip. Try again later</string>
     <string name="trip_edit_success_message">Trip updated successfully</string>
+    <string name="trip_delete_error_message">An error occurred while deleting this trip. Try again later</string>
+    <string name="trip_delete_success_message">Trip deleted</string>
 
     <string name="poi_add_error_message">An error occurred while creating your attraction. Try again later</string>
     <string name="poi_add_success_message">Attraction created successfully</string>

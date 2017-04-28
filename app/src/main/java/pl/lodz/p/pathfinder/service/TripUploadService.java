@@ -46,4 +46,9 @@ public class TripUploadService
 //        return restClient.removeFromFavorites(TripJsonWrapperFactory.convertToJsonWrapper(idToken,favoriteTrip));
         return restClient.removeFromFavorites(idToken,favoriteTrip.getId());
     }
+
+    public Observable<ResponseBody> deleteTrip(String idToken, Trip deleteTrip)
+    {
+        return restClient.deleteTrip(idToken,deleteTrip.getId());
+    }
 }

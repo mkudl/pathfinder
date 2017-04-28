@@ -135,7 +135,7 @@ public class TripEditActivity extends AppCompatActivity
 
         if(item.getItemId() == R.id.action_delete)
         {
-            //TODO DELETE
+            presenter.deleteTrip();
             return true;
         }
 
@@ -187,6 +187,21 @@ public class TripEditActivity extends AppCompatActivity
                 Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
+
+    public void displayDeleteSuccessMessage()
+    {
+        Toast.makeText(this,getResources().getString(R.string.trip_delete_success_message), Toast.LENGTH_LONG)
+                .show();
+    }
+
+    public void displayDeleteErrorMessage(Throwable t)
+    {
+        Snackbar.make( finishButton,
+                getResources().getString(R.string.trip_delete_error_message),
+                Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
 
     public void finishActivity()
     {
