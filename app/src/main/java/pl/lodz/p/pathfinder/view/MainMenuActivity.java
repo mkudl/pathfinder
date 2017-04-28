@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -19,13 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
 import pl.lodz.p.pathfinder.MainActivity;
-import pl.lodz.p.pathfinder.MapsActivity;
 import pl.lodz.p.pathfinder.R;
-import pl.lodz.p.pathfinder.TripMenuType;
+import pl.lodz.p.pathfinder.presenter.TripMenuType;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener

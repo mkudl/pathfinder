@@ -1,4 +1,4 @@
-package pl.lodz.p.pathfinder;
+package pl.lodz.p.pathfinder.model;
 
 import java.util.List;
 

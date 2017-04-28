@@ -3,13 +3,8 @@ package pl.lodz.p.pathfinder.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -17,12 +12,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.squareup.picasso.Picasso;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
 import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.R;
-import pl.lodz.p.pathfinder.TripMenuType;
 
 public class LoginScreenActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener//, View.OnClickListener
 {

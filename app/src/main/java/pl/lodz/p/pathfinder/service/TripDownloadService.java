@@ -2,14 +2,9 @@ package pl.lodz.p.pathfinder.service;
 
 import java.util.List;
 
-import pl.lodz.p.pathfinder.AccountSingleton;
-import pl.lodz.p.pathfinder.Configuration;
-import pl.lodz.p.pathfinder.TripFactory;
+import pl.lodz.p.pathfinder.model.TripFactory;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 
 

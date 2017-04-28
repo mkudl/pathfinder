@@ -1,4 +1,4 @@
-package pl.lodz.p.pathfinder;
+package pl.lodz.p.pathfinder.json;
 
 import java.util.ArrayList;
 import java.util.List;

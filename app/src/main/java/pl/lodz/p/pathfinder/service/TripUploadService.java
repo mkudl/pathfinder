@@ -1,7 +1,7 @@
 package pl.lodz.p.pathfinder.service;
 
 import okhttp3.ResponseBody;
-import pl.lodz.p.pathfinder.TripJsonWrapperFactory;
+import pl.lodz.p.pathfinder.json.TripJsonWrapperFactory;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
 import rx.Observable;
