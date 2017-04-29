@@ -15,12 +15,11 @@ import pl.lodz.p.pathfinder.model.PointOfInterest;
 public class PoiListFragmentOpenEdit extends PoiListFragment
 {
 
-    public static PoiListFragment newInstance(List<PointOfInterest> poiList) //TODO? replace string with enum
+    public static PoiListFragment newInstance(List<PointOfInterest> poiList)
     {
         PoiListFragment fragment = new PoiListFragmentOpenEdit();
         Bundle args = new Bundle();
         args.putParcelableArrayList(ARG_PARAM1,new ArrayList<Parcelable>(poiList));
-//        args.putString(ARG_PARAM2,listenerType);
         fragment.setArguments(args);
         return fragment;
     }

@@ -43,27 +43,17 @@ public class PoiMenuActivity extends AppCompatActivity
         viewPager = (ViewPager) findViewById(R.id.poi_viewpager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-
         //hide ui
         //doesn't need method; only place it'd be called from anyway
         tabs.setVisibility(View.GONE);
         viewPager.setVisibility(View.GONE);
-
-
 
         PointOfInterestClient poiClient = new PointOfInterestClient(this);
 
         PoiMenuPresenter presenter = new PoiMenuPresenter(this,poiClient);
         presenter.startActivity();
 
-
-
-
-
         isForResult =  getCallingActivity() != null;
-
-        //TODO delete
-//        Toast.makeText(this, getCallingActivity() == null ? "STANDALONE" : "FOR RESULT" , Toast.LENGTH_LONG).show();
 
     }
 

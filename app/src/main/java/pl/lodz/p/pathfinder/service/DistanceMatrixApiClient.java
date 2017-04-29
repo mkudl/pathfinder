@@ -1,18 +1,9 @@
 package pl.lodz.p.pathfinder.service;
 
-import android.graphics.Path;
-import android.text.Layout;
-import android.util.Log;
-
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import pl.lodz.p.pathfinder.json.distance.DistanceMatrixResponse;
 import pl.lodz.p.pathfinder.json.distance.Element;
-import pl.lodz.p.pathfinder.json.distance.Row;
 import pl.lodz.p.pathfinder.model.SimpleDirections;
 import pl.lodz.p.pathfinder.rest.DistanceMatrixRest;
 import retrofit2.Call;

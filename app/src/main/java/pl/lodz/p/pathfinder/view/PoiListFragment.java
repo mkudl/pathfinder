@@ -25,7 +25,6 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
 {
 
     private List<PointOfInterest> myPlacesList;
-//    String listenerType;
 
 
     private RVAdapterRemovable adapter;
@@ -42,7 +41,6 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
     static final String ARG_PARAM2 = "listenerType";
 
 
-//    private OnFragmentInteractionListener mListener;
 
 
     /**
@@ -54,17 +52,6 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-//    public static PoiListFragment newInstance(String param1, String param2)
-//    public static PoiListFragment newInstance(List<PointOfInterest> poiList) //TODO? replace string with enum
-//    {
-//        PoiListFragment fragment = new PoiListFragment();
-//        Bundle args = new Bundle();
-//        args.putParcelableArrayList(ARG_PARAM1,new ArrayList<Parcelable>(poiList));
-////        args.putString(ARG_PARAM2,listenerType);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -97,14 +84,8 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
         rv.setAdapter(adapter);
 
 
-        //FIXME
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(getContext())
-//                .enableAutoManage(this /* FragmentActivity */,
-//                        this /* OnConnectionFailedListener */)
-//                .addConnectionCallbacks(this)
-//                .addApi(LocationServices.API)
                 .addApi(Places.GEO_DATA_API)
-//                .addApi(Places.PLACE_DETECTION_API)
                 .build();
         googleApiClient.connect();
 
@@ -163,7 +144,6 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
 
     public void removeAt(int position)
     {
-//        myPlacesList.remove(position);    //the list object is passed down to the adapter, so the item only has to be deleted down there
         if(adapter!= null){
             adapter.removeAt(position);
         }
@@ -172,78 +152,4 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
 
 
     abstract RvItemClickListener<PointOfInterest> createItemListener();
-//    {
-//        RvItemClickListener<PointOfInterest> result = null;
-//        switch (type)
-//        {
-//            case "MOVE_MAP":
-//                result = new PoiListOnClickUpdateMap();
-//                break;
-//            case "OPEN_EDIT":
-//                result = new PoiListOnClickOpenEditMode();
-//                break;
-//            default:
-//                throw new IllegalArgumentException("Unknown argument" + type);
-//        }
-//
-//        return result;
-//    }
-
-
-
-
-//    private View.OnClickListener createOnClickListener(PoiViewListenerType listenerType)
-//    {
-//
-//    }
-
-
-
-
-
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri)
-//    {
-//        if (mListener != null)
-//        {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-
-//    @Override
-//    public void onAttach(Context context)
-//    {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener)
-//        {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else
-//        {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-
-//    @Override
-//    public void onDetach()
-//    {
-//        super.onDetach();
-//        mListener = null;
-//    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener
-//    {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

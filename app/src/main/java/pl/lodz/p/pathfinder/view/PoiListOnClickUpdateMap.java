@@ -12,14 +12,13 @@ import pl.lodz.p.pathfinder.model.PointOfInterest;
 public class PoiListOnClickUpdateMap implements RvItemClickListener<PointOfInterest>
 {
 
-    GoogleMapsMovable map;
+    private GoogleMapsMovable map;
 
     public PoiListOnClickUpdateMap(GoogleMapsMovable map)
     {
         this.map = map;
     }
 
-    //TODO
     @Override
     public void onItemClicked(PointOfInterest item, View view)
     {

@@ -8,12 +8,6 @@ import android.view.View;
  */
 
 
-/**
- *
- * TODO
- * @param <T>
- */
-//TODO delete Parcelable once DI in fragments is implemented
 public interface RvItemClickListener<T>  extends Parcelable
 {
     void onItemClicked(T item, View view);

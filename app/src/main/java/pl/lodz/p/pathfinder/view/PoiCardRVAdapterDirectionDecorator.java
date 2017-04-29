@@ -41,20 +41,6 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
     private List<DetailDirections> directionsDetailList;
 
 
-    //TODO remove
-    {
-//        for(PointOfInterest p : )
-//
-//        SimpleDirections asd = new SimpleDirections();
-//        asd.setDistance("123 km");
-//        asd.setDuration("1hr 23min");
-//        directionsOverviewList = new ArrayList<>();
-//        directionsOverviewList.add(asd);
-//        directionsOverviewList.add(asd);
-//        directionsOverviewList.add(asd);
-//        directionsOverviewList.add(asd);
-    }
-
 
     public PoiCardRVAdapterDirectionDecorator(List<PointOfInterest> dataset, RvItemClickListener<PointOfInterest> itemListener,List<Bitmap> poiPhotoList)
     {

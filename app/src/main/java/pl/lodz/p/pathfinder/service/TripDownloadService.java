@@ -8,7 +8,6 @@ import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
 import rx.Observable;
 
 
-//TODO? change name (service might be more appropriate)
 public class TripDownloadService
 {
 

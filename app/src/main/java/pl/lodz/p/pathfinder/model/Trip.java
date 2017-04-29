@@ -47,8 +47,10 @@ public class Trip implements Parcelable
         this.pointOfInterestList = pointOfInterestList;
     }
 
-    //TODO? include id
-    @Deprecated
+
+    /**
+     * to be used for newly created trips that don't have an id yet
+     */
     public Trip(String name, String description, List<PointOfInterest> pointOfInterestList)
     {
         this.name = name;

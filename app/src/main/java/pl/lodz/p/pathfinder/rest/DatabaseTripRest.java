@@ -23,28 +23,6 @@ import rx.Observable;
 
 public interface DatabaseTripRest
 {
-    //TODO? rename class and methods to be explicitly Trip-related
-
-
-//    @GET("trip/getAll")
-//    Call<List<Trip>> loadUserCreated(@Query("idToken") String idToken);
-//
-//    @GET("trip/favorites")
-//    Call<List<Trip>> loadUserFavorites(@Query("idToken") String idToken);
-//
-//    @GET("trip/recommended")
-//    Call<List<Trip>> loadRecommended(@Query("idToken") String idToken);
-//
-//    @POST("trip/create")
-//    Call<ResponseBody> createTrip(@Body TripJsonWrapper tripRequest);
-//
-//    @PUT("trip/update")
-//    Call<ResponseBody> updateTrip(@Body TripJsonWrapper tripRequest);
-//
-//    @PUT("trip/addFavorite")
-//    Call<ResponseBody> addToFavorites(@Body TripJsonWrapper tripRequest);
-
-
     @GET("trip/getAll")
     Observable<List<TripJson>> loadUserCreated(@Query("idToken") String idToken);
 
@@ -54,7 +32,6 @@ public interface DatabaseTripRest
     @GET("trip/recommended")
     Observable<List<TripJson>> loadRecommended(@Query("idToken") String idToken);
 
-    //TODO observable?
     @POST("trip/create")
     Observable<ResponseBody> createTrip(@Body TripJsonWrapper tripRequest);
 

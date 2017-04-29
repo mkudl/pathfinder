@@ -90,8 +90,6 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
         {
             GoogleSignInAccount asd = result.getSignInAccount();
             AccountSingleton.INSTANCE.setAccount(asd);
-            //TODO launch main menu
-
             launchMainMenu();
         }
         else{   //display error message

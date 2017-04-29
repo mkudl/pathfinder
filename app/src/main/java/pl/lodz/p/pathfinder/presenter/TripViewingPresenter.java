@@ -46,7 +46,6 @@ public class TripViewingPresenter implements SimpleDirectionsCallback, DetailedD
         this.view = view;
         this.displayedTrip = displayedTrip;
 
-//        this.simpleDirectionsApi = simpleDirectionsApi;
         simpleDirectionsApi = new DistanceMatrixApiClient(this);
 
         this.tripFavoriteChecker = tripFavoriteChecker;

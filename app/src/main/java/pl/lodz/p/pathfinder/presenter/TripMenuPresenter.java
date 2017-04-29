@@ -65,9 +65,6 @@ public abstract class TripMenuPresenter
     //TODO possible SRP violation
     private void downloadPhotos()
     {
-        //TODO move to constructor
-//        RepresentativePoiStrategy poiStrategy = new ChooseFirstPoiStrategy();
-
         //for every trip chooses the poi that best represents it (according to strategy)
         //then retrieves its photo and stores it in a list
         Observable.just(getTripList())

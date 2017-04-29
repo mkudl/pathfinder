@@ -7,7 +7,6 @@ import java.util.List;
  */
 
 
-//TODO constructor from model   // or maybe converter class
 public class TripJson
 {
 

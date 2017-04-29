@@ -62,7 +62,6 @@ public class PoiMenuPresenter
 
 
         //TODO error handling
-        //TODO method reference
         poiRepository.loadUserCreatedPois(idToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

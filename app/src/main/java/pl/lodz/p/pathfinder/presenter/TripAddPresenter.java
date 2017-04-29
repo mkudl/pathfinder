@@ -49,12 +49,8 @@ public class TripAddPresenter
 
     public void saveTrip(String name, String description)
     {
-
-        //TODO see whether this should be created here
         String idToken = AccountSingleton.INSTANCE.getAccount().getIdToken();
-
         Trip createdTrip = new Trip(name,description,poiList);
-
         tripUploadService.createTrip(idToken,createdTrip)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -66,11 +62,6 @@ public class TripAddPresenter
                             view.displayCreationErrorMessage(t);
                         }
                 , () -> view.finishActivity());
-
-
-
-        //TODO on fail display snackbar
-        //TODO on success display message then close? toast then close?
     }
 
 

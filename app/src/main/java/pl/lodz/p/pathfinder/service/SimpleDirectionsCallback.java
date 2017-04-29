@@ -8,7 +8,6 @@ import pl.lodz.p.pathfinder.model.SimpleDirections;
 
 public interface SimpleDirectionsCallback
 {
-    //TODO? change method types to void
     void successCallback(SimpleDirections directions, int itemPosition);
 
     //failure calling the api

@@ -31,7 +31,7 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder //implements View.OnClickListener
+    public class ViewHolder extends RecyclerView.ViewHolder
     {
         public TextView title;
         public ImageView image;
@@ -44,19 +44,9 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
             title = (TextView) itemView.findViewById(R.id.tripcard_textview_title);
             image = (ImageView) itemView.findViewById(R.id.tripcard_imageview);
             this.itemView = itemView;
-//            itemView.setOnClickListener(this);
         }
 
 
-//        @Override
-//        public void onClick(View v)
-//        {
-//
-//            //FIXME different values for list of just poi and list of poi with directions
-//            int itemPosition = getLayoutPosition()/2;
-//            Toast.makeText(v.getContext(),String.valueOf(itemPosition),Toast.LENGTH_SHORT).show();
-//            if(itemClick != null)    itemClick.onItemClicked(poiList.get(itemPosition), v);
-//        }
     }
 
 
