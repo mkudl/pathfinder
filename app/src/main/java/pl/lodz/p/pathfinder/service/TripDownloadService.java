@@ -2,8 +2,8 @@ package pl.lodz.p.pathfinder.service;
 
 import java.util.List;
 
-import pl.lodz.p.pathfinder.model.TripFactory;
 import pl.lodz.p.pathfinder.model.Trip;
+import pl.lodz.p.pathfinder.model.TripFactory;
 import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
 import rx.Observable;
 

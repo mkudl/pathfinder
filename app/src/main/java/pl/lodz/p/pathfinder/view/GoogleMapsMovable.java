@@ -1,7 +1,5 @@
 package pl.lodz.p.pathfinder.view;
 
-import android.os.Parcelable;
-
 import com.google.android.gms.maps.model.LatLng;
 
 /**

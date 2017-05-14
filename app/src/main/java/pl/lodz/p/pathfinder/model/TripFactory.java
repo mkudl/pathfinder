@@ -3,8 +3,6 @@ package pl.lodz.p.pathfinder.model;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.json.server.TripJson;
-import pl.lodz.p.pathfinder.model.PointOfInterest;
-import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.service.PointOfInterestClient;
 
 /**

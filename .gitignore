@@ -1,5 +1,7 @@
 google_maps_api.xml
 
+.idea/*
+
 *.iml
 .gradle
 /local.properties

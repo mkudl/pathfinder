@@ -4,8 +4,6 @@ package pl.lodz.p.pathfinder;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import java.util.List;
 
 /**

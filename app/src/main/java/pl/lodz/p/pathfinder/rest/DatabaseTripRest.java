@@ -4,11 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
-import pl.lodz.p.pathfinder.TokenJson;
 import pl.lodz.p.pathfinder.json.server.TripJson;
 import pl.lodz.p.pathfinder.json.server.TripJsonWrapper;
-import pl.lodz.p.pathfinder.model.Trip;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;

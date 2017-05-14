@@ -1,7 +1,5 @@
 package pl.lodz.p.pathfinder.presenter;
 
-import android.view.View;
-
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -13,7 +11,6 @@ import pl.lodz.p.pathfinder.model.SimpleDirections;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.service.DistanceMatrixApiClient;
 import pl.lodz.p.pathfinder.service.SimpleDirectionsCallback;
-import pl.lodz.p.pathfinder.service.TripDownloadService;
 import pl.lodz.p.pathfinder.service.TripFavoriteChecker;
 import pl.lodz.p.pathfinder.service.TripUploadService;
 import pl.lodz.p.pathfinder.service.directions.DetailedDirectionsCallback;

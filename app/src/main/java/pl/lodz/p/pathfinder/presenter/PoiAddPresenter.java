@@ -1,15 +1,8 @@
 package pl.lodz.p.pathfinder.presenter;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.AddPlaceRequest;
-import com.google.android.gms.location.places.GeoDataApi;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Collections;

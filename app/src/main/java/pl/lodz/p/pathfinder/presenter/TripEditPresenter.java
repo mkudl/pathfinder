@@ -2,7 +2,6 @@ package pl.lodz.p.pathfinder.presenter;
 
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.AccountSingleton;

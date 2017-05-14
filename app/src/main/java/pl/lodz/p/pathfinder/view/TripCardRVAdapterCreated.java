@@ -1,6 +1,5 @@
 package pl.lodz.p.pathfinder.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.view.View;

@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
-import pl.lodz.p.pathfinder.json.server.PointOfInterestJson;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.rest.DatabasePoiRest;
-import retrofit2.Retrofit;
 import rx.Observable;
 
 /**

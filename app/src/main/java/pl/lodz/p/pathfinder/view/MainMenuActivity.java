@@ -4,22 +4,21 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import pl.lodz.p.pathfinder.AccountSingleton;
-import pl.lodz.p.pathfinder.MainActivity;
 import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.presenter.TripMenuType;
 
@@ -78,7 +77,6 @@ public class MainMenuActivity extends AppCompatActivity
 
         poiButton.setOnClickListener( v ->  startActivity(new Intent(this, PoiMenuActivity.class)));
 
-        ((Button) findViewById(R.id.button_dev)).setOnClickListener( v -> startActivity(new Intent(this, MainActivity.class))); //FIXME delete upon project completion!!!!!!
 
         View header = navigationView.getHeaderView(0);
 

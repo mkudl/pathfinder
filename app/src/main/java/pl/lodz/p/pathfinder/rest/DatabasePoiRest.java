@@ -5,7 +5,6 @@ import java.util.Map;
 
 import okhttp3.ResponseBody;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
-import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;

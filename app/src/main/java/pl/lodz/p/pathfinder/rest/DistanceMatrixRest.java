@@ -1,6 +1,5 @@
 package pl.lodz.p.pathfinder.rest;
 
-import pl.lodz.p.pathfinder.json.directions.DirectionsResponse;
 import pl.lodz.p.pathfinder.json.distance.DistanceMatrixResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -11,7 +11,6 @@ import java.util.List;
 import pl.lodz.p.pathfinder.model.DetailDirections;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.model.SimpleDirections;
-import pl.lodz.p.pathfinder.service.directions.DetailedDirectionsCallback;
 
 /**
  * Created by QDL on 2017-03-29.

@@ -1,7 +1,5 @@
 package pl.lodz.p.pathfinder.json.server;
 
-import pl.lodz.p.pathfinder.model.Trip;
-
 /**
  * Created by QDL on 2017-04-06.
  */

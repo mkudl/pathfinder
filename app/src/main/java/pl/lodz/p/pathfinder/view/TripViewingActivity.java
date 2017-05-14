@@ -20,7 +20,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Polyline;
@@ -28,7 +31,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.stream.Collectors;
 
 import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.PolylineUtils;
@@ -44,6 +46,8 @@ import pl.lodz.p.pathfinder.service.TripUploadService;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+//import java.util.stream.Collectors;
 
 //FIXME EVERYTHING
 //TODO #IMPORTANT ask for permissions at main menu, if  check fails here back out of the activity

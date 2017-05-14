@@ -6,9 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import pl.lodz.p.pathfinder.R;

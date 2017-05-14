@@ -2,7 +2,6 @@ package pl.lodz.p.pathfinder.model;
 
 import java.util.List;
 
-import pl.lodz.p.pathfinder.json.directions.Leg;
 import pl.lodz.p.pathfinder.json.directions.OverviewPolyline;
 import pl.lodz.p.pathfinder.json.directions.Step;
 

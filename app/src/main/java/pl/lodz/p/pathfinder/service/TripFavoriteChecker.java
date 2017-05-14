@@ -1,6 +1,5 @@
 package pl.lodz.p.pathfinder.service;
 
-import pl.lodz.p.pathfinder.AccountSingleton;
 import pl.lodz.p.pathfinder.model.Trip;
 import pl.lodz.p.pathfinder.rest.DatabaseTripRest;
 import rx.Observable;

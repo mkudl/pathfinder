@@ -2,9 +2,9 @@ package pl.lodz.p.pathfinder.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +21,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 import pl.lodz.p.pathfinder.Configuration;
 import pl.lodz.p.pathfinder.R;
-import pl.lodz.p.pathfinder.model.PointOfInterest;
 import pl.lodz.p.pathfinder.presenter.PoiAddPresenter;
 import pl.lodz.p.pathfinder.rest.DatabasePoiRest;
 import pl.lodz.p.pathfinder.service.PoiRepository;
