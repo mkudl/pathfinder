@@ -26,13 +26,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TripAddActivity extends AppCompatActivity
 {
-
     TripAddPresenter presenter;
-
     Button addTripButton;
     Button finishButton;
-
-
     private final static int CALL_POI_PICK_CODE = 42099;
 
     @Override
@@ -40,7 +36,6 @@ public class TripAddActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_add);
-
         createPresenter();
         bindButtons();
         setAddButtonBehavior();
@@ -51,18 +46,16 @@ public class TripAddActivity extends AppCompatActivity
     {
         finishButton.setOnClickListener( v ->
                 presenter.saveTrip(
-                        ((EditText) findViewById(R.id.trip_add_name_content)).getText().toString(),
-                        ((EditText) findViewById(R.id.trip_add_desc_content)).getText().toString()
+                    ((EditText) findViewById(R.id.trip_add_name_content)).getText().toString(),
+                    ((EditText) findViewById(R.id.trip_add_desc_content)).getText().toString()
                 ));
     }
 
     private void setAddButtonBehavior()
     {
         addTripButton.setOnClickListener( v -> {
-
             Intent intent = new Intent(this,PoiMenuActivity.class);
             startActivityForResult(intent,CALL_POI_PICK_CODE);
-
         });
     }
 
@@ -89,9 +82,7 @@ public class TripAddActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == CALL_POI_PICK_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-
                 PointOfInterest selectedPoi =  data.getParcelableExtra("selectedPoi");
-
                 presenter.addPoi(selectedPoi);
             }
             else {
@@ -137,8 +128,8 @@ public class TripAddActivity extends AppCompatActivity
     public void displayCreationErrorMessage(Throwable t)
     {
         Snackbar.make( finishButton,
-                        getResources().getString(R.string.trip_add_error_message),
-                        Snackbar.LENGTH_LONG)
+                       getResources().getString(R.string.trip_add_error_message),
+                       Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 

@@ -31,35 +31,17 @@ import pl.lodz.p.pathfinder.model.PointOfInterest;
  */
 public class PoiSearchFragment extends Fragment
 {
-
+    final int PLACE_PICKER_REQUEST = 9420;
+    private static final String ARG_LISTENER = "listenerType";
 
     Button againButton;
     Button actionButton;
     TextView placeName;
     LinearLayout infoLayout;
     LinearLayout actionLayout;
-
-
-
     String listenerType;
-
     PointOfInterest currentSelection;
 
-
-
-    final int PLACE_PICKER_REQUEST = 9420;
-
-
-//    // TODO: Rename parameter arguments, choose names that match
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_LISTENER = "listenerType";
-//    private static final String ARG_PARAM2 = "param2";
-//
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-
-//    private OnFragmentInteractionListener mListener;
 
     public PoiSearchFragment()
     {
@@ -90,23 +72,16 @@ public class PoiSearchFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        // Inflate the layout for this fragment
+        // Inflate a layout for this fragment
         View v =inflater.inflate(R.layout.fragment_poi_search, container, false);
         againButton = (Button) v.findViewById(R.id.poi_picker_button_pickagain);
         actionButton = (Button) v.findViewById(R.id.poi_picker_action_button);
         infoLayout = (LinearLayout) v.findViewById(R.id.poi_picker_info_layout);
         actionLayout = (LinearLayout) v.findViewById(R.id.poi_picker_action_layout);
         placeName = (TextView) v.findViewById(R.id.poi_search_selected_name);
-
         hideUI();
-
-
         againButton.setOnClickListener(v1 -> callPicker());
-
-
         actionButton.setOnClickListener(createActionListener(listenerType));//TODO
-
-//        callPicker();
         return v;
     }
 

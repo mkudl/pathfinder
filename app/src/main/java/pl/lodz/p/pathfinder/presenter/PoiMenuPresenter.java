@@ -61,7 +61,6 @@ public class PoiMenuPresenter
         PoiRepository poiRepository = new PoiRepository(rxRetrofit.create(DatabasePoiRest.class),poiClient);
 
 
-        //TODO error handling
         poiRepository.loadUserCreatedPois(idToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -89,11 +88,10 @@ public class PoiMenuPresenter
 
     protected void onConnectionFailure(Throwable t)
     {
-        //TODO? some sort of util class?
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        t.printStackTrace(pw);
-        Log.d("PoiMenuPresenter", sw.toString());
+//        StringWriter sw = new StringWriter();
+//        PrintWriter pw = new PrintWriter(sw);
+//        t.printStackTrace(pw);
+        Log.d("PoiMenuPresenter", " Connection Failure", t);
 
         view.displayCreationErrorMessage(t);
         view.hideSpinner();

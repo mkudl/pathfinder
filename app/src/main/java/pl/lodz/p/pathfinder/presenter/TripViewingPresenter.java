@@ -25,14 +25,12 @@ import rx.schedulers.Schedulers;
 
 public class TripViewingPresenter implements SimpleDirectionsCallback, DetailedDirectionsCallback
 {
-    //TODO change to interfaces, decouple etc.
 
     private TripViewingActivity view;
     private Trip displayedTrip;
     private boolean isFavorite = false;
 
-
-    private DistanceMatrixApiClient simpleDirectionsApi; //TODO see if this can be turned into a local variable
+    private DistanceMatrixApiClient simpleDirectionsApi;
 
     private TripFavoriteChecker tripFavoriteChecker;
     private TripUploadService tripUploadService;
