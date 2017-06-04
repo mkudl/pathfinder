@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TripAddActivity extends AppCompatActivity
 {
     TripAddPresenter presenter;
-    Button addTripButton;
+    Button addPoiButton;
     Button finishButton;
     private final static int CALL_POI_PICK_CODE = 42099;
 
@@ -53,7 +53,7 @@ public class TripAddActivity extends AppCompatActivity
 
     private void setAddButtonBehavior()
     {
-        addTripButton.setOnClickListener( v -> {
+        addPoiButton.setOnClickListener(v -> {
             Intent intent = new Intent(this,PoiMenuActivity.class);
             startActivityForResult(intent,CALL_POI_PICK_CODE);
         });
@@ -61,7 +61,7 @@ public class TripAddActivity extends AppCompatActivity
 
     private void bindButtons()
     {
-        addTripButton = (Button) findViewById(R.id.trip_add_button_poi_add);
+        addPoiButton = (Button) findViewById(R.id.trip_add_button_poi_add);
         finishButton = (Button) findViewById(R.id.trip_add_button_finish);
     }
 
