@@ -64,12 +64,12 @@ public class PoiMenuPresenter
         poiRepository.loadUserCreatedPois(idToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( x -> setFavorites(x), t -> onConnectionFailure(t), () -> returnData());
+                .subscribe( x -> setCreated(x), t -> onConnectionFailure(t), () -> returnData());
 
         poiRepository.loadUserFavoritePois(idToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( x -> setCreated(x), t -> onConnectionFailure(t), () -> returnData());
+                .subscribe( x -> setFavorites(x), t -> onConnectionFailure(t), () -> returnData());
 
     }
 
