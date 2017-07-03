@@ -57,7 +57,6 @@ public class PoiMenuActivity extends AppCompatActivity
 
 
     //methods called from presenter
-    //TODO? add interface
     public void showSpinner()
     {
         spinner.setVisibility(View.VISIBLE);

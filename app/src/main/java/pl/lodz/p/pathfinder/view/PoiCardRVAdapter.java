@@ -54,8 +54,6 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     {
         this.poiList = dataset;
         this.itemClick = itemListener;
-
-        //FIXME?
         this.poiPhotoList = poiPhotoList;
 
     }
@@ -104,7 +102,7 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
         notifyDataSetChanged();
     }
 
-    //TODO adopt approach from TipCardRVAdapter
+    //NOTE might consider adopting approach from TipCardRVAdapter
     @Override
     public void updatePhoto(Bitmap bitmap, int position)
     {

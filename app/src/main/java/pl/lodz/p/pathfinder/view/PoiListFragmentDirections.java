@@ -34,7 +34,6 @@ public class PoiListFragmentDirections extends PoiListFragment
 
 
 
-    //TODO? extract interface
     void updateDirections(SimpleDirections dirs, int position)
     {
         RVAdapter.updateDirections(dirs,position);

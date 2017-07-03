@@ -26,6 +26,7 @@ public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
 
+    //TODO extract methods
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

@@ -46,7 +46,6 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
     {
         poiAdapter = new PoiCardRVAdapter(dataset,itemListener,poiPhotoList);
 
-        //FIXME?
         directionsOverviewList = new ArrayList<>();
         directionsDetailList = new ArrayList<>();
         SimpleDirections asd = new SimpleDirections();
@@ -87,9 +86,9 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
         {
             int itemPosition = getLayoutPosition();
             //TODO? perhaps remove check entirely
-            if(getItemViewType() == 1)  //FIXME change to enum
+            if(getItemViewType() == 1)  //TODO change to enum
             {
-                Toast.makeText(v.getContext(),String.valueOf(itemPosition) + " direction",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(),String.valueOf(itemPosition) + " direction",Toast.LENGTH_SHORT).show();
                 //TODO expand details
             }
 

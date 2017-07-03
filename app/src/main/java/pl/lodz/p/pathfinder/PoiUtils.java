@@ -20,7 +20,8 @@ import pl.lodz.p.pathfinder.view.PhotoDownloadCallback;
  * Created by QDL on 2017-04-03.
  */
 
-public class PoiUtils       //TODO? get poi photo link instead, delegate loading to Picasso in view
+public class PoiUtils
+//NOTE possible alternative: get poi photo link instead, delegate loading to Picasso in view
 {
 
     public static void loadPoiPhoto(final GoogleApiClient googleApiClient, PointOfInterest displayedPoi, final ImageView display)

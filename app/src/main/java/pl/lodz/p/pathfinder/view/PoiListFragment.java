@@ -35,8 +35,6 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
 
 
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     static final String ARG_PARAM1 = "poiList";
     static final String ARG_PARAM2 = "listenerType";
 

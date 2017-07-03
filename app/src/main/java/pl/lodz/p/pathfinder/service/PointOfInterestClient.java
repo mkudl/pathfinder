@@ -57,7 +57,7 @@ public class PointOfInterestClient
             places.release();
             return poi;
         }
-        else return null; //FIXME error handling?
+        else return null;
     }
 
 

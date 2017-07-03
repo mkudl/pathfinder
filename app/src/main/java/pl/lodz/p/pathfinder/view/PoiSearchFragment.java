@@ -81,7 +81,7 @@ public class PoiSearchFragment extends Fragment
         placeName = (TextView) v.findViewById(R.id.poi_search_selected_name);
         hideUI();
         againButton.setOnClickListener(v1 -> callPicker());
-        actionButton.setOnClickListener(createActionListener(listenerType));//TODO
+        actionButton.setOnClickListener(createActionListener(listenerType));
         return v;
     }
 
@@ -105,9 +105,9 @@ public class PoiSearchFragment extends Fragment
             if (resultCode == Activity.RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, getActivity());
 //                Place place = PlacePicker.getPlace(this,data);
-                //TODO remove toast
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_LONG).show();
+//                //TODO remove toast
+//                String toastMsg = String.format("Place: %s", place.getName());
+//                Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_LONG).show();
 
                 placeName.setText(place.getName());
                 currentSelection = new PointOfInterest(place.getName().toString(),place.getLatLng(),place.getId());

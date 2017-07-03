@@ -10,8 +10,6 @@ package pl.lodz.p.pathfinder.model;
  */
 public class SimpleDirections
 {
-   //TODO? package distance and duration into objects
-    //use json model objects?
 
     private String distance;
     private Integer distance_actual;

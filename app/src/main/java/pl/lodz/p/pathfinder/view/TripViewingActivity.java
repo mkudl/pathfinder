@@ -50,7 +50,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 //import java.util.stream.Collectors;
 
 //FIXME EVERYTHING
-//TODO #IMPORTANT ask for permissions at main menu, if  check fails here back out of the activity
 public class TripViewingActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMapsMovable
 {
 
@@ -120,15 +119,8 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view)
             {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                //TODO Presenter -> get detail directions -> callback, create details
-                //TODO enable expand button in directions
                 presenter.startNavigation(trip.getPointOfInterestList());
 
-
-                //TODO set navigation started flag, hide button
-//                startNavigation();
             }
         });
 
@@ -257,47 +249,23 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap)
     {
         mMap = googleMap;
-
         PolylineOptions po = new PolylineOptions();
         List<LatLng> positionList = new ArrayList<>();
-
         for (PointOfInterest p : trip.getPointOfInterestList())
         {
             positionList.add(p.getPosition());
         }
-
-        //FIXME
-        LatLngBounds.Builder asd = new LatLngBounds.Builder();
-//        asd.include(positionList.get(positionList.size() - 1));
-//        asd.include(positionList.get(0));
-        positionList.forEach(asd::include);
-
+        LatLngBounds.Builder latLngBuilder = new LatLngBounds.Builder();
+        positionList.forEach(latLngBuilder::include);
         int width = getResources().getDisplayMetrics().widthPixels;
         int height = getResources().getDisplayMetrics().heightPixels;
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(asd.build(), width, height, 200));
-
-
-//         LatLngBounds AUSTRALIA = new LatLngBounds(
-//                new LatLng(-44, 113), new LatLng(-10, 154));
-//
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(AUSTRALIA, 10));
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBuilder.build(), width, height, 200));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         mMap.setMyLocationEnabled(true);
-
         po.addAll(positionList);
-
-
         po.width(5).color(Color.RED);
         Polyline line = mMap.addPolyline(po);   //TODO unused assignment, consider whether to remove
         polylinesDrawn.add(line);               //^ i knew it'd come in handy at some point

@@ -26,8 +26,8 @@ import rx.schedulers.Schedulers;
 public class PoiMenuPresenter
 {
 
-    //TODO interface
-    //TODO weakreference
+    //NOTE memory leaks prevented by nulling view reference at the end; another possible solution - weakreference
+
     private PoiMenuActivity view;
     private PointOfInterestClient poiClient;
 //    private TripDownloadService tripRepository;

@@ -67,7 +67,7 @@ public class DirectionsApiClient
 
 
 
-    //TODO think about moving to another class
+    //NOTE think about moving to another class
     private class DirectionsApiClientCallback implements Callback<DirectionsResponse>
     {
         int itemPosition;

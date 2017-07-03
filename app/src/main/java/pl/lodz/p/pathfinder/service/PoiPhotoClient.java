@@ -12,7 +12,7 @@ import com.google.android.gms.location.places.Places;
  * Created by QDL on 2017-04-21.
  */
 
-//TODO ultimately this should replace PoiUtils
+//NOTE ultimately this should replace PoiUtils
 public class PoiPhotoClient
 {
     private final static int PHOTO_TO_GET=0;    //TODO consider other methods of picking the appropriate photo
