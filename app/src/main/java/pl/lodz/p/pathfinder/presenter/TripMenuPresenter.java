@@ -24,8 +24,8 @@ import rx.schedulers.Schedulers;
 public abstract class TripMenuPresenter
 {
     protected TripDownloadService tripDownloadService;
-    PoiPhotoClient poiPhotoClient;
-    RepresentativePoiStrategy poiStrategy;
+    private PoiPhotoClient poiPhotoClient;
+    private RepresentativePoiStrategy poiStrategy;
 
     protected TripMenuActivity view;
     private List<Trip> tripList;
@@ -62,7 +62,6 @@ public abstract class TripMenuPresenter
         return new TripCardRVAdapter(trips);
     }
 
-    //TODO possible SRP violation
     private void downloadPhotos()
     {
         //for every trip chooses the poi that best represents it (according to strategy)

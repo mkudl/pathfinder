@@ -16,15 +16,12 @@ import rx.Observable;
 public class PoiRepository
 {
 
-//    private Retrofit rxRetrofit;
     private DatabasePoiRest restClient;
     private PointOfInterestClient poiClient;
 
 
     public PoiRepository(DatabasePoiRest restClient, PointOfInterestClient poiClient)
     {
-//        this.rxRetrofit = rxRetrofit;
-////        this.restClient = restClient;
         this.poiClient = poiClient;
 
         this.restClient = restClient;

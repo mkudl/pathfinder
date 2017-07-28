@@ -34,9 +34,6 @@ public class DirectionsApiClient
 
 
 
-
-
-
     public void sendRequest(LatLng origin, LatLng destination, int itemPosition)
     {
         callDirectionsApi(""+origin.latitude+","+origin.longitude,""+destination.latitude+","+destination.longitude, itemPosition, null);
@@ -49,14 +46,6 @@ public class DirectionsApiClient
 
 
 
-//    void callDirectionsApi(String origin, String destination, int itemPosition)
-//    {
-//        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://maps.googleapis.com/").addConverterFactory(GsonConverterFactory.create()).build();
-//        DirectionsRest rI = retrofit.create(DirectionsRest.class);
-//        Call<DirectionsResponse> response = rI.getDirections(origin,destination,null);
-//        response.enqueue(new DirectionsApiClientCallback(itemPosition,directionsCallback));     //register this as a callback
-//    }
-
     void callDirectionsApi(String origin, String destination, int itemPosition,Integer time)
     {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://maps.googleapis.com/").addConverterFactory(GsonConverterFactory.create()).build();
@@ -66,8 +55,6 @@ public class DirectionsApiClient
     }
 
 
-
-    //NOTE think about moving to another class
     private class DirectionsApiClientCallback implements Callback<DirectionsResponse>
     {
         int itemPosition;
@@ -103,8 +90,6 @@ public class DirectionsApiClient
             directions.setOverviewPolyline(response.body().getRoutes().get(0).getOverviewPolyline());
 
             directionsCallback.successCallback(directions, itemPosition);
-
-
         }
 
         @Override

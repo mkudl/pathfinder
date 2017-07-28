@@ -73,7 +73,6 @@ public class TripViewingPresenter implements SimpleDirectionsCallback, DetailedD
 
     public void loadDirectionsFromLocation(LatLng currentLocation, PointOfInterest poi)
     {
-        //NOTE create non-anonymous class?
         DirectionsApiClient directionsApi = new DirectionsApiClient(new DetailedDirectionsCallback()
         {
             @Override

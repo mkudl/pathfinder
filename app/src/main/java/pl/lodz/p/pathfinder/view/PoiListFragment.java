@@ -26,14 +26,8 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
 
     private List<PointOfInterest> myPlacesList;
 
-
     private RVAdapterRemovable adapter;
     private RVAdapterPhotoUpdateable adapterPhotoUpdateable;
-
-
-//TODO truncate long poi descriptions
-
-
 
     static final String ARG_PARAM1 = "poiList";
     static final String ARG_PARAM2 = "listenerType";
@@ -68,20 +62,27 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
     {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.poi_menu_tab_my_fragment, container, false);
+        setupRV(v);
+        downloadPhotos();
+        return v;
+    }
 
+    private void setupRV(View v)
+    {
         RecyclerView rv = (RecyclerView) v.findViewById(R.id.poi_my_fragment_recyclerview);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
 
         if(myPlacesList==null) myPlacesList = new ArrayList<>();
 
-
         RecyclerView.Adapter adapter = createRVAdapter(myPlacesList);
         this.adapter = (RVAdapterRemovable) adapter;
         this.adapterPhotoUpdateable = (RVAdapterPhotoUpdateable) adapter;
         rv.setAdapter(adapter);
+    }
 
-
+    private void downloadPhotos()
+    {
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(getContext())
                 .addApi(Places.GEO_DATA_API)
                 .build();
@@ -93,9 +94,8 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
             PoiUtils.getPhotosForPoi(googleApiClient,p,i,this);
             i++;
         }
-
-        return v;
     }
+
 
     @Override
     public void onDestroyView()
@@ -138,15 +138,12 @@ public abstract class PoiListFragment extends Fragment implements PhotoDownloadC
         }
     }
 
-
-
     public void removeAt(int position)
     {
         if(adapter!= null){
             adapter.removeAt(position);
         }
     }
-
 
 
     abstract RvItemClickListener<PointOfInterest> createItemListener();

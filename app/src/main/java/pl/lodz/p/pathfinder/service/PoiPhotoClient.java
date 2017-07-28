@@ -15,7 +15,7 @@ import com.google.android.gms.location.places.Places;
 //NOTE ultimately this should replace PoiUtils
 public class PoiPhotoClient
 {
-    private final static int PHOTO_TO_GET=0;    //TODO consider other methods of picking the appropriate photo
+    private final static int PHOTO_TO_GET=0;
 
     private GoogleApiClient googleApiClient;
 

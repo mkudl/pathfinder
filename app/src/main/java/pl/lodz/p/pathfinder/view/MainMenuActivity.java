@@ -26,7 +26,6 @@ public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
 
-    //TODO extract methods
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -35,27 +34,29 @@ public class MainMenuActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fabDirections = (FloatingActionButton) findViewById(R.id.fabDirections);
-//        fabDirections.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        setupDrawer(toolbar);
+        setupButtons();
+        setupText();
 
+        if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                && (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED))
+        {
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+        }
+
+    }
+
+    private void setupDrawer(Toolbar toolbar)
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+    }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-
+    private void setupButtons()
+    {
         Button createdButton = (Button) findViewById(R.id.main_menu_button_created);
         Button favoritesButton = (Button) findViewById(R.id.main_menu_button_favorites);
         Button recButton = (Button) findViewById(R.id.main_menu_button_recommended);
@@ -77,13 +78,16 @@ public class MainMenuActivity extends AppCompatActivity
             startActivity(intent);});
 
         poiButton.setOnClickListener( v ->  startActivity(new Intent(this, PoiMenuActivity.class)));
+    }
 
-
+    private void setupText()
+    {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
 
         TextView navHeaderName = (TextView) header.findViewById(R.id.navheader_name);
         TextView navHeaderEmail = (TextView) header.findViewById(R.id.navheader_email);
-
 
         TextView welcomeText = (TextView) findViewById(R.id.main_menu_welcome);
         if(AccountSingleton.INSTANCE.getAccount() != null)
@@ -94,16 +98,8 @@ public class MainMenuActivity extends AppCompatActivity
             navHeaderName.setText(AccountSingleton.INSTANCE.getAccount().getDisplayName());
             navHeaderEmail.setText( AccountSingleton.INSTANCE.getAccount().getEmail());
         } else Log.wtf("MAIN_MENU", "User accessed main menu without logging in");  //should never happen
-
-
-
-        if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                && (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED))
-        {
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
-        }
-
     }
+
 
     @Override
     public void onBackPressed()
@@ -143,7 +139,6 @@ public class MainMenuActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
     {
@@ -157,10 +152,6 @@ public class MainMenuActivity extends AppCompatActivity
             Intent intent = new Intent(this, LoginScreenActivity.class);
             startActivity(intent);
             finish();
-        }
-        else if (id == R.id.menu_info)
-        {
-            //TODO
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

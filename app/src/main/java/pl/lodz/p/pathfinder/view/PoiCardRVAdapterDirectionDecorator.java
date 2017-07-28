@@ -56,48 +56,28 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
             directionsOverviewList.add(asd);
             directionsDetailList.add(null);
         }
-//        super(dataset);
     }
 
 
 
-    class ViewHolderDirections extends RecyclerView.ViewHolder implements View.OnClickListener
+    class ViewHolderDirections extends RecyclerView.ViewHolder
     {
         public ImageView icon;
         TextView overviewTime;
         TextView overviewDistance;
         LinearLayout baseAnchor;
-//        public TextView details;
-//        private PoiCardRVAdapter.ViewHolder
 
         public ViewHolderDirections(View itemView)
         {
             super(itemView);
             icon = (ImageView) itemView.findViewById(R.id.cardview_directions_icon);
-//            details = (TextView) itemView.findViewById(R.id.cardview_directions_content);
             overviewDistance = (TextView) itemView.findViewById(R.id.cardview_directions_overview_distance);
             overviewTime = (TextView) itemView.findViewById(R.id.cardview_directions_overview_time);
             baseAnchor = (LinearLayout) itemView.findViewById(R.id.cardview_attach);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v)
-        {
-            int itemPosition = getLayoutPosition();
-            //TODO? perhaps remove check entirely
-            if(getItemViewType() == 1)  //TODO change to enum
-            {
-//                Toast.makeText(v.getContext(),String.valueOf(itemPosition) + " direction",Toast.LENGTH_SHORT).show();
-                //TODO expand details
-            }
-
         }
     }
 
 
-
-    //TODO move to some sort of interface?
     void updateDirections(SimpleDirections dirs, int position)
     {
         directionsOverviewList.set(position,dirs);
@@ -109,14 +89,6 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
         directionsDetailList.set(position,dirs);
         notifyDataSetChanged();
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -143,7 +115,6 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
             break;
             case 1:
                 ViewHolderDirections vhd = (ViewHolderDirections) holder;
-                //TODO move to directions api callback
                 if(directionsOverviewList != null )
                 {
                     SimpleDirections sd = directionsOverviewList.get(position/2);
@@ -170,9 +141,9 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
     @Override
     public int getItemCount()
     {
-        return poiAdapter.getItemCount()*2-1 ;  //FIXME actually not broken (probably), come back to later
+        return poiAdapter.getItemCount()*2-1 ;  //there's a direction item in between every two points
+                                                //therefore there are (n-1) directions for n points, for a total of 2n-1 items
     }
-
 
     @Override
     public int getItemViewType(int position)
@@ -181,8 +152,6 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
         return position%2;
     }
 
-
-
     @Override
     public void removeAt(int position)
     {
@@ -190,17 +159,12 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
         notifyDataSetChanged();
     }
 
-
     @Override
     public void updatePhoto(Bitmap bitmap, int position)
     {
         poiAdapter.updatePhoto(bitmap,position);
         notifyDataSetChanged();
     }
-
-
-
-
 
 
     private View createTransitView(Step step, Context context)
@@ -219,7 +183,6 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
 
         //set icon for vehicle
         Picasso.with(context).load("http:" + details.getLine().getVehicle().getIcon()).resize(60,60).into(travelMode);
-//        Picasso.with(context).load("http://maps.gstatic.com/mapfiles/transit/iw2/6/bus2.png").resize(60,60).into(travelMode);
 
         hourDepart.setText(details.getDepartureTime().getText());
         nameDepart.setText(details.getDepartureStop().getName());
@@ -244,8 +207,6 @@ public class PoiCardRVAdapterDirectionDecorator extends RecyclerView.Adapter<Rec
         String details = step.getDistance().getText() + ", " + step.getDuration().getText();
         walkDetail.setText(details);
         walkInfo.setText(step.getHtmlInstructions());
-
-
 
         return child;
     }

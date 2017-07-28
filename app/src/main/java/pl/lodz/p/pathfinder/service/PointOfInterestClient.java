@@ -64,7 +64,6 @@ public class PointOfInterestClient
     private PendingResult<PlaceBuffer> retrieveDetailsPending(final String googleID)
     {
         //NOTE  might be a good idea to provide a dependency in constructor
-        //also client does not get closed
         googleApiClient = new GoogleApiClient.Builder(context)
                 .addApi(Places.GEO_DATA_API)
                 .build();

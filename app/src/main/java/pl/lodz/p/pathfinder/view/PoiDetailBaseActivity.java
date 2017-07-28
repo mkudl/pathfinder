@@ -47,6 +47,13 @@ public class PoiDetailBaseActivity extends AppCompatActivity implements GoogleAp
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poi_detail_base);
+
+        setupUI();
+        setupPresenter();
+    }
+
+    private void setupUI()
+    {
         displayedPoi = getIntent().getParcelableExtra("POI_PARAM");
 
         googleApiClient = new GoogleApiClient.Builder(this)
@@ -58,40 +65,27 @@ public class PoiDetailBaseActivity extends AppCompatActivity implements GoogleAp
 
         img = (ImageView) findViewById(R.id.poi_detail_image);
         description = (TextView) findViewById(R.id.poi_detail_description);
+
         header = (CollapsingToolbarLayout) findViewById(R.id.poi_detail_toolbar_layout);
-
         header.setTitle(displayedPoi.getName());
-
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
+        PoiUtils.loadPoiPhoto(googleApiClient,displayedPoi,img);
+    }
 
-
-//        //TODO remove
-//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//        // set your desired log level
-//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-//
-//        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-//        // add your other interceptors …
-//
-//        // add logging as last interceptor
-//        httpClient.addInterceptor(logging);  // <-- this is the important line!
-
-        //presenter dependencies
+    private void setupPresenter()
+    {
         Retrofit rxRetrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(Configuration.SERVER_ADDRESS)
-//                .client(httpClient.build()) //for debugging
                 .build();
         PointOfInterestClient poiClient = new PointOfInterestClient(this);
         PoiRepository poiRepository = new PoiRepository(rxRetrofit.create(DatabasePoiRest.class),poiClient);
 
         presenter = new PoiDetailPresenter(displayedPoi,this,poiRepository);
         presenter.init();
-
-        PoiUtils.loadPoiPhoto(googleApiClient,displayedPoi,img);
     }
 
     @Override

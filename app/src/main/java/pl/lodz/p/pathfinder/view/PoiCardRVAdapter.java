@@ -24,9 +24,7 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
 
     private List<PointOfInterest> poiList;
     private List<Bitmap> poiPhotoList;
-
     private RvItemClickListener<PointOfInterest> itemClick;
-
     private String listenerType;
 
 
@@ -45,8 +43,6 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
             image = (ImageView) itemView.findViewById(R.id.tripcard_imageview);
             this.itemView = itemView;
         }
-
-
     }
 
 
@@ -73,16 +69,11 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     public void onBindViewHolder(ViewHolder holder, final int position)
     {
         holder.title.setText(poiList.get(position).getName());
-//        PoiUtils.loadPoiPhoto();
         holder.image.setImageBitmap(poiPhotoList.get(position));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener()
+        holder.itemView.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v)
-            {
-                if(itemClick != null)    itemClick.onItemClicked(poiList.get(position), v);
-            }
+            if(itemClick != null)    itemClick.onItemClicked(poiList.get(position), v);
         });
     }
 
@@ -93,7 +84,6 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
     }
 
 
-
     @Override
     public void removeAt(int position)
     {
@@ -102,7 +92,6 @@ public class PoiCardRVAdapter extends RecyclerView.Adapter<PoiCardRVAdapter.View
         notifyDataSetChanged();
     }
 
-    //NOTE might consider adopting approach from TipCardRVAdapter
     @Override
     public void updatePhoto(Bitmap bitmap, int position)
     {

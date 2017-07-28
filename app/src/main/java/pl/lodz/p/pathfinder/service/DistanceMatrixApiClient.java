@@ -16,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by QDL on 2017-03-29.
  */
 
-//TODO? move retrofit callback to another class - currently the methods have to be public and they have no business being so
 public class DistanceMatrixApiClient
 {
 
@@ -58,7 +57,6 @@ public class DistanceMatrixApiClient
 
 
 
-    //TODO think about moving to another class
     private class DistanceMatrixApiClientCallback  implements Callback<DistanceMatrixResponse>
     {
 
@@ -102,8 +100,6 @@ public class DistanceMatrixApiClient
                 sd.setDuration_actual(element.getDuration().getValue());
                 sd.setDistance(element.getDistance().getText());
                 sd.setDistance_actual(element.getDistance().getValue());
-                //TODO set direction type
-//            sd.setDirectionType(call.request().
 
                 directionsCallback.successCallback(sd,itemPosition);
 
