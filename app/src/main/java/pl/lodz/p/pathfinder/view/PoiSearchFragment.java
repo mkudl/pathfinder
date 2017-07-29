@@ -22,10 +22,6 @@ import pl.lodz.p.pathfinder.R;
 import pl.lodz.p.pathfinder.model.PointOfInterest;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PoiSearchFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  * Use the {@link PoiSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -104,10 +100,6 @@ public class PoiSearchFragment extends Fragment
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, getActivity());
-//                Place place = PlacePicker.getPlace(this,data);
-//                //TODO remove toast
-//                String toastMsg = String.format("Place: %s", place.getName());
-//                Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_LONG).show();
 
                 placeName.setText(place.getName());
                 currentSelection = new PointOfInterest(place.getName().toString(),place.getLatLng(),place.getId());
@@ -183,18 +175,5 @@ public class PoiSearchFragment extends Fragment
         actionButton.setVisibility(View.VISIBLE);
     }
 
-
-
-//    @Override
-//    public void onAttach(Context context)
-//    {
-//        super.onAttach(context);
-//    }
-//
-//    @Override
-//    public void onDetach()
-//    {
-//        super.onDetach();
-//    }
 
 }

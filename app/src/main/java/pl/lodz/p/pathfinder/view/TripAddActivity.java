@@ -85,9 +85,6 @@ public class TripAddActivity extends AppCompatActivity
                 PointOfInterest selectedPoi =  data.getParcelableExtra("selectedPoi");
                 presenter.addPoi(selectedPoi);
             }
-            else {
-                //TODO error handling
-            }
         }
     }
 

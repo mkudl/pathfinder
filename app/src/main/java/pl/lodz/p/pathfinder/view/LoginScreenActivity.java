@@ -30,13 +30,10 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
 
-
-
         if (AccountSingleton.INSTANCE.getAccount() != null)
         {
             launchMainMenu();
         }
-
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -50,7 +47,6 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
 
         findViewById(R.id.sign_in_button).setOnClickListener(v ->
                 startActivityForResult(Auth.GoogleSignInApi.getSignInIntent(googleApiClient), RC_SIGN_IN) );
-
     }
 
     @Override
@@ -63,12 +59,6 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
                 .setAction("Action", null).show();
     }
 
-//    @Override
-//    public void onClick(View v)
-//    {
-//        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
 
 
     @Override
@@ -81,7 +71,6 @@ public class LoginScreenActivity extends AppCompatActivity implements GoogleApiC
             userSignedIn(result);
         }
     }
-
 
 
     private void userSignedIn(GoogleSignInResult result)

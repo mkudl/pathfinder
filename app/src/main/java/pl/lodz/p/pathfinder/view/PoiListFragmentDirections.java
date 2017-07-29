@@ -27,7 +27,6 @@ public class PoiListFragmentDirections extends PoiListFragment
         PoiListFragmentDirections fragment = new PoiListFragmentDirections();
         Bundle args = new Bundle();
         args.putParcelableArrayList(ARG_PARAM1,new ArrayList<Parcelable>(poiList));
-//        args.putString(ARG_PARAM2,listenerType);
         fragment.setArguments(args);
         return fragment;
     }

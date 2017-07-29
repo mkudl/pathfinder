@@ -29,13 +29,5 @@ public class TripFactory
         return result;
     }
 
-//    public  Trip convertToModel(TripJson tripJson)
-//    {
-//        List<PointOfInterest> poiList;
-//        poiList = poiClient.getPoisFromIds(tripJson.getPointOfInterestList());
-//        Trip result = new Trip(tripJson.getId(),tripJson.getName(),tripJson.getDescription(),poiList);
-//        return result;
-//    }
-
 
 }

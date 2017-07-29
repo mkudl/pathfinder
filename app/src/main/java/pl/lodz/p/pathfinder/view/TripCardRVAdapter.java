@@ -32,7 +32,7 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
     private List<Boolean> expandStateList;
     private List<Bitmap> photoBitmaps;
 
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
@@ -58,42 +58,19 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
 
             //not actually a button, but it's more convenient like this
             popupMenuButton = (TextView) v.findViewById(R.id.tripcard_menu_actions);
-
-
             v.setOnClickListener(this);
-
-
-//            tv.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View view)
-//                {
-//                    Toast.makeText(view.getContext(),"textview pressed",Toast.LENGTH_SHORT).show();
-//                }
-//            });
         }
 
 
-        //TODO utilize my generic interface
         @Override
         public void onClick(View view)
         {
-//            int itemPosition = recyclerView.indexOfChild(v);
             int itemPosition = getLayoutPosition();
-
-
-
-//            Trip trip = TripCardRVAdapter.this.dataset.get(itemPosition);
             Trip trip = tripList.get(itemPosition);
-
 
             Intent intent = new Intent(view.getContext(), TripViewingActivity.class);
             intent.putExtra("TRIP_PARAM",trip);
-//            TemporarySingleton.INSTANCE.setTrip(trip);
             view.getContext().startActivity(intent);
-
-//            Toast.makeText(view.getContext(),"position" + itemPosition, Toast.LENGTH_SHORT).show();
-
         }
     }
 
@@ -108,25 +85,18 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
 
     @Override
     public TripCardRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
-        // create a new view
+    {   // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cardview_trip, parent, false);
-        //v.setOnClickListener(this);
-//        v.setOnClickListener(new MyOnClickListener());
-
-
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder( v, this.dataset);
         return vh;
     }
 
 
-    //FIXME everything in here
     @Override
     public void onBindViewHolder(TripCardRVAdapter.ViewHolder holder, int position)
     {
-//        holder.tv.setOnClickListener(new MyOnClickListener());
         holder.name.setText(dataset.get(position).getName());
         holder.description.setText(dataset.get(position).getDescription());
         if(photoBitmaps.get(position) != null){
@@ -187,44 +157,10 @@ public class TripCardRVAdapter extends RecyclerView.Adapter<TripCardRVAdapter.Vi
     }
 
 
-    //TODO use some kind of interface for this
-    public void updatePhotos(List<Bitmap> photos)
+    void updatePhotos(List<Bitmap> photos)
     {
         this.photoBitmaps = photos;
         notifyDataSetChanged();
     }
-
-
-//    @Override
-//    public void onClick(final View view)
-//    {
-//        TripCardRVAdapter.this.index
-//        Intent intent = new Intent(recyclerView.getContext(), TripViewingActivity.class);
-//        intent.putExtra("TRIP_PARAM",)
-//        recyclerView.getContext().startActivity(intent);
-//
-//        //int asd = recyclerView.getChildLayoutPosition(view);
-//        //String st = dataset.get(asd);
-//        //Toast.makeText(view.getContext(),st,Toast.LENGTH_SHORT).show();
-//    }
-//
-//    class MyOnClickListener implements View.OnClickListener {
-//        @Override
-//        public void onClick(View v){
-//            int itemPosition = recyclerView.indexOfChild(v);
-//
-//            Log.e("Clicked and Position is",String.valueOf(itemPosition));
-//
-//
-//            Trip trip = TripCardRVAdapter.this.dataset.get(itemPosition);
-//
-//            Intent intent = new Intent(recyclerView.getContext(), TripViewingActivity.class);
-////            intent.putExtra("TRIP_PARAM",;
-//            TemporarySingleton.INSTANCE.setTrip(trip);
-//            recyclerView.getContext().startActivity(intent);
-//        }
-//    }
-
-
 
 }

@@ -48,6 +48,12 @@ public class PoiAddActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poi_add);
 
+        setupUI();
+        setupPresenter();
+    }
+
+    private void setupUI()
+    {
         Button getLocationButton = (Button) findViewById(R.id.poi_add_button_pickagain);
         coordinates = (TextView) findViewById(R.id.poi_add_location_coords);
         address = (TextView) findViewById(R.id.poi_add_location_address);
@@ -65,9 +71,12 @@ public class PoiAddActivity extends AppCompatActivity
             }
         });
 
+        finishButton.setOnClickListener( v -> presenter.createPoi(name.getText().toString()));
+        hideFinishButton();
+    }
 
-
-
+    private void setupPresenter()
+    {
         Retrofit rxRetrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -77,16 +86,12 @@ public class PoiAddActivity extends AppCompatActivity
         PointOfInterestClient poiClient = new PointOfInterestClient(this);
         PoiRepository pr = new PoiRepository(restClient,poiClient);
 
-         googleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .build();
+        googleApiClient = new GoogleApiClient.Builder(this)
+               .addApi(Places.GEO_DATA_API)
+               .build();
         googleApiClient.connect();
 
         this.presenter = new PoiAddPresenter(this,pr,googleApiClient);
-
-
-        finishButton.setOnClickListener( v -> presenter.createPoi(name.getText().toString()));
-        hideFinishButton();
     }
 
 
@@ -95,7 +100,6 @@ public class PoiAddActivity extends AppCompatActivity
             if (resultCode == Activity.RESULT_OK)
             {
                 Place place = PlacePicker.getPlace(this,data);
-
                 presenter.updateLocation(place.getLatLng(),place.getAddress().toString());
             }
         }

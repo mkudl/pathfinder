@@ -88,9 +88,6 @@ public class PoiMenuPresenter
 
     protected void onConnectionFailure(Throwable t)
     {
-//        StringWriter sw = new StringWriter();
-//        PrintWriter pw = new PrintWriter(sw);
-//        t.printStackTrace(pw);
         Log.d("PoiMenuPresenter", " Connection Failure", t);
 
         view.displayCreationErrorMessage(t);

@@ -47,19 +47,14 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-//import java.util.stream.Collectors;
-
-//FIXME EVERYTHING
 public class TripViewingActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMapsMovable
 {
 
     private Trip trip;
     private SupportMapFragment mapFragment;
-    //    private PoiListFragment poiFragment;
     private GoogleMap mMap;
     List<Polyline> polylinesDrawn;
     GoogleApiClient googleApiClient;
-    //    private LinearLayout ll;
     private PoiListFragmentDirections poiListFragment;
     private List<DetailDirections> detailDirections;
 
@@ -70,30 +65,41 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
     private TripViewingPresenter presenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  //TODO extract methods
+    protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         setContentView(pl.lodz.p.pathfinder.R.layout.trip_viewing_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        //TODO retrieve flag from bundle
         navigationStarted = false;
 
-        //retrieve data
         trip = getIntent().getParcelableExtra("TRIP_PARAM");
+        setupFloatButton();
+        setupPresenter();
+        initializeDetailDirections();
+        setupNavButton();
+        prepareMap();
+        //add a view with a list of POIs
+        poiListFragment = PoiListFragmentDirections.newInstance(trip.getPointOfInterestList());
+        //adds fragment as a child of the specified view
+        getSupportFragmentManager().beginTransaction().add(R.id.trip_viewing_content_bottom, poiListFragment).commit();
+        setupBottomSheet();
+        initGoogleApiClient();
+    }
 
+    private void prepareMap()
+    {
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_frag);
+        mapFragment.getMapAsync(this);
+        polylinesDrawn = new ArrayList<>();
+    }
 
-        fabFavorite = (FloatingActionButton) findViewById(R.id.trip_favorite_fab);
-        fabFavorite.setVisibility(View.INVISIBLE);
-
+    private void setupPresenter()
+    {
         Retrofit rxRetrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(Configuration.SERVER_ADDRESS)
-//                .client(httpClient.build()) //for debugging
                 .build();
         TripFavoriteChecker tripFavoriteChecker = new TripFavoriteChecker(rxRetrofit.create(DatabaseTripRest.class));
         TripUploadService tripUploadService = new TripUploadService(rxRetrofit.create(DatabaseTripRest.class));
@@ -101,43 +107,32 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
         presenter = new TripViewingPresenter(this,trip,tripFavoriteChecker,tripUploadService);
         presenter.getSimpleDirections(trip.getPointOfInterestList());
         presenter.initFavorite();
+    }
 
-        //initialize the detailed directions list
+    private void setupFloatButton()
+    {
+        fabFavorite = (FloatingActionButton) findViewById(R.id.trip_favorite_fab);
+        fabFavorite.setVisibility(View.INVISIBLE);
+    }
+
+    private void initializeDetailDirections()
+    {
         detailDirections = new ArrayList<>();
         detailDirections.add(null);
         detailDirections.add(null);
         detailDirections.add(null);
         detailDirections.add(null);
         detailDirections.add(null);
+    }
 
-
-
-        //set up the navigation button
+    private void setupNavButton()
+    {
         fabDirections = (FloatingActionButton) findViewById(R.id.trip_navigate_fab);
-        fabDirections.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                presenter.startNavigation(trip.getPointOfInterestList());
+        fabDirections.setOnClickListener(view -> presenter.startNavigation(trip.getPointOfInterestList()));
+    }
 
-            }
-        });
-
-
-        //prepare map
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_frag);
-        mapFragment.getMapAsync(this);
-        polylinesDrawn = new ArrayList<>();
-
-        //add a view with a list of POIs
-//        Fragment poiListFragment = PoiListFragmentUpdateMap.newInstance(trip.getPointOfInterestList());  //FIXME
-        poiListFragment = PoiListFragmentDirections.newInstance(trip.getPointOfInterestList());  //FIXME
-        //adds fragment as a child of the specified view
-        getSupportFragmentManager().beginTransaction().add(R.id.trip_viewing_content_bottom, poiListFragment).commit();
-
-
-        // set bottom sheet behavior
+    private void setupBottomSheet()
+    {
         View bottomSheet = findViewById(R.id.trip_viewing_content_bottom);
         final BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
         final ImageView bottomSheetExpandIcon = (ImageView) findViewById(R.id.trip_viewing_content_bottom_img);
@@ -147,11 +142,6 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState)
             {
-
-
-//                LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
-//                ViewGroup.LayoutParams params = mapFragment.getView().getLayoutParams();
-
                 switch (newState)
                 {
 //                    case BottomSheetBehavior.STATE_DRAGGING:
@@ -160,15 +150,9 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
 //                        break;
                     case BottomSheetBehavior.STATE_EXPANDED:
                         bottomSheetExpandIcon.setRotation(180);
-//                        params = mapFragment.getView().getLayoutParams();
-//                        params.height =  mapFragment.getView().getHeight() - bottomSheet.getHeight();
-//                        mapFragment.getView().setLayoutParams(params);
                         break;
                     case BottomSheetBehavior.STATE_COLLAPSED:
                         bottomSheetExpandIcon.setRotation(0);
-//                        params = mapFragment.getView().getLayoutParams();
-//                        params.height =  mapFragment.getView().getHeight() + bottomSheet.getHeight();
-//                        mapFragment.getView().setLayoutParams(params);
                         break;
 //                    case BottomSheetBehavior.STATE_HIDDEN:
 //                        break;
@@ -178,17 +162,16 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset)
             {
-//                Log.i("BottomSheetCallback", "slideOffset: " + slideOffset);
+                //intentionally left blank
             }
         });
+    }
 
-
+    private void initGoogleApiClient()
+    {
         googleApiClient = new GoogleApiClient.Builder(this)
-//                .addConnectionCallbacks(this)
-//                .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-
     }
 
     @Override
@@ -260,15 +243,17 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
         int width = getResources().getDisplayMetrics().widthPixels;
         int height = getResources().getDisplayMetrics().heightPixels;
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBuilder.build(), width, height, 200));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             return;
         }
         mMap.setMyLocationEnabled(true);
         po.addAll(positionList);
         po.width(5).color(Color.RED);
-        Polyline line = mMap.addPolyline(po);   //TODO unused assignment, consider whether to remove
-        polylinesDrawn.add(line);               //^ i knew it'd come in handy at some point
+        Polyline line = mMap.addPolyline(po);
+        polylinesDrawn.add(line);
     }
 
 
@@ -289,13 +274,10 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
 
     private void actionNext()
     {
-        //TODO move to presenter?
-        Toast.makeText(this, "next", Toast.LENGTH_SHORT).show();  //todo REMOVE TOAST
         if (navigationStarted && trip.getPointOfInterestList().size() >= 1)
         {
             trip.getPointOfInterestList().remove(0);
             poiListFragment.removeAt(0);
-            //TODO remove first poi and corresponding direction block
             presenter.startNavigation(trip.getPointOfInterestList());
         } else
             Log.d("TripViewingActivity", "User pressed next, but there was only one poi left, ignoring click");
@@ -372,16 +354,9 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
         navigationStarted = true;
         fabDirections.setVisibility(View.GONE);
 
-        //TODO? possibly move the location retrieval to presenter
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            //permissions already checked on launch, no use in checking here
             return;
         }
         //get directions from user's current location to first poi
@@ -392,18 +367,12 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
             presenter.loadDirectionsFromLocation(usrLocation,trip.getPointOfInterestList().get(0));
 
         }
-
-
-//        presenter.loadDirectionsFromLocation();
-
-
         poiListFragment.updateDetailedDirections(dirs,position);
         detailDirections.set(position,dirs);
     }
 
     public void hideNavButton()
     {
-//        fabDirections.setVisibility(View.INVISIBLE);
         fabDirections.setVisibility(View.GONE);
     }
 
@@ -416,30 +385,13 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
     public void clearDrawings()
     {
         polylinesDrawn.forEach(Polyline::remove);
-
-//        for (Polyline p : polylinesDrawn)
-//        {
-//            p.remove();
-//        }
     }
 
 
     public void drawDirections(DetailDirections detailDirections)
     {
-            PolylineOptions po = new PolylineOptions();
-            List<LatLng> positionList = PolylineUtils.decodePolyline(detailDirections.getOverviewPolyline().getPoints());
-
-
-            //this adds the detailed polylines of every step, but it turns out that doesn't really look much better
-//            PolylineOptions po = new PolylineOptions();
-//            List<LatLng> positionList = new ArrayList<>();
-//
-//        for(Step s : detailDirections.getDetails())
-//        {
-//            positionList.addAll(PolylineUtils.decodePolyline(s.getPolyline().getPoints()));
-//        }
-
-
+        PolylineOptions po = new PolylineOptions();
+        List<LatLng> positionList = PolylineUtils.decodePolyline(detailDirections.getOverviewPolyline().getPoints());
         po.addAll(positionList);
         po.width(5).color(Color.RED);
         Polyline line = mMap.addPolyline(po);
@@ -450,24 +402,6 @@ public class TripViewingActivity extends AppCompatActivity implements OnMapReady
     public void drawCurrentDirections(DetailDirections currentDirections)
     {
         drawDirections(currentDirections);
-    }
-
-
-
-
-
-
-
-
-
-    void refocusMapSmall()
-    {
-
-    }
-
-    void refocusMapBig()
-    {
-
     }
 
 }

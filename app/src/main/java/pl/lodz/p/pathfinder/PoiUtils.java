@@ -61,19 +61,15 @@ public class PoiUtils
                             Log.d("PoiUtils", "placePhotoMetadataResult null " + (placePhotoMetadataResult == null));
                             Log.d("PoiUtils", "PhotoMetadata null" + (placePhotoMetadataResult.getPhotoMetadata() == null));
                             Log.d("PoiUtils", "success " + (placePhotoMetadataResult.getStatus().isSuccess()));
-                            if(placePhotoMetadataResult.getStatus().isSuccess())    //TODO? error handling (sometimes api fails for no reason)
+                            if(placePhotoMetadataResult.getStatus().isSuccess())
                             {
                                 PlacePhotoMetadataBuffer buffer = placePhotoMetadataResult.getPhotoMetadata();
                                 PlacePhotoMetadata photo = buffer.get(0);
-                                photo.getPhoto(googleApiClient).setResultCallback(new ResultCallback<PlacePhotoResult>()
+                                photo.getPhoto(googleApiClient).setResultCallback(placePhotoResult ->
                                 {
-                                    @Override
-                                    public void onResult(@NonNull PlacePhotoResult placePhotoResult)
-                                    {
-                                        Bitmap bmp = placePhotoResult.getBitmap();
-                                        callback.photoDownloaded(bmp, position);
+                                    Bitmap bmp = placePhotoResult.getBitmap();
+                                    callback.photoDownloaded(bmp, position);
 //                                        placePhotoMetadataResult.getPhotoMetadata().release();
-                                    }
                                 });
                                 buffer.release();
                             }

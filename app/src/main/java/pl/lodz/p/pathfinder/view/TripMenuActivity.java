@@ -53,7 +53,6 @@ public class TripMenuActivity extends AppCompatActivity implements GoogleApiClie
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        //TODO split cases of new creation and recreating from savedInstanceState
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trip_menu_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,14 +63,15 @@ public class TripMenuActivity extends AppCompatActivity implements GoogleApiClie
         recyclerView = (RecyclerView) findViewById(R.id.main3recycler);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
+        setupPresenter();
+    }
 
-
-        //creating presenter dependencies
+    private void setupPresenter()
+    {
         Retrofit rxRetrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(Configuration.SERVER_ADDRESS)
-//            .client(httpClient.build()) //for debugging
                 .build();
         DatabaseTripRest restClient = rxRetrofit.create(DatabaseTripRest.class);
         PointOfInterestClient poiClient = new PointOfInterestClient(this);
@@ -95,8 +95,6 @@ public class TripMenuActivity extends AppCompatActivity implements GoogleApiClie
 
     public void onDataRetrieved(TripCardRVAdapter rvAdapter)
     {
-//        newDataSet = trips;
-//        adapter = new TripCardRVAdapter(newDataSet,this);
         adapter = rvAdapter;
         recyclerView.setAdapter(adapter);
 
